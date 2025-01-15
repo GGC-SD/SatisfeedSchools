@@ -9,3 +9,6 @@ Project Manager, Visualizations
 
 ## Elizabeth Doss
 Data analyzer, Client Liason
+
+## Damaris Montecinos
+Data modeler, Project Documenter
