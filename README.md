@@ -1,7 +1,8 @@
 # Satisfeed - Data Collection & Dashboard
 Spring 2025 Team
 
-Project Manager - Caleb Cedeno
+## Caleb Cedeno
+Project Manager, Visualizations
 
 ## Elizabeth Doss
 Data analyzer, Client Liason
