@@ -1,0 +1,11 @@
+# Customer Requirements
+- Ability to generate reports giving # of people served each week, including changes
+- Ability to generate reports showing amount of food recieved per family
+- Heatmap of customers by geographic location and/or school district
+
+
+## To-Do
+- Email client about database platform (Oasis) and how to interact with data
+- Obtain csv report and load into Python to clean
+- Munge data and handle null values
+- Create basic initial visualizations
