@@ -10,9 +10,9 @@ Project Poster [STARS/CREATE Poster in the Docs folder]
 Final Report [link tba]
 
 ## Spring 2025 Team
-Caleb Cedeno - Project Manager, Visualizations
-Elizabeth Doss- Data analyzer, Client Liason
-Damaris Montecinos- Data modeler, Project Documenter
+Caleb Cedeno - Project Manager & Visualizations |
+Elizabeth Doss - Data analyzer & Client Liason |
+Damaris Montecinos - Data modeler, Project Documenter
 
 ## Outreach Activities
 
