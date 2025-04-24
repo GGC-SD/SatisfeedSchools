@@ -27,8 +27,7 @@ dashboard can be viewed by Satisfeed employees.
 
 ## Spring 2025 Project Progress
 
-The notebook and dataset cannot be displayed, as they contain personal information of Satisfeed customers including full names, addresses, and phone numbers. Therefore, 
-this will be a high-level overview of the analysis without specific data points displayed.
+Disclaimer: The notebook,dataset, and PBIX file cannot be displayed, as they contain personal information of Satisfeed customers including full names, addresses, and phone numbers. Therefore, all displayed metrics and stats are a high-level overview of the analysis without specific data points displayed.
 
 ### Analysis Methods
 PCA and linear regression were attempted on the data set, but failed due to a lack of numerical data and numerous gaps in client reporting. As a result, most of the 
