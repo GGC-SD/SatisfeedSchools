@@ -4,7 +4,7 @@
 Team Satisfeed partnered with the nonprofit organization Satisfeed, which delivers hunger relief for Gwinnett’s families in need. With their food co-op and weekend support programs, they work to fight food insecurity and reduce food waste. Their mission is to feed people and connect communities. The team was tasked with developing a data-driven dashboard to visualize client demographics and service usage statistics. Using Google Colab for data analysis and Power BI for dashboard development, we designed an interactive tool that allows the organization to better understand the needs of its clients and make informed decisions about program planning and resource allocation. This project highlights the potential of data science to empower nonprofit organizations in their mission to create meaningful social impact while being able to visualize said impact. 
 
 ## Project Documentation:
-Project Demo [PowerBI Dashboard Demo Via Workspace in Person due to license restrictions] | 
+Project Demo [(https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)] | 
 Project Website [https://satisfeeddashboardproject.carrd.co] | 
 Project Poster [STARS/CREATE Poster in the Docs folder] | 
 Final Report [link tba]
