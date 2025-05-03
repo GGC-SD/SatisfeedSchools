@@ -5,8 +5,11 @@ Team Satisfeed partnered with the nonprofit organization Satisfeed, which delive
 
 ## Project Documentation:
 Project Demo [(https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)]
+
 Project Website [https://satisfeeddashboardproject.carrd.co] 
+
 Project Poster [STARS/CREATE Poster in the Docs folder] 
+
 Final Report [link tba]
 
 ## Spring 2025 Team
