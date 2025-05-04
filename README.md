@@ -10,7 +10,8 @@ Project Website [https://satisfeeddashboardproject.carrd.co]
 
 Project Poster [STARS/CREATE Poster in the Docs folder] 
 
-Final Report [link tba]
+Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx)
+)]
 
 ## Spring 2025 Team
 Caleb Cedeno - Project Manager & Visualizations 
