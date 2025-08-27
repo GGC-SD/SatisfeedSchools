@@ -20,6 +20,7 @@ Damaris Montecinos - Data modeler, Project Documenter
 
 ## Fall 2025 Team
 Sam Keller - Code architecture / lead programmer, UI/UX designer, Client liaison
+Dylan Long - Testing lead / Team manager
 
 ## Outreach Activities
 
