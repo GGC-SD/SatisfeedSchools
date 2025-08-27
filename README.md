@@ -19,7 +19,7 @@ Elizabeth Doss - Data analyzer & Client Liason
 Damaris Montecinos - Data modeler, Project Documenter
 
 ## Fall 2025 Team
-Sam Keller - Code architecture / lead programmer, UI/UX designer, Client liaison
+Sam Keller - Code architecture / lead programmer, UI/UX designer, Client liaison <br>
 Dylan Long - Testing lead / Team manager
 
 ## Outreach Activities
