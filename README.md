@@ -18,6 +18,9 @@ Caleb Cedeno - Project Manager & Visualizations
 Elizabeth Doss - Data analyzer & Client Liason 
 Damaris Montecinos - Data modeler, Project Documenter
 
+## Fall 2025 Team
+Sam Keller - Code architecture / lead programmer, UI/UX designer, Client liaison
+
 ## Outreach Activities
 
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
