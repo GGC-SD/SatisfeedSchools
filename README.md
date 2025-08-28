@@ -17,58 +17,33 @@ Project Poster [STARS/CREATE Poster in the Docs folder]
 Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx)
 )]
 
-## **Technologies**\
+## Technologies
+- Next.js
+- Firebase
+- Python
 
+## Working Features
+- Dashboard Login
+- Select Dashboard Data Version
+- Data visualization by:
+   - Race
+   - Income
+   - Education
+   - Employment Status
+   - Food Distribution by County
+   - Food Distribution by ZIP Code
+   - Total Families Reached
+   - Total People Helped
+- Upload Raw Data
+- Manage Data Versions
 
-
-Next.js
-
-Firebase
-
-Python
-
-
-
-## **Working Features**\
-
-
-
-Dashboard Login
-
-Select Dashboard Data Version
-
-Data visualization by
-
-Race
-
-Income
-
-Education
-
-Employment Status
-
-Food Distribution by County
-
-Food Distribution by ZIP Code
-
-Total Families Reached
-
-Total People Helped
-
-Upload Raw Data
-
-Manage Data Versions
-
-
-
-### **Installation Steps**\
-
+### Installation Steps
 1. Clone the repo: git clone https://github.com/nhuthanhtran/Satisfeed
 2. Install dependencies: install npm with "npm install"
-3. Add environment variables to root directory
+3. Add environment variables to .env.local file in root directory
 
 
-### **Running Steps**\
+### Running Steps
 1. Run the development server:
    
     ```
