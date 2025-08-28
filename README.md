@@ -37,13 +37,13 @@ Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attac
 - Upload Raw Data
 - Manage Data Versions
 
-### Installation Steps
+## Installation Steps
 1. Clone the repo: git clone https://github.com/nhuthanhtran/Satisfeed
 2. Install dependencies: install npm with "npm install"
 3. Add environment variables to .env.local file in root directory
 
 
-### Running Steps
+## Running Steps
 1. Run the development server:
    
     ```
@@ -54,7 +54,8 @@ Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attac
     pnpm dev
     # or
     bun dev
-    ```
+    ```  
+    
 2. Open http://localhost:3000 with your browser to see the result.
 
 3. Sign up for an account and verify with your email to get approved as an admin.
@@ -68,7 +69,7 @@ Damaris Montecinos - Data modeler, Project Documenter
 
 ## Fall 2025 Team
 Sam Keller - Code Architecture / Lead programmer, UI/UX designer, Client liaison <br>
-Dylan Long - Testing lead / Team manager 🦉
+Dylan Long - Testing lead / Team manager 🦉  
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
 ## Outreach Activities
