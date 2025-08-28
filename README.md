@@ -46,15 +46,15 @@ Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attac
 ## Running Steps
 1. Run the development server:
    
-    ```
-    npm run dev  
-    # or  
-    yarn dev  
-    # or  
-    pnpm dev  
-    # or  
-    bun dev  
-    ```  
+```
+npm run dev  
+# or  
+yarn dev  
+# or  
+pnpm dev  
+# or  
+bun dev  
+```  
     
 2. Open http://localhost:3000 with your browser to see the result.
 
