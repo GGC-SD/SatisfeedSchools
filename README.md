@@ -1,7 +1,11 @@
 # Satisfeed - Data Collection & Dashboard
 
-## Project Abstract
-Team Satisfeed partnered with the nonprofit organization Satisfeed, which delivers hunger relief for Gwinnett’s families in need. With their food co-op and weekend support programs, they work to fight food insecurity and reduce food waste. Their mission is to feed people and connect communities. The team was tasked with developing a data-driven dashboard to visualize client demographics and service usage statistics. Using Google Colab for data analysis and Power BI for dashboard development, we designed an interactive tool that allows the organization to better understand the needs of its clients and make informed decisions about program planning and resource allocation. This project highlights the potential of data science to empower nonprofit organizations in their mission to create meaningful social impact while being able to visualize said impact. 
+## Description  
+In Spring 2025, Team Satisfeed partnered with the nonprofit Satisfeed, which provides hunger relief for families in and around Gwinnett County through food co-ops and weekend programs. Their mission is to fight food insecurity, reduce waste, and connect communities. The team created a data-driven dashboard using Google Colab and Power BI to visualize client demographics and service usage, giving the organization insights for program planning and resource allocation.
+
+
+
+In Fall 2025, Let Us Cook will build on this work by adding Gwinnett County school zone data to the existing web app dashboard, enabling Satisfeed to better understand and serve families across the area.
 
 ## Project Documentation:
 Project Demo [(https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)]
@@ -13,14 +17,84 @@ Project Poster [STARS/CREATE Poster in the Docs folder]
 Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx)
 )]
 
+## **Technologies**\
+
+
+
+Next.js
+
+Firebase
+
+Python
+
+
+
+## **Working Features**\
+
+
+
+Dashboard Login
+
+Select Dashboard Data Version
+
+Data visualization by
+
+Race
+
+Income
+
+Education
+
+Employment Status
+
+Food Distribution by County
+
+Food Distribution by ZIP Code
+
+Total Families Reached
+
+Total People Helped
+
+Upload Raw Data
+
+Manage Data Versions
+
+
+
+### **Installation Steps**\
+
+1. Clone the repo: git clone https://github.com/nhuthanhtran/Satisfeed
+2. Install dependencies: install npm with "npm install"
+3. Add environment variables to root directory
+
+
+### **Running Steps**\
+1. Run the development server:
+   
+    ```
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
+2. Open http://localhost:3000 with your browser to see the result.
+
+3. Sign up for an account and verify with your email to get approved as an admin.
+
+4. You can start editing the page by modifying app/page.tsx. The page auto-updates as you edit the file.
+
 ## Spring 2025 Team
 Caleb Cedeno - Project Manager & Visualizations 
 Elizabeth Doss - Data analyzer & Client Liason 
 Damaris Montecinos - Data modeler, Project Documenter
 
 ## Fall 2025 Team
-Sam Keller - Code architecture / lead programmer, UI/UX designer, Client liaison <br>
+Sam Keller - Code Architecture / Lead programmer, UI/UX designer, Client liaison <br>
 Dylan Long - Testing lead / Team manager 🦉
+Ewura Ama Awere - Data Modeler, Documentation Lead 
 
 ## Outreach Activities
 
