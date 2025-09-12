@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-100 text-gray-800;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+/* Card Styling */
+.card {
+  @apply bg-white shadow-lg p-4 rounded-lg;
+}
+
+/* Header Styling */
+.header {
+  @apply text-center py-6;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  @apply flex flex-col h-full p-6 min-h-screen;
+}
+
+.grid-container {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8;
+}
+
+.chart-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.map-section path {
+  fill: #f9f9f9;
+  stroke: #ffffff;
+  stroke-width: 0.5;
+  transition: fill-opacity 0.2s ease-in-out;
+}
+
+.map-section path:hover {
+  fill-opacity: 0.7;
+  cursor: pointer;
+}
+
+.tooltip {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #dedbdb;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+/* Page Layout for Login and Register */
+.auth-page {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: url('/Satisfeed logo.png') no-repeat center center;
+  background-size: auto;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+/* Left Side */
+.auth-left {
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: flex-end;;
+  align-items: center;
+  padding: 20px;
+}
+
+.auth-left h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1d3b32;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.auth-left p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Right Side */
+.auth-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+.auth-card .form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.auth-card .form-control {
+  background: #f8f9fa;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.auth-card .btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.auth-card .btn-primary:hover {
+  background-color: #0056b3;
+}
