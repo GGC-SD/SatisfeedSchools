@@ -28,6 +28,7 @@ export default function DashboardSchoolsMap({
       zoom,
     });
 
+    // custom reset button for map
     const ResetButton = class implements maplibregl.IControl {
       private container!: HTMLDivElement;
 
@@ -35,7 +36,7 @@ export default function DashboardSchoolsMap({
         const btn = document.createElement("button");
         btn.type = "button";
         btn.textContent = "Reset";
-        btn.className = "maplibregl-ctrl my-reset-btn"; // styling hook
+        btn.className = "maplibregl-ctrl my-reset-btn";
 
         const wrapper = document.createElement("div");
         wrapper.className = "maplibregl-ctrl my-reset-wrapper";
@@ -50,6 +51,7 @@ export default function DashboardSchoolsMap({
       }
     };
 
+    // reset button
     map.addControl(new ResetButton(), "top-right");
 
     // zoom buttons
