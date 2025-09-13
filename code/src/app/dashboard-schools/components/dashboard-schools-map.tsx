@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
 import maplibregl, { Map as MLMap, LngLatLike } from "maplibre-gl";
-// import "maplibre-gl/dist/maplibre-gl.css";
 
 type Props = {
   className?: string;
