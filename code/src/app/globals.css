@@ -20,7 +20,7 @@ h1, h2, h3, h4, h5, h6 {
   @apply border-gray-400 rounded-md flex-1;
 }
 
-.dropdowncontainer {
+.dropdown-container {
   @apply flex items-center justify-between gap-4 w-full max-w-md
 }
 

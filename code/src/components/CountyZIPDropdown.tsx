@@ -30,7 +30,7 @@ export default function CountyZIPDropdown() {
 
     return (
         <>
-        <div className="dropdowncontainer">
+        <div className="dropdown-container">
             <label>County</label> 
             <select
                 value={selectedCounty}
@@ -47,7 +47,7 @@ export default function CountyZIPDropdown() {
 
         <br />
         <br />
-        <div className="dropdowncontainer">
+        <div className="dropdown-container">
         <label>ZIP Code</label>
         <select
         value={selectedZIP}
