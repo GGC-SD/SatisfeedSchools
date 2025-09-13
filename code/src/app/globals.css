@@ -4,10 +4,15 @@
 
 body {
   @apply bg-gray-100 text-gray-800;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-bold;
 }
 
@@ -21,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dropdown-container {
-  @apply flex items-center justify-between gap-4 w-full max-w-md
+  @apply flex items-center justify-between gap-4 w-full max-w-md;
 }
 
 /* Header Styling */
@@ -35,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .grid-container {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8;
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8;
 }
 
 .chart-container {
@@ -72,7 +77,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background: url('/Satisfeed logo.png') no-repeat center center;
+  background: url("/Satisfeed logo.png") no-repeat center center;
   background-size: auto;
   background-attachment: fixed;
   background-position: center center;
@@ -82,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
 .auth-left {
   background: rgba(255, 255, 255, 0.5);
   display: flex;
-  justify-content: flex-end;;
+  justify-content: flex-end;
   align-items: center;
   padding: 20px;
 }
@@ -136,4 +141,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .auth-card .btn-primary:hover {
   background-color: #0056b3;
+}
+
+:root {
+  --map-btn-bg: #facc14;
+  --map-btn-bg-hover: #e0b800;
+  --map-btn-radius: 4px;
+  --map-btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --map-btn-border: 0.5px solid #1d3b32;
+  --map-btn-padding: 6px 10px;
+  --map-btn-font-size: 14px;
+}
+
+.my-reset-btn {
+  background: var(--map-btn-bg);
+  padding: var(--map-btn-padding);
+  border-radius: var(--map-btn-radius);
+  box-shadow: var(--map-btn-shadow);
+  font-size: var(--map-btn-font-size);
+  border: var(--map-btn-border);
+}
+
+.my-reset-btn:hover {
+  background: var(--map-btn-bg-hover) !important;
+}
+
+.school-map .maplibregl-ctrl-group button {
+  background-color: var(--map-btn-bg);
+  border: var(--map-btn-border);
+}
+
+.school-map .maplibregl-ctrl-group button:hover {
+  background-color: var(--map-btn-bg-hover);
 }
