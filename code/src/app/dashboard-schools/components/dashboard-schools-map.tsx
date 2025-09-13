@@ -36,7 +36,7 @@ export default function DashboardSchoolsMap({
         const btn = document.createElement("button");
         btn.type = "button";
         btn.textContent = "Reset";
-        btn.className = "maplibregl-ctrl my-reset-btn";
+        btn.className = "maplibregl-ctrl t-reset-btn";
 
         const wrapper = document.createElement("div");
         wrapper.className = "maplibregl-ctrl my-reset-wrapper";

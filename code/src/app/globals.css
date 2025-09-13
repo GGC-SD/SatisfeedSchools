@@ -153,24 +153,20 @@ h6 {
   --map-btn-font-size: 14px;
 }
 
-.my-reset-btn {
-  background: var(--map-btn-bg);
-  padding: var(--map-btn-padding);
-  border-radius: var(--map-btn-radius);
-  box-shadow: var(--map-btn-shadow);
-  font-size: var(--map-btn-font-size);
-  border: var(--map-btn-border);
+@layer components {
+  .t-reset-btn {
+    @apply py-[6px] px-[10px] text-[14px] border transition-colors;
+    @apply rounded-[var(--map-btn-radius)] shadow-[var(--map-btn-shadow)];
+    @apply border-[0.5px] border-[#1d3b32];
+    @apply bg-[var(--map-btn-bg)] hover:bg-[var(--map-btn-bg-hover)] !important;
+  }
 }
 
-.my-reset-btn:hover {
-  background: var(--map-btn-bg-hover) !important;
-}
-
-.school-map .maplibregl-ctrl-group button {
-  background-color: var(--map-btn-bg);
-  border: var(--map-btn-border);
-}
-
-.school-map .maplibregl-ctrl-group button:hover {
-  background-color: var(--map-btn-bg-hover);
+@layer components {
+  .school-map .maplibregl-ctrl-group button {
+    @apply bg-[var(--map-btn-bg)] border border-[0.5px] border-[#1d3b32];
+  }
+  .school-map .maplibregl-ctrl-group button:hover {
+    @apply bg-[var(--map-btn-bg-hover)];
+  }
 }
