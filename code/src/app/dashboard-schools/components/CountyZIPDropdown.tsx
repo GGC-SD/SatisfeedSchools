@@ -45,9 +45,7 @@ export default function CountyZIPDropdown() {
             </select>
         </div>
 
-        <br />
-        <br />
-        <div className="dropdown-container">
+        <div className="dropdown-container mt-2">
         <label>ZIP Code</label>
         <select
         value={selectedZIP}
