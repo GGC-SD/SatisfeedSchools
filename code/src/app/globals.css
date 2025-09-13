@@ -16,6 +16,14 @@ h1, h2, h3, h4, h5, h6 {
   @apply bg-white shadow-lg p-4 rounded-lg;
 }
 
+.child-component-borders {
+  @apply border-gray-400 rounded-md flex-1;
+}
+
+.dropdowncontainer {
+  @apply flex items-center justify-between gap-4 w-full max-w-md
+}
+
 /* Header Styling */
 .header {
   @apply text-center py-6;
