@@ -1,0 +1,8 @@
+Ewura Ama implemented variable 'child-component-borders' in the file 'globals.css' and the corresponding page 'CountyZIPDropdown.tsx'
+Ewura Ama implemented variable 'dropdown-container'      in the file 'globals.css' and the corresponding page 'DataCard.tsx'
+
+Dylan implemented variable 't-reset-btn' in the file 'globals.css' and the corresponding page 'dashboard-schools-map.tsx'
+Dylan implemented variable 'school-map'  in the file 'globals.css' and the corresponding page 'dashboard-schools-map.tsx'
+
+Sam implemented variable 'dashboard-header' in the file 'globals.css' and the corresponding page 'header.tsx'
+Sam implemented variable 'tab-selected'     in the file 'globals.css' and the corresponding page 'tabs.tsx'
