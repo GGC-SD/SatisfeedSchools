@@ -10,7 +10,10 @@
 export default function DataCard() {
 
     return (
-        <div className="min-w-[150px] min-h-[400px] card child-component-borders">
+        <div className="min-w-[150px] min-h-96 lg:min-h-[40rem] bg-white child-component-borders">
+            <div className="w-full h-full flex justify-center">
+                <h1 className="text-lg flex place-self-center text-neutral-400">School Information / Data</h1>
+            </div>
         </div>
     );
 

@@ -35,7 +35,7 @@ export default function DashboardSchoolsMap({
       onAdd() {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.textContent = "Reset";
+        btn.textContent = "Clear Selection";
         btn.className = "maplibregl-ctrl t-reset-btn";
 
         const wrapper = document.createElement("div");
@@ -57,7 +57,7 @@ export default function DashboardSchoolsMap({
     // zoom buttons
     map.addControl(
       new maplibregl.NavigationControl({ visualizePitch: true }),
-      "top-right"
+      "top-left"
     );
 
     // Scale bar` (i.e. 10 miles)
