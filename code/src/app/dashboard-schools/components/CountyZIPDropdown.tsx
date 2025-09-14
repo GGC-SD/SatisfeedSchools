@@ -29,13 +29,13 @@ export default function CountyZIPDropdown() {
     };
 
     return (
-        <>
-        <div className="dropdown-container">
-            <label>County</label> 
+        <div className="w-full">
+        <div className="dropdown-container w-full">
+            <label className="w-1/3 font-bold text-xl">County</label> 
             <select
                 value={selectedCounty}
                 onChange={handleCountyChange}
-                className="child-component-borders"
+                className="w-2/3 text-lg px-1 py-0.5 child-component-borders"
             >
             {Object.keys(counties).map((county) => (
                 <option key={county} value={county}>
@@ -45,12 +45,12 @@ export default function CountyZIPDropdown() {
             </select>
         </div>
 
-        <div className="dropdown-container mt-2">
-        <label>ZIP Code</label>
+        <div className="dropdown-container mt-2 w-full">
+        <label className="w-1/3 font-bold text-xl">ZIP Code</label>
         <select
         value={selectedZIP}
         onChange={(e) => setSelectedZIP(e.target.value)}
-        className="child-component-borders"
+        className="w-2/3 text-lg px-1 py-0.5 child-component-borders"
         >
             {zipCodes.map((zip) => (
                 <option key={zip} value={zip}>
@@ -59,6 +59,6 @@ export default function CountyZIPDropdown() {
             ))}
         </select>
         </div>
-        </>
+        </div>
     );
 }
