@@ -18,7 +18,21 @@ h6 {
 
 /* Dashboard Header */
 .dashboard-header{
-  @apply py-4 px-6 md:px-10 bg-yellow-400 w-full text-end md:text-start;
+  @apply pt-10 pb-2 md:py-4 px-6 md:px-10 bg-yellow-400 w-full text-center md:text-start;
+}
+
+/* Tabs */
+.tab-basic{
+ @apply w-fit px-2 py-1 rounded-t-md;
+}
+
+.tab-selected{
+  @apply bg-neutral-200 font-bold;
+}
+
+.tab-unselected{
+  @apply bg-neutral-400 text-neutral-600;
+  @apply duration-150 ease-in-out hover:brightness-[1.15] 
 }
 
 /* Card Styling */

@@ -20,16 +20,16 @@ export default function Tabs({onSelect}: TabsProp) {
         <div className="flex">
             <button 
                 id="1"
-                className={`w-fit px-2 py-1 rounded-t-md font-bold
-                    ${selectedTab == 1 ? 'bg-neutral-200' : 'bg-neutral-400' }`}
+                className={`tab-basic
+                    ${selectedTab == 1 ? 'tab-selected' : 'tab-unselected' }`}
                 onClick={handleSelectedTab}
             >
                 Schools
             </button>
             <button 
                 id="2"
-                className={`w-fit px-2 py-1 rounded-t-md text-neutral-600
-                    ${selectedTab == 2 ? 'bg-neutral-200' : 'bg-neutral-400' }`}
+                className={`tab-basic
+                    ${selectedTab == 2 ? 'tab-selected' : 'tab-unselected' }`}
                 onClick={handleSelectedTab}
             >
                 (Coming soon)
