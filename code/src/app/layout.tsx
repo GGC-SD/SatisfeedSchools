@@ -1,8 +1,9 @@
+import "maplibre-gl/dist/maplibre-gl.css";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import {AuthProvider} from "@/firebase/authContext";
+import { AuthProvider } from "@/firebase/authContext";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
