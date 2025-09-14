@@ -29,7 +29,7 @@ export default function CountyZIPDropdown() {
     };
 
     return (
-        <>
+        <div className="w-full">
         <div className="dropdown-container">
             <label>County</label> 
             <select
@@ -59,6 +59,6 @@ export default function CountyZIPDropdown() {
             ))}
         </select>
         </div>
-        </>
+        </div>
     );
 }
