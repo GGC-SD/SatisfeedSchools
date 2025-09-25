@@ -27,7 +27,8 @@ export default function SidebarNav() {
     const pathname = usePathname()
 
     const navItems = [
-        { path: "/dashboard", label: "Dashboard" },
+        { path: "/dashboard", label: "Dashboard Summary" },
+        {path: "/dashboard-insights", label: "Dashboard Insights" },
         { path: "/summary", label: "Summary Detail" },
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },
