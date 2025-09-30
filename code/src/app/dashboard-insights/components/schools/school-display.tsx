@@ -1,6 +1,6 @@
 "use client";
-import CountyZIPDropdown from "./CountyZIPDropdown";
-import DataCard from "./DataCard";
+import CountyZIPDropdown from "../county-zip-dropdown";
+import DataCard from "../data-card";
 import DashboardSchoolsMap from "./dashboard-schools-map";
 
 export default function SchoolDisplay() {

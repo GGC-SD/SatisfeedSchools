@@ -32,7 +32,7 @@ export default function Tabs({onSelect}: TabsProp) {
                     ${selectedTab == 2 ? 'tab-selected' : 'tab-unselected' }`}
                 onClick={handleSelectedTab}
             >
-                (Coming soon)
+                Libraries
             </button>
         </div>
         

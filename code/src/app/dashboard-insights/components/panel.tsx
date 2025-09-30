@@ -1,5 +1,5 @@
 "use client";
-import SchoolDisplay from "./school-display";
+import SchoolDisplay from "./schools/school-display";
 
 type PanelProps = {
     currentTab: number;
