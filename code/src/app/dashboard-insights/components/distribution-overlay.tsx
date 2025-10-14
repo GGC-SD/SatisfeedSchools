@@ -214,7 +214,7 @@ export default function DistributionOverlay({
         paint: {
           "line-color": "#d6670d",
           "line-opacity": 0.25,
-          "line-width": 1.25,
+          "line-width": 1.25, 
         },
       });
     }

@@ -188,8 +188,7 @@ export default function DistributionHeatmapOverlay({
             ["zoom"],
             13,
             1,
-            14.25,
-            0.0,
+            14.25, 0.0,
           ],
         },
       } as any);

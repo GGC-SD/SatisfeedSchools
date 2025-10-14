@@ -15,7 +15,7 @@ type Props = {
 
 export default function DashboardSchoolsMap({
   className = "w-full h-full",
-  center = [-84.07, 33.95], // coords of Gwinnett County
+  center = [-84.07, 33.95], // coords of Gwinnett County 
   zoom = 11,
   geojsonUrl,
   privacyRadiusMeters = 500,

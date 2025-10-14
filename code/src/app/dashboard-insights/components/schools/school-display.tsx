@@ -18,7 +18,7 @@ export default function SchoolDisplay() {
         </div>
         <div className="w-full lg:w-2/5 flex flex-col gap-4">
           <CountyZIPDropdown />
-          <DataCard />
+          <DataCard /> 
         </div>
       </div>
     </div>
