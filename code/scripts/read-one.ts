@@ -1,3 +1,5 @@
+// Checks if able to pull a school record from firebase
+
 import "dotenv/config";
 import { initializeApp, applicationDefault } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
