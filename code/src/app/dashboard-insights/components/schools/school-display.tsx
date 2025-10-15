@@ -1,6 +1,7 @@
 "use client";
 import CountyZIPDropdown from "../county-zip-dropdown";
 import DataCard from "../data-card";
+import SearchableDropdown from "../searchable-dropdown";
 import DashboardSchoolsMap from "./dashboard-schools-map";
 
 export default function SchoolDisplay() {
@@ -14,7 +15,7 @@ export default function SchoolDisplay() {
           </div>
         </div>
         <div className="w-full lg:w-2/5 flex flex-col gap-4">
-          <CountyZIPDropdown />
+          <SearchableDropdown/>
           <DataCard />
         </div>
       </div>
