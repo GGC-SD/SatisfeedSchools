@@ -1,6 +1,6 @@
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, ComboboxButton } from '@headlessui/react'
 import { useState, useEffect } from 'react'
-import Papa from "papaparse";
+import { parse } from "csv-parse/sync";
 
 type CountyData = Record<string, string[]>;
 
@@ -16,10 +16,10 @@ export default function SearchableDropdown() {
         fetch("/data/Zip_City_Mapping.csv")
             .then((res) => res.text())
             .then((csvText) => {
-                const parse = Papa.parse(csvText, { header: true });
+                const response = parse(csvText, { columns: true, skip_empty_lines: true });
                 const grouped: CountyData = {};
 
-                parse.data.forEach((row: any) => {
+                response.forEach((row: any) => {
                     const county = row.county?.trim();
                     const zip = row.zip?.trim();
                     if (county && zip) {
