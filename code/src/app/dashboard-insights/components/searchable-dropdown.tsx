@@ -34,6 +34,11 @@ export default function SearchableDropdown() {
             .catch((err) => console.error("Error loadinig CSV:", err));
     }, []);
 
+    useEffect(() => {
+        setSelectedZip(null);
+        setZipQuery(""); // clears the ZIP input box
+    }, [selectedCounty]);
+
     //countyNames reads the JSON object keys as names.
     const countyNames = Object.keys(data);
     const filteredCounty = countyNames
