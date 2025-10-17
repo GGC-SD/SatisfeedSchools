@@ -1,18 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
-import type { Map as MLMap } from "maplibre-gl";
+import maplibregl, {
+  Map as MLMap,
+  MapLayerMouseEvent,
+  MapGeoJSONFeature,
+} from "maplibre-gl";
 import { db } from "@/firebase/firebaseConfig";
-import {
-  collection,
-  getDocs,
-  query /*, where, limit */,
-} from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 
 type Props = {
   map: MLMap | null;
-  idSuffix?: string; // to avoid id clashes if you ever mount multiples
-  // You can add filters later (state, district, etc.)
+  idSuffix?: string; // to avoid id clashes if you mount multiple overlays
 };
 
 type SchoolDoc = {
@@ -34,7 +33,6 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "" }: Props) {
     let unmounted = false;
 
     async function draw() {
-      // 1) Firestore → GeoJSON
       const q = query(collection(db, "schools"));
       const snap = await getDocs(q);
       if (unmounted) return;
@@ -62,7 +60,6 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "" }: Props) {
 
       const geojson = { type: "FeatureCollection" as const, features };
 
-      // 2) (Re)place source/layers
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);
@@ -132,29 +129,32 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "" }: Props) {
         },
       } as any);
 
-      // 3) interactions
-      m.on("click", PT_ID, (e) => {
-        const f = e.features?.[0];
+      // interactions
+      const onPointClick = (e: MapLayerMouseEvent) => {
+        const f = e.features?.[0] as MapGeoJSONFeature | undefined;
         if (!f) return;
+
         const [lng, lat] = (f.geometry as any).coordinates as [number, number];
         const { id, name, state } = (f.properties ?? {}) as {
           id?: string;
           name?: string;
           state?: string;
         };
-        new (m as any)._gl.popupCtor({ offset: 12 }) // works with maplibre-gl.Popup
+
+        new maplibregl.Popup({ offset: 12 })
           .setLngLat([lng, lat])
           .setHTML(
             `<strong>${name ?? "School"}</strong><br/>${id ?? ""}${
               state ? ` • ${state}` : ""
             }`
           )
-          .addTo(m as any);
-      });
+          .addTo(m);
+      };
 
-      m.on("click", CLUST_ID, (e) => {
+      const onClusterClick = (e: MapLayerMouseEvent) => {
         const feats = m.queryRenderedFeatures(e.point, { layers: [CLUST_ID] });
-        const clusterId = feats?.[0]?.properties?.cluster_id;
+        if (!feats?.length) return;
+        const clusterId = (feats[0].properties as any)?.cluster_id;
         (m.getSource(SRC_ID) as any)?.getClusterExpansionZoom(
           clusterId,
           (err: any, z: number) => {
@@ -166,18 +166,46 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "" }: Props) {
             m.easeTo({ center, zoom: z });
           }
         );
-      });
+      };
 
       const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      m.on("mouseenter", PT_ID, () => setCursor("pointer"));
-      m.on("mouseleave", PT_ID, () => setCursor(""));
-      m.on("mouseenter", CLUST_ID, () => setCursor("pointer"));
-      m.on("mouseleave", CLUST_ID, () => setCursor(""));
+      const onEnterPoint = () => setCursor("pointer");
+      const onLeavePoint = () => setCursor("");
+      const onEnterCluster = () => setCursor("pointer");
+      const onLeaveCluster = () => setCursor("");
+
+      m.on("click", PT_ID, onPointClick);
+      m.on("click", CLUST_ID, onClusterClick);
+      m.on("mouseenter", PT_ID, onEnterPoint);
+      m.on("mouseleave", PT_ID, onLeavePoint);
+      m.on("mouseenter", CLUST_ID, onEnterCluster);
+      m.on("mouseleave", CLUST_ID, onLeaveCluster);
+
+      return () => {
+        try {
+          m.off("click", PT_ID, onPointClick);
+        } catch {}
+        try {
+          m.off("click", CLUST_ID, onClusterClick);
+        } catch {}
+        try {
+          m.off("mouseenter", PT_ID, onEnterPoint);
+        } catch {}
+        try {
+          m.off("mouseleave", PT_ID, onLeavePoint);
+        } catch {}
+        try {
+          m.off("mouseenter", CLUST_ID, onEnterCluster);
+        } catch {}
+        try {
+          m.off("mouseleave", CLUST_ID, onLeaveCluster);
+        } catch {}
+      };
     }
 
     if (!m.isStyleLoaded()) {
       const onLoad = () => {
-        draw();
+        void draw();
         m.off("load", onLoad);
       };
       m.on("load", onLoad);
@@ -198,6 +226,9 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "" }: Props) {
       } catch {}
       try {
         if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
+      } catch {}
+      try {
+        m.getCanvas().style.cursor = "";
       } catch {}
     };
   }, [map, idSuffix]);

@@ -1,4 +1,3 @@
-// src/app/dashboard-insights/components/schools/school-display.tsx
 "use client";
 import CountyZIPDropdown from "../filters/county-zip-dropdown";
 import DataCard from "../ui/data-card";

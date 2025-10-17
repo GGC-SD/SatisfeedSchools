@@ -1,9 +1,6 @@
-// src/app/dashboard-insights/components/schools/dashboard-schools-map.tsx
 "use client";
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map as MLMap, LngLatLike } from "maplibre-gl";
-// If you don't import the CSS globally, keep this line:
-// import "maplibre-gl/dist/maplibre-gl.css";
 
 import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
 import SchoolsClusterOverlay from "./overlays/SchoolsClusterOverlay";
@@ -15,7 +12,7 @@ type Props = {
   geojsonUrl?: string; // heatmap points
   privacyRadiusMeters?: number;
   jitterMeters?: number;
-  showSchools?: boolean; // NEW: toggle schools layer
+  showSchools?: boolean;
   onClearSelection?: () => void; // optional callback for your reset button
 };
 

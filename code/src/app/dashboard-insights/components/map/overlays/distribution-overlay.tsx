@@ -14,13 +14,9 @@ import type {
 
 type Props = {
   map: MLMap | null;
-  // URL to FeatureCollection<Point> with { weight }
   geojsonUrl: string;
-  // Circle radius in meters
   privacyRadiusMeters?: number;
-  // Optional jitter in meters (0 = off)
   jitterMeters?: number;
-  // Optional unique suffix if mounting multiple overlays
   idSuffix?: string;
 };
 
@@ -41,7 +37,6 @@ export default function DistributionOverlay({
 
     let aborted = false;
 
-    // --- helpers ---
     const rand = (min: number, max: number) =>
       Math.random() * (max - min) + min;
 
@@ -61,7 +56,6 @@ export default function DistributionOverlay({
     };
 
     async function draw() {
-      // 1) fetch points
       const res = await fetch(geojsonUrl, { cache: "no-cache" });
       if (!res.ok) {
         console.error(
@@ -214,7 +208,7 @@ export default function DistributionOverlay({
         paint: {
           "line-color": "#d6670d",
           "line-opacity": 0.25,
-          "line-width": 1.25, 
+          "line-width": 1.25,
         },
       });
     }
