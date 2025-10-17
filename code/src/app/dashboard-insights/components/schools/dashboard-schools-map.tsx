@@ -1,25 +1,33 @@
+// src/app/dashboard-insights/components/schools/dashboard-schools-map.tsx
 "use client";
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map as MLMap, LngLatLike } from "maplibre-gl";
-import DistributionOverlay from "../distribution-overlay";
+// If you don't import the CSS globally, keep this line:
+// import "maplibre-gl/dist/maplibre-gl.css";
+
 import DistributionHeatmapOverlay from "../distribution-heatmap-overlay";
+import SchoolsClusterOverlay from "./SchoolsClusterOverlay";
 
 type Props = {
   className?: string;
-  center?: LngLatLike; // starting position [lng, lat]
+  center?: LngLatLike;
   zoom?: number;
-  geojsonUrl?: string; // FeatureCollection<Point> with {weight}
+  geojsonUrl?: string; // heatmap points
   privacyRadiusMeters?: number;
   jitterMeters?: number;
+  showSchools?: boolean; // NEW: toggle schools layer
+  onClearSelection?: () => void; // optional callback for your reset button
 };
 
 export default function DashboardSchoolsMap({
   className = "w-full h-full",
-  center = [-84.07, 33.95], // coords of Gwinnett County 
+  center = [-84.07, 33.95],
   zoom = 11,
   geojsonUrl,
   privacyRadiusMeters = 500,
   jitterMeters = 0,
+  showSchools = true,
+  onClearSelection,
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MLMap | null>(null);
@@ -29,84 +37,77 @@ export default function DashboardSchoolsMap({
   useEffect(() => {
     if (!containerRef.current || initializedRef.current) return;
 
-    // from env.local
-    const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY!;
-    const map = new maplibregl.Map({
+    const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
+    if (!apiKey) {
+      console.error(
+        "Missing NEXT_PUBLIC_MAPTILER_KEY; map will not initialize."
+      );
+      return;
+    }
+
+    const m = new maplibregl.Map({
       container: containerRef.current,
       style: `https://api.maptiler.com/maps/topo-v2/style.json?key=${apiKey}`,
       center,
       zoom,
     });
 
-    // custom reset button for map
-    const ResetButton = class implements maplibregl.IControl {
+    class ResetButton implements maplibregl.IControl {
+      constructor(private onClear?: () => void) {}
       private container!: HTMLDivElement;
-
       onAdd() {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.textContent = "Clear Selection";
+        btn.setAttribute("aria-label", "Clear selection");
         btn.className = "maplibregl-ctrl t-reset-btn";
-
+        btn.onclick = () => this.onClear?.();
         const wrapper = document.createElement("div");
         wrapper.className = "maplibregl-ctrl my-reset-wrapper";
         wrapper.appendChild(btn);
-
         this.container = wrapper;
         return wrapper;
       }
-
       onRemove() {
         this.container.remove();
       }
-    };
+    }
 
-    // reset button
-    map.addControl(new ResetButton(), "top-right");
-
-    // zoom buttons
-    map.addControl(
+    m.addControl(new ResetButton(onClearSelection), "top-right");
+    m.addControl(
       new maplibregl.NavigationControl({ visualizePitch: true }),
       "top-left"
     );
-
-    // Scale bar` (i.e. 10 miles)
-    map.addControl(
+    m.addControl(
       new maplibregl.ScaleControl({ unit: "imperial" }),
       "bottom-left"
     );
 
-    const ro = new ResizeObserver(() => map.resize());
+    const ro = new ResizeObserver(() => m.resize());
     ro.observe(containerRef.current);
 
-    // When map's style and tiles are fully loaded, 
-    // store map instance in refs/state so overlays can use it
-    // prevents reinitialization by marking it as "initialized"
-    // Allows overlays to work
-    map.on("load", () => {
-      mapRef.current = map;
-      setMap(map);
+    m.on("load", () => {
+      mapRef.current = m;
+      setMap(m);
       initializedRef.current = true;
-      // console.log("[Map] loaded");
     });
 
-    // log errors from MapLibre
-    map.on("error", (e) => console.error("[Map error]", e?.error || e));
+    m.on("error", (e) => console.error("[Map error]", e?.error || e));
 
-    // Cleanup function: runs when component unmounts or effect re-runs
-    // Disconnects ResizeObserver, destroys map instance, 
-    // and clears refs/state to prevent memory leaks or double maps
-    // Keeps overlays stable between mounts
     return () => {
-      try { ro.disconnect(); } catch {}
-      try { map.remove(); } catch {}
+      try {
+        ro.disconnect();
+      } catch {}
+      try {
+        m.remove();
+      } catch {}
       mapRef.current = null;
       setMap(null);
       initializedRef.current = false;
     };
-  }, []);
+  }, [onClearSelection]);
 
-  // If center/zoom changes, adjust view without rebuilding map
+  // react to center/zoom prop changes without recreating the map
   useEffect(() => {
     const m = mapRef.current;
     if (!m) return;
@@ -125,6 +126,9 @@ export default function DashboardSchoolsMap({
           privacyRadiusMeters={privacyRadiusMeters}
           jitterMeters={jitterMeters}
         />
+      )}
+      {map && showSchools && (
+        <SchoolsClusterOverlay map={map} idSuffix="-schools" />
       )}
     </>
   );
