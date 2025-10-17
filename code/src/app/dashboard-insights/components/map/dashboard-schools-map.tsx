@@ -9,27 +9,27 @@ import maplibregl, {
 
 import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
 import SchoolsClusterOverlay from "./overlays/SchoolsClusterOverlay";
+import GeorgiaOutlineOverlay from "./overlays/GeorgiaOutlineOverlay";
 
 type Padding =
   | number
   | { top: number; right: number; bottom: number; left: number };
 
 type Props = {
-  className?: string; // container classes (pass Tailwind like "m-4 h-[600px]")
-  center?: LngLatLike; // initial center
-  zoom?: number; // initial zoom
-  geojsonUrl?: string; // heatmap source (FC<Point> with {weight})
+  className?: string;
+  center?: LngLatLike;
+  zoom?: number;
+  geojsonUrl?: string;
   privacyRadiusMeters?: number;
   jitterMeters?: number;
-  showSchools?: boolean; // toggle clustered schools
-  onClearSelection?: () => void; // Clear Selection button callback
-  viewPadding?: Padding; // camera inset padding for easeTo/fitBounds
+  showSchools?: boolean;
+  onClearSelection?: () => void;
+  viewPadding?: Padding;
 };
 
-/** Georgia bounding box: [west,south,east,north] */
 const GA_BOUNDS: [[number, number], [number, number]] = [
-  [-85.6052, 30.3556], // SW
-  [-80.7514, 35.0007], // NE
+  [-86.33327, 29.658835],
+  [-80.02333, 35.697465],
 ];
 
 export default function DashboardSchoolsMap({
@@ -48,7 +48,6 @@ export default function DashboardSchoolsMap({
   const [map, setMap] = useState<MLMap | null>(null);
   const initializedRef = useRef(false);
 
-  // Clamp any target center into Georgia
   const clampToGeorgia = (c: LngLatLike): [number, number] => {
     const ll = maplibregl.LngLat.convert(c);
     const ga = new LngLatBounds(GA_BOUNDS[0], GA_BOUNDS[1]);
@@ -57,7 +56,6 @@ export default function DashboardSchoolsMap({
     return [clampedLng, clampedLat];
   };
 
-  // Init map once
   useEffect(() => {
     if (!containerRef.current || initializedRef.current) return;
 
@@ -74,12 +72,10 @@ export default function DashboardSchoolsMap({
       style: `https://api.maptiler.com/maps/topo-v2/style.json?key=${apiKey}`,
       center,
       zoom,
-      maxBounds: GA_BOUNDS, // lock panning to Georgia
-      renderWorldCopies: false, // no wrapped worlds
-      // minZoom: 5, maxZoom: 18, // optional zoom limits
+      maxBounds: GA_BOUNDS,
+      renderWorldCopies: false,
     });
 
-    // Simple custom "Clear Selection" button
     class ResetButton implements maplibregl.IControl {
       constructor(private onClear?: () => void) {}
       private container!: HTMLDivElement;
@@ -90,11 +86,11 @@ export default function DashboardSchoolsMap({
         btn.setAttribute("aria-label", "Clear selection");
         btn.className = "maplibregl-ctrl t-reset-btn";
         btn.onclick = () => this.onClear?.();
-        const wrapper = document.createElement("div");
-        wrapper.className = "maplibregl-ctrl my-reset-wrapper";
-        wrapper.appendChild(btn);
-        this.container = wrapper;
-        return wrapper;
+        const wrap = document.createElement("div");
+        wrap.className = "maplibregl-ctrl my-reset-wrapper";
+        wrap.appendChild(btn);
+        this.container = wrap;
+        return wrap;
       }
       onRemove() {
         this.container.remove();
@@ -111,7 +107,6 @@ export default function DashboardSchoolsMap({
       "bottom-left"
     );
 
-    // Keep map sized with container
     const ro = new ResizeObserver(() => m.resize());
     ro.observe(containerRef.current);
 
@@ -119,8 +114,7 @@ export default function DashboardSchoolsMap({
       mapRef.current = m;
       setMap(m);
       initializedRef.current = true;
-
-      // Optional: frame Georgia exactly on first load
+      // Optional: fit exactly to GA on first load
       // m.fitBounds(GA_BOUNDS, { padding: viewPadding ?? 0, duration: 300 });
     });
 
@@ -139,7 +133,6 @@ export default function DashboardSchoolsMap({
     };
   }, [onClearSelection, viewPadding]);
 
-  // Apply center/zoom updates with optional camera padding, clamped to GA
   useEffect(() => {
     const m = mapRef.current;
     if (!m) return;
@@ -156,10 +149,12 @@ export default function DashboardSchoolsMap({
 
   return (
     <>
-      {/* Add outside margin by passing it in className, e.g. "m-4" */}
       <div ref={containerRef} className={`${className} school-map`} />
 
-      {/* Heatmap overlay (if URL provided) */}
+      {/* Very noticeable Georgia outline */}
+      {map && <GeorgiaOutlineOverlay map={map} />}
+
+      {/* Heatmap (if provided) */}
       {map && geojsonUrl && (
         <DistributionHeatmapOverlay
           map={map}
@@ -169,7 +164,7 @@ export default function DashboardSchoolsMap({
         />
       )}
 
-      {/* Clustered schools overlay (Firestore-backed) */}
+      {/* Clustered schools */}
       {map && showSchools && (
         <SchoolsClusterOverlay map={map} idSuffix="-schools" />
       )}
