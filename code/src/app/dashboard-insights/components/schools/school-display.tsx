@@ -1,9 +1,9 @@
 // src/app/dashboard-insights/components/schools/school-display.tsx
 "use client";
-import CountyZIPDropdown from "../county-zip-dropdown";
-import DataCard from "../data-card";
-import SearchableDropdown from "../searchable-dropdown";
-import DashboardSchoolsMap from "./dashboard-schools-map";
+import CountyZIPDropdown from "../filters/county-zip-dropdown";
+import DataCard from "../ui/data-card";
+import SearchableDropdown from "../filters/searchable-dropdown";
+import DashboardSchoolsMap from "../map/dashboard-schools-map";
 
 export default function SchoolDisplay() {
   return (

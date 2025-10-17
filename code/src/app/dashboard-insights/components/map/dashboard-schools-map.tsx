@@ -5,8 +5,8 @@ import maplibregl, { Map as MLMap, LngLatLike } from "maplibre-gl";
 // If you don't import the CSS globally, keep this line:
 // import "maplibre-gl/dist/maplibre-gl.css";
 
-import DistributionHeatmapOverlay from "../distribution-heatmap-overlay";
-import SchoolsClusterOverlay from "./SchoolsClusterOverlay";
+import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
+import SchoolsClusterOverlay from "./overlays/SchoolsClusterOverlay";
 
 type Props = {
   className?: string;
