@@ -222,14 +222,14 @@ export default function SchoolsClusterOverlay({ map, idSuffix = "", onAreaSelect
         } as any);
 
         // Lightweight info popup
-        new maplibregl.Popup({ offset: 12 })
-          .setLngLat([lng, lat])
-          .setHTML(
-            `<strong>${name ?? "School"}</strong><br/>${id ?? ""}${
-              state ? ` • ${state}` : ""
-            }`
-          )
-          .addTo(m);
+        // new maplibregl.Popup({ offset: 12 })
+        //   .setLngLat([lng, lat])
+        //   .setHTML(
+        //     `<strong>${name ?? "School"}</strong><br/>${id ?? ""}${
+        //       state ? ` • ${state}` : ""
+        //     }`
+        //   )
+        //   .addTo(m);
       };
 
       /**

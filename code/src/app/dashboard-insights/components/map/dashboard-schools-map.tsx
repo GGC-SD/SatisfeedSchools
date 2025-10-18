@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useImperativeHandle, forwardRef } from "react";
 import maplibregl, {
   Map as MLMap,
   LngLatLike,
@@ -14,6 +14,7 @@ import DistributionOverlay from "./overlays/distribution-overlay";
 
 import type { PolygonFeature } from "./overlays/click-radius";
 import { clearFixedRadius } from "./overlays/click-radius";
+import CountyOverlay from "./overlays/county-overlay";
 
 /**
  * Utility type for map padding. Mirrors MapLibre's padding shape while also
@@ -53,6 +54,10 @@ type Padding =
  * @property onSelectionChange       Callback that receives `{ schoolName, householdCount }` whenever either
  *                                   the selected school name or the counted households within the selected
  *                                   radius changes. Useful for updating a sidebar DataCard.
+ *
+ * @property boundarySelection       County/ZIP selection coming from UI outside the map. When present,
+ *                                   CountyOverlay renders that boundary and fits the camera. When `null`,
+ *                                   the overlay is removed.
  */
 type Props = {
   className?: string;
@@ -65,6 +70,16 @@ type Props = {
   onClearSelection?: () => void;
   viewPadding?: Padding;
   onSelectionChange?: (info: { schoolName: string; householdCount: number }) => void;
+  boundarySelection?: { type: "county"; countyName: string } | { type: "zip"; countyName: string; zcta: string } | null; // NEW
+};
+
+/**
+ * Public imperative handle exposed via `forwardRef`.
+ * External components (e.g., the DataCard's "Clear Selected School" button) call
+ * `clearSelection()` to run the same internal clear logic used here.
+ */
+export type DashboardSchoolsMapHandle = {
+  clearSelection: () => void;
 };
 
 /**
@@ -89,12 +104,12 @@ const GA_BOUNDS: [[number, number], [number, number]] = [
  *
  * Key behaviors:
  *  - Clicking a school in SchoolsClusterOverlay draws a fixed-radius ring (via click-radius helpers)
- *    and updates the local `selection` state with the selected polygon + school name.
+ *    and updates local `selection` with the polygon + school name.
  *  - DistributionOverlay listens to `selectedArea` and reports how many input points fall inside it.
- *  - The "Clear Selection" control removes the ring, clears the highlight dot (if present), resets count,
- *    and notifies `onClearSelection` if provided.
+ *  - Clearing the selection (removing the ring + highlight and resetting counts) is initiated externally
+ *    by calling the imperative `clearSelection()` handle; there is no in-map clear control.
  */
-export default function DashboardSchoolsMap({
+const DashboardSchoolsMap = forwardRef<DashboardSchoolsMapHandle, Props>(function DashboardSchoolsMap({
   className = "w-full h-full",
   center = [-84.07, 33.95],
   zoom = 11,
@@ -105,7 +120,8 @@ export default function DashboardSchoolsMap({
   onClearSelection,
   viewPadding,
   onSelectionChange,
-}: Props) {
+  boundarySelection,
+}: Props, ref) {
   /** DOM ref for MapLibre container. */
   const containerRef = useRef<HTMLDivElement | null>(null);
   /** Ref to the live MapLibre instance (safe to pass to overlays). */
@@ -185,35 +201,6 @@ export default function DashboardSchoolsMap({
       renderWorldCopies: false,
     });
 
-    /**
-     * Inline MapLibre control that injects a "Clear Selection" button in the map UI.
-     * On click, it runs `handleClear`, which wipes the fixed-radius polygon, removes the
-     * selected-point highlight, resets local selection + count, and calls `onClearSelection`.
-     */
-    class ResetButton implements maplibregl.IControl {
-      constructor(private onClear?: () => void) {}
-      private container!: HTMLDivElement;
-      onAdd() {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = "Clear Selection";
-        btn.setAttribute("aria-label", "Clear selection");
-        btn.className = "maplibregl-ctrl t-reset-btn";
-        btn.onclick = () => this.onClear?.();
-        const wrap = document.createElement("div");
-        wrap.className = "maplibregl-ctrl my-reset-wrapper";
-        wrap.appendChild(btn);
-        this.container = wrap;
-        return wrap;
-      }
-      onRemove() {
-        this.container.remove();
-      }
-    }
-
-    // Register controls (note: we intentionally pass our local handler here).
-    m.addControl(new ResetButton(handleClear), "top-right");
-
     m.addControl(
       new maplibregl.NavigationControl({ visualizePitch: true }),
       "top-left"
@@ -287,12 +274,18 @@ export default function DashboardSchoolsMap({
     try { onClearSelection?.(); } catch {}
   }, [onClearSelection]);
 
+  /** Expose the same clear logic to external callers (e.g., DataCard button). */
+  useImperativeHandle(ref, () => ({ clearSelection: handleClear }), [handleClear]);
+
   return (
     <>
       <div ref={containerRef} className={`${className} school-map`} />
 
       {/* Very noticeable Georgia outline */}
       {map && <GeorgiaOutlineOverlay map={map} />}
+
+      {/* County/ZIP overlay controlled by `boundarySelection` (fits camera when present). */}
+      {map && <CountyOverlay map={map} selection={boundarySelection ?? null} />}
 
       {/* Distribution: dissolved coverage + heatmap (data-driven layers) */}
       {map && geojsonUrl && (
@@ -324,4 +317,6 @@ export default function DashboardSchoolsMap({
       )}
     </>
   );
-}
+});
+
+export default DashboardSchoolsMap;
