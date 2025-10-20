@@ -9,18 +9,51 @@ import type {
   GeoJsonProperties,
 } from "geojson";
 
+/**
+ * Props for the heatmap overlay component.
+ *
+ * @property map                    Active MapLibre GL map instance. If null, the overlay does nothing.
+ * 
+ * @property geojsonUrl             URL to a GeoJSON FeatureCollection<Point>. Each feature can include a numeric 
+ *                                  `properties.weight` used for heatmap intensity; defaults to 1 when missing.
+ * 
+ * @property privacyRadiusMeters    Conceptual smoothing scale used to derive heatmap radius (in pixels) so the
+ *                                  visual blur roughly matches the privacy buffer you use elsewhere.
+ * 
+ * @property jitterMeters           Optional randomization (in meters) applied to each point to avoid exact 
+ *                                  coordinate re-identification. Set to 0 to disable.
+ * 
+ * @property idSuffix               Optional suffix appended to source/layer IDs to avoid collisions when 
+ *                                  mounting multiple instances of this overlay (e.g., per map).
+ */
 type Props = {
   map: MLMap | null;
-  // URL to FeatureCollection<Point> with { weight }
   geojsonUrl: string;
-  // smoothing scale 
   privacyRadiusMeters?: number;
-  // Optional jitter in meters (0 = off)
   jitterMeters?: number;
-  // Optional unique suffix if mounting multiple overlays
   idSuffix?: string;
 };
 
+/**
+ * DistributionHeatmapOverlay
+ *
+ * React component that mounts a MapLibre **heatmap** layer backed by a remote GeoJSON
+ * FeatureCollection<Point>. The layer:
+ *  - Optionally jitters each point (in meters) to protect privacy.
+ *  - Uses per-point `properties.weight` (fallback 1) to influence heatmap intensity.
+ *  - Scales radius/intensity with zoom so the layer remains readable across scales.
+ *  - Cleans up its source/layer on unmount or when dependencies change.
+ *
+ * Lifecycle:
+ * 1) `useEffect` -> fetch remote points -> normalize/jitter -> add/replace GeoJSON source
+ * 2) Add a single heatmap layer with zoom-driven paint expressions
+ * 3) On effect cleanup, remove layer and source safely
+ *
+ * Notes:
+ * - Layer IDs are namespaced by `idSuffix` to support multiple overlays.
+ * - This component is *display-only*; it does not emit events or interact with clicks.
+ * - If you also render point/circle layers, be mindful of layer order (MapLibre draws last-added on top).
+ */
 export default function DistributionHeatmapOverlay({
   map,
   geojsonUrl,
@@ -32,15 +65,28 @@ export default function DistributionHeatmapOverlay({
     if (!map) return;
     const m = map;
 
+    // Stable source/layer IDs so we can safely re-add/replace
     const SRC_ID = `heatmap-src${idSuffix}`;
     const HEAT_ID = `heatmap-layer${idSuffix}`;
 
     let aborted = false;
 
     // --- helpers ---
+
+    /**
+     * Return a random float within [min, max).
+     * Used to pick random distance/bearing for jitter.
+     */
     const rand = (min: number, max: number) =>
       Math.random() * (max - min) + min;
 
+    /**
+     * Jitter a lon/lat by a random distance up to `meters` in a random bearing.
+     * Works by converting the distance to a delta in degrees longitude/latitude.
+     * If `meters` is falsy or <= 0, returns the input unchanged.
+     *
+     * @returns [jitteredLon, jitteredLat]
+     */
     const jitterLonLatMeters = (
       lon: number,
       lat: number,
@@ -56,6 +102,16 @@ export default function DistributionHeatmapOverlay({
       return [lon + dLon, lat + dLat];
     };
 
+     /**
+     * Fetch the GeoJSON, normalize (apply jitter, ensure `weight`), then
+     * (re)create the source and heatmap layer with consistent styling.
+     *
+     * Important pieces:
+     * - `radiusBasePx`: derived from `privacyRadiusMeters` to keep a loose parity between
+     *    the heatmap blur and any other privacy radius visuals you may show elsewhere.
+     * - Paint props (`heatmap-intensity`, `heatmap-radius`, `heatmap-color`): zoom-aware
+     *    expressions for consistent readability from z8 to z14+.
+     */
     async function draw() {
       // 1) fetch points
       const res = await fetch(geojsonUrl, { cache: "no-cache" });
@@ -101,7 +157,7 @@ export default function DistributionHeatmapOverlay({
         features,
       };
 
-      // 3) replace source/layers
+      // 3) replace source/layers (idempotent cleanup to avoid duplicates)
       try {
         if (m.getLayer(HEAT_ID)) m.removeLayer(HEAT_ID);
         if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
@@ -129,6 +185,7 @@ export default function DistributionHeatmapOverlay({
         id: HEAT_ID,
         type: "heatmap",
         source: SRC_ID,
+        maxzoom: 12.5,
         paint: {
           // Use per-point 'weight' to influence density
           "heatmap-weight": [
@@ -143,14 +200,10 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            8,
-            0.6,
-            10,
-            1.0,
-            12,
-            1.6,
-            14,
-            2.0,
+            8, 0.6,
+            10, 1.0,
+            12, 1.6,
+            14, 2.0,
           ],
 
           // Radius in px scaled by zoom; tied loosely to privacyRadiusMeters for parity
@@ -158,14 +211,10 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            8,
-            Math.round(radiusBasePx * 0.6),
-            10,
-            radiusBasePx,
-            12,
-            Math.round(radiusBasePx * 1.4),
-            14,
-            Math.round(radiusBasePx * 1.8),
+            8, Math.round(radiusBasePx * 0.6),
+            10, radiusBasePx,
+            12, Math.round(radiusBasePx * 1.4),
+            14, Math.round(radiusBasePx * 1.8),
           ],
 
           // Color ramp by heatmap-density
@@ -176,8 +225,6 @@ export default function DistributionHeatmapOverlay({
             0.0, "rgba(0,0,0,0)",
             0.15, "rgba(207, 163, 19, 0.45)",
             0.3, "rgba(232, 145, 14, 0.65)",
-            //0.75, "rgba(199, 108, 28, 0.50)",
-            //1.15, "rgba(212, 66, 35, 0.65)",
             1.15, "rgba(247, 206, 22, 0.65)",
           ],
 
@@ -186,14 +233,14 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            13,
-            1,
-            14.25, 0.0,
+            11.5, 1,
+            13, 0.5,
           ],
         },
       } as any);
     }
 
+    // Ensure the style is loaded before adding sources/layers
     if (!m.isStyleLoaded()) {
       const onLoad = () => {
         void draw();
@@ -204,6 +251,7 @@ export default function DistributionHeatmapOverlay({
       void draw();
     }
 
+     // Cleanup: remove layer/source when props change or component unmounts
     return () => {
       aborted = true;
       try {
