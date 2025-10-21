@@ -7,7 +7,7 @@ type PanelProps = {
 
 export default function Panel({ currentTab }: PanelProps) {
   return (
-    <div className="w-full h-fit bg-neutral-200 drop-shadow-lg">
+    <div className="w-full h-fit rounded-b-md rounded-r-md bg-neutral-200 drop-shadow-lg">
       {currentTab == 1 ? <SchoolDisplay /> : <div className="h-96"></div>}
     </div>
   );
