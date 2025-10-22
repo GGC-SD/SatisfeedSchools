@@ -1,4 +1,4 @@
-// Test for user story LEC-31:
+// Test for user story LEC-30:
 // As a user, I want to be able to access the dashboard-insights route with a link/button
 
 import React from "react";
@@ -65,7 +65,7 @@ describe("User Story LEC-31: Access dashboard-schools route", () => {
     // Simulate user click
     fireEvent.click(link);
 
-    // Just confirm the link is still valid (navigation is not verified in unit tests)
+    // confirm the link is still valid
     expect(link).toHaveAttribute("href", "/dashboard-insights");
   });
 });

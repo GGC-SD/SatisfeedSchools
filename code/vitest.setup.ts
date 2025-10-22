@@ -1,18 +1,16 @@
-import "@testing-library/jest-dom/vitest";
 import { vi } from "vitest";
 
-if (!("matchMedia" in window)) {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: vi.fn().mockImplementation((q: string) => ({
-      matches: false,
-      media: q,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    })),
-  });
-}
+// Stub out your firebase config wherever it's imported as "@/firebase/firebaseConfig"
+vi.mock("@/firebase/firebaseConfig", () => ({
+  db: {},
+}));
+
+// Stub Firestore calls used by overlays
+vi.mock("firebase/firestore", () => ({
+  collection: vi.fn(),
+  getDocs: vi.fn().mockResolvedValue({ docs: [] }),
+  query: vi.fn(),
+}));
+
+import { ResizeObserver as RO } from "@juggle/resize-observer";
+(globalThis as any).ResizeObserver = (globalThis as any).ResizeObserver ?? RO;
