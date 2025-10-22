@@ -1,5 +1,6 @@
-// Test for user story LEC-26:
-// As a user, I want to see recent school data that as been pulled from a reliable source
+// Test for user story LEC-26 & LEC-4:
+// LEC-26: As a user, I want to see recent school data that as been pulled from a reliable source
+// LEC-4: As a user, I want to see school information displayed beside the map
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
