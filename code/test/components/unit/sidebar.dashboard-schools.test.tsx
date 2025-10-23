@@ -34,7 +34,7 @@ vi.mock("react-bootstrap", async () => {
   return { ...actual, Offcanvas: MockOffcanvas };
 });
 
-import SidebarNav from "../../src/components/ui/sidebar";
+import SidebarNav from "../../../src/components/ui/sidebar";
 
 describe("User Story LEC-31: Access dashboard-schools route", () => {
   // This test verifies that the sidebar renders the correct link
