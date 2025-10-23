@@ -1,0 +1,20 @@
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import { fileURLToPath, URL } from "node:url";
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  test: {
+    environment: "jsdom",
+    include: ["test/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["test/e2e/**", "node_modules/**", "dist/**"],
+    setupFiles: ["./vitest.setup.ts"],
+    css: true,
+    globals: true,
+  },
+});
