@@ -44,4 +44,4 @@ next-env.d.ts
 .idea/
 
 auth.json
-.env.e2e
+.env.e2e.DS_Store
