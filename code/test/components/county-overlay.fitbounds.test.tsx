@@ -1,5 +1,6 @@
 // Test for user story LEC-48:
 // As a user, when I filter by County / ZIP code I expect the map to move to that location
+
 // This file tests that CountyOverlay actually moves the map
 // when a valid county or zip is selected
 
