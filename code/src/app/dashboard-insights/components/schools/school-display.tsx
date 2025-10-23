@@ -3,6 +3,10 @@ import DataCard from "../ui/data-card";
 import SearchableDropdown from "../filters/searchable-dropdown";
 import DashboardSchoolsMap, { DashboardSchoolsMapHandle } from "../map/dashboard-schools-map";
 import { useCallback, useRef, useState } from "react";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { app } from "@/firebase/firebaseConfig"
+import { useEffect } from "react";
+import { SchoolRecord } from "@/data/schoolTypes";
 
 /**
  * SchoolDisplay
@@ -37,6 +41,38 @@ export default function SchoolDisplay() {
     schoolName: string;
     householdCount: number;
   }>({ schoolName: "", householdCount: 0 });
+
+    /**
+   * state for the school record
+   */
+  const [schoolRecord, setSchoolRecord] = useState<SchoolRecord | null>(null);
+  
+  useEffect(() => {
+    const fetchSchoolRecord = async () => {
+      if (!selectionInfo.schoolName) {
+        setSchoolRecord(null);
+        return;
+      }
+
+      try {
+        const db = getFirestore(app);
+        const q = query(
+          collection(db, "schools"),
+          where("name", "==", selectionInfo.schoolName)
+        );
+
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          setSchoolRecord(snapshot.docs[0].data());
+        } else {
+          setSchoolRecord(null);
+        }
+      } catch (error) {
+        //error message
+      }
+    };
+    fetchSchoolRecord();
+  }, [selectionInfo.schoolName]);
 
   /**
    * Persist selection updates from the map so the DataCard can reflect them.
@@ -107,6 +143,7 @@ export default function SchoolDisplay() {
           <DataCard
             title={selectionInfo.schoolName}
             value={selectionInfo.householdCount}
+            record={schoolRecord}
             onClear={handleSidebarClear}
           />
         </div>
