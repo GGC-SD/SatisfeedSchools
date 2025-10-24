@@ -9,16 +9,16 @@ import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }) => {
     return (
-        <Link href={href} passHref legacyBehavior>
-            <Nav.Link
-                active={active}
-                onClick={onClick}
-                className={active ? "bg-secondary" : ""}
-                style={{ borderRadius: "5px", padding: "10px 15px" }}
-            >
-                {children}
-            </Nav.Link>
-        </Link>
+        <Nav.Link
+            as={Link}
+            href={href}
+            active={active}
+            onClick={onClick}
+            className={active ? "bg-secondary" : ""}
+            style={{ borderRadius: "5px", padding: "10px 15px" }}
+        >
+            {children}
+        </Nav.Link>
     )
 }
 
@@ -27,7 +27,8 @@ export default function SidebarNav() {
     const pathname = usePathname()
 
     const navItems = [
-        { path: "/dashboard", label: "Dashboard" },
+        { path: "/dashboard", label: "Dashboard Summary" },
+        {path: "/dashboard-insights", label: "Dashboard Insights" },
         { path: "/summary", label: "Summary Detail" },
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },

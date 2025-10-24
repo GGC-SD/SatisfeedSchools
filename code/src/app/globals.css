@@ -35,6 +35,11 @@ h6 {
   @apply duration-150 ease-in-out hover:brightness-[1.15] 
 }
 
+/* button */
+.button-insights{
+  @apply bg-yellow-400 py-1 px-2 rounded-lg font-semibold text-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95
+}
+
 /* Card Styling */
 .card {
   @apply bg-white p-4 rounded-lg;
@@ -46,6 +51,10 @@ h6 {
 
 .dropdown-container {
   @apply flex items-center justify-between gap-4 w-full;
+}
+
+.dropdown-basic{
+  @apply w-full border-4 border-yellow-400 rounded-lg font-bold py-2 px-3 focus:outline-none focus:ring-2 focus:ring-yellow-600
 }
 
 /* Header Styling */
