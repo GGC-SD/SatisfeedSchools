@@ -204,7 +204,9 @@ export default function CountyOverlay({ map, selection }: Props) {
           source: SRC_ID,
           paint: {
             "line-color": "#181a1f",
-            "line-width": 3,
+            "line-width": 2,
+            "line-opacity": 0.6,
+            "line-dasharray": [4, 2],
           },
         });
 
