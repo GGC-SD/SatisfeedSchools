@@ -32,7 +32,7 @@ export default function DataCard({ title, value, record, onClear }: DataCardProp
 
      if (!record && !title) {
     return (
-      <div className="min-w-[150px] min-h-96 lg:min-h-[40rem] bg-white child-component-borders flex justify-center items-center">
+      <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center">
         <h1 className="text-lg text-neutral-700">Select a School To Begin</h1>
       </div>
     );
@@ -58,25 +58,29 @@ export default function DataCard({ title, value, record, onClear }: DataCardProp
   };
 
     return (
-    <div className="min-w-[150px] min-h-96 lg:min-h-[40rem] bg-white child-component-borders">
-      <div className="p-4 w-full h-full flex flex-col">
+    <div className="min-w-[150px] min-h-36 lg:min-h-[20rem] bg-white child-component-borders">
+      <div className="p-3 w-full h-full flex flex-col">
         <h3 className="text-2xl font-bold text-center">{title}</h3>
 
-        <div className="flex">
-          <p className="mt-3 text-xl">Households: {value}</p>
-          <p className="text-sm text-neutral-500 flex place-self-end">&nbsp;(approximate)</p>
+        <div className="flex mt-2 text-md flex-col xl:flex-row xl:justify-between">
+            <div className="font-medium uppercase">Households: </div>
+            <div className="flex mb-1">
+              <div className="">{value}</div>
+              <div className="text-sm text-neutral-500 flex place-self-end">&nbsp;(approximate)</div>
+            </div> 
         </div>
 
         {/* Rendering fields in the desired order with labels*/}
         {record ? (
-          <div className="mt-3 text-xl">
+          <div className="text-md">
             {displayOrder.map((key) => {
               const val = record[key];
               if (!val) return null;
               return (
-                <p key={key} className="text-neutral-700">
-                  <strong>{fieldLabels[key] || key}:</strong> {String(val)}
-                </p>
+                <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
+                    <div className="font-medium uppercase">{fieldLabels[key] || key}:</div>
+                    <div>{String(val)}</div>
+                </div>
               );
             })}
           </div>
@@ -84,7 +88,7 @@ export default function DataCard({ title, value, record, onClear }: DataCardProp
           <p className="text-neutral-500 mt-4">No additional data found.</p>
         )}
 
-        <div className="mt-auto self-end flex">
+        <div className="mt-2 self-end flex">
           <button
             type="button"
             onClick={onClear}
