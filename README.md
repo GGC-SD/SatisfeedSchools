@@ -110,5 +110,9 @@ It would be optimal to pull data to the dashboard straight from Satisfeeds datab
 client would also like the "lbs of food served" card to be real time where they can live update the data. As of now the card pulls static data from a hypothetical table 
 and is used as a placeholder.
 
+---
 
+## License
+This project is licensed under the [MIT License](License.md).  
+© 2025 Georgia Gwinnett College
 
