@@ -113,6 +113,6 @@ and is used as a placeholder.
 ---
 
 ## License
-This project is licensed under the [MIT License](License.md).  
+This project is licensed under the [MIT License](LICENSE).  
 © 2025 Georgia Gwinnett College
 
