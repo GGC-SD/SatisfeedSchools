@@ -92,7 +92,7 @@ export default function Dashboard() {
                     <SidebarNav />
                 </Col>
 
-                <Col md={10} lg={10} className="p-4">
+                <Col md={10} lg={10} className="pt-5 pb-2 d-flex flex-column min-vh-100">
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
                         <div className="text-center py-6">
@@ -188,6 +188,9 @@ export default function Dashboard() {
                             </>
                         )}
                     </div>
+                    <footer className="mt-auto text-center text-muted small pt-3">
+                        © 2025 Georgia Gwinnett College – Team Satisfeed
+                    </footer>
                 </Col>
             </Row>
         </Container>
