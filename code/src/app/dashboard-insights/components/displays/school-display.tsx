@@ -1,5 +1,4 @@
 "use client";
-
 import DataCard from "../ui/data-card";
 import SearchableDropdown from "../filters/searchable-dropdown";
 import DashboardSchoolsMap, { DashboardSchoolsMapHandle } from "../map/dashboard-schools-map";
@@ -85,12 +84,14 @@ const classifySchoolType = (name?: string) => {
  */
 export default function SchoolDisplay() {
   /** Track the current school selection and its household count. */
-  const [selectionInfo, setSelectionInfo] = useState<{ 
-    schoolName: string; 
-    householdCount: number; 
+  const [selectionInfo, setSelectionInfo] = useState<{
+    schoolName: string;
+    householdCount: number;
   }>({ schoolName: "", householdCount: 0 });
 
-  /** Detailed Firestore record of the selected school, shown in DataCard. */
+  /**
+   * state for the school record
+   */
   const [schoolRecord, setSchoolRecord] = useState<SchoolRecord | null>(null);
 
    /**
@@ -109,7 +110,9 @@ export default function SchoolDisplay() {
         const snapshot = await getDocs(q);
         const hit = snapshot.docs.find(d => (d.data() as any)?.name === selectionInfo.schoolName);
         setSchoolRecord(hit ? (hit.data() as any) : null);
-      } catch {/* ignore */}
+      } catch (error) {
+        // ignore
+      }
     };
     fetchSchoolRecord();
   }, [selectionInfo.schoolName]);
@@ -124,7 +127,7 @@ export default function SchoolDisplay() {
 
   /** County or ZIP selection passed down to the map. */
   const [boundarySelection, setBoundarySelection] = useState<BoundarySelection>(null);
-  
+
   /** Called when a new boundary is chosen in the dropdown. */
   const handleBoundarySelect = useCallback(
     (sel: NonNullable<BoundarySelection>) => setBoundarySelection(sel), 
@@ -320,6 +323,7 @@ export default function SchoolDisplay() {
             title={selectionInfo.schoolName}
             value={selectionInfo.householdCount}
             record={schoolRecord}
+            type={'School'}
             onClear={handleSidebarClear}
           />
         </div>

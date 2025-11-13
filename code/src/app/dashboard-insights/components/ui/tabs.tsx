@@ -17,7 +17,7 @@ export default function Tabs({onSelect}: TabsProp) {
     }
 
     return(
-        <div className="flex">
+        <div className="flex text-lg">
             <button 
                 id="1"
                 className={`tab-basic
