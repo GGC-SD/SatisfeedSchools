@@ -15,7 +15,8 @@ type DataCardProps = {
   title: string;
   value: number;
   record: SchoolRecord | null;
-onClear?: () => void;
+  type: string;
+  onClear?: () => void;
 };
 
 /**
@@ -28,12 +29,12 @@ onClear?: () => void;
  *
  * @returns A card reflecting the selected school's data, or a placeholder when none is selected.
  */
-export default function DataCard({ title, value, record, onClear }: DataCardProps) {
+export default function DataCard({ title, value, record, type, onClear }: DataCardProps) {
 
      if (!record && !title) {
     return (
       <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center">
-        <h1 className="text-lg text-neutral-700">Select a School To Begin</h1>
+        <h1 className="text-lg text-neutral-700">Select a {type} To Begin</h1>
       </div>
     );
   }
@@ -74,7 +75,7 @@ export default function DataCard({ title, value, record, onClear }: DataCardProp
         {record ? (
           <div className="text-md">
             {displayOrder.map((key) => {
-              const val = record[key];
+              const val = (record as Record<string, unknown>)[key];
               if (!val) return null;
               return (
                 <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
@@ -95,7 +96,7 @@ export default function DataCard({ title, value, record, onClear }: DataCardProp
             className="button-insights"
             aria-label="Clear selected school"
           >
-            Clear Selected School
+            Clear Selected {type}
           </button>
         </div>
       </div>
