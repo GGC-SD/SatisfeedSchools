@@ -3,9 +3,8 @@
 ## Description  
 In Spring 2025, Team Satisfeed partnered with the nonprofit Satisfeed, which provides hunger relief for families in and around Gwinnett County through food co-ops and weekend programs. Their mission is to fight food insecurity, reduce waste, and connect communities. The team created a data-driven dashboard using Google Colab and Power BI to visualize client demographics and service usage, giving the organization insights for program planning and resource allocation.
 
-
-
-In Fall 2025, Let Us Cook will build on this work by adding Gwinnett County school zone data to the existing web app dashboard, enabling Satisfeed to better understand and serve families across the area.
+### Updates Fall 2025
+This semester’s work expands the original dashboard by integrating a new dashboard section with an interactive map. The goal is to help Satisfeed identify trends in food insecurity around Georgia's schools / libraries in relation to food distribution geographical data to improve distribution planning.
 
 ## Project Documentation:
 Project Demo [(https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)]
@@ -14,13 +13,15 @@ Project Website [https://satisfeeddashboardproject.carrd.co]
 
 Project Poster [STARS/CREATE Poster in the Docs folder] 
 
-Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx)
-)]
+Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx))]
 
 ## Technologies
 - Next.js
 - Firebase
 - Python
+
+### Updates Fall 2025
+- MapLibre GL JS - https://maplibre.org/maplibre-gl-js/docs/  
 
 ## Working Features
 - Dashboard Login
@@ -37,11 +38,44 @@ Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attac
 - Upload Raw Data
 - Manage Data Versions
 
+### Working Features Developed Fall 2025
+- Dashboard Insights Tab  
+New section of the Satisfeed dashboard focused on interactive layered maps enabling Satisfeed to view food distribution around GA, statistical information, and locations of schools / libraries.
+
+- School Data Integration  
+Interactive map overlay showing Georgia schools, allowing Satisfeed to view distribution geographically in relation to schools.
+Involved integrating scripts to parse school data from public APIs and saving data to firebase. This allowed users to access said data when interacting with the maps in Dashboard Insights' Schools tab.
+
+- Food Distribution Data Integration  
+Dashboard now highlights total families served allowing deeper insight into which communities need the most assistance. 
+Involved integrating a backend endpoint to safely parse CSV file of dirstibution data, and save (approximate) address coordinates with LocationIQ api as a persistant file. This allowed users to safely view distribution data on the map.
+
+- Library Data Integration  
+Interactive map overlay showing Georgia Libraries, allowing Satisfeed to view distribution geographically in relation to libraries.
+Involved integrating scripts to parse library data from public APIs and saving data to firebase. This allowed users to access said data when interacting with the maps in Dashboard Insights' Libraries tab.
+
+- County / ZIP Statistics  
+Dashboard integrates relevant statisitcs per county / ZIP code selected while also showcasing location on maps.
+Involved working with exisiting GEOJson data which allows users to select needed County / ZIP to be presented with relevant information.
+
+---
+
 ## Installation Steps
 1. Clone the repo: git clone https://github.com/nhuthanhtran/Satisfeed
 2. Install dependencies: install npm with "npm install"
 3. Add environment variables to .env.local file in root directory
+### Updates Fall 2025 
+4. Ensure MapLibre is installed
+```
+npm install maplibre-gl
+```
+5. Apply updated environment variables
+```
+NEXT_PUBLIC_MAPTILER_KEY=
+LOCATIONIQ_KEY=
+```
 
+7. Verify Firebase credentials include rules for new data models.
 
 ## Running Steps
 1. Run the development server:
@@ -57,9 +91,7 @@ bun dev
 ```  
     
 2. Open http://localhost:3000 with your browser to see the result.
-
 3. Sign up for an account and verify with your email to get approved as an admin.
-
 4. You can start editing the page by modifying app/page.tsx. The page auto-updates as you edit the file.
 
 ## Spring 2025 Team
@@ -73,9 +105,11 @@ Dylan Long - Testing lead / Team manager 🦉
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
 ## Outreach Activities
-
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
 2. Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 4/24/2025
+3. Expanded Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 11/21/2025
+
+---
 
 ## Technologies and Usage
 
@@ -84,8 +118,7 @@ layout was created in Power BI for later implementation in Javascript by Thanh T
 dashboard can be viewed by Satisfeed employees.
 
 ## Spring 2025 Project Progress
-
-Disclaimer: The notebook,dataset, and PBIX file cannot be displayed, as they contain personal information of Satisfeed customers including full names, addresses, and phone numbers. Therefore, all displayed metrics and stats are a high-level overview of the analysis without specific data points displayed.
+Disclaimer: The notebook, dataset, and PBIX file cannot be displayed, as they contain personal information of Satisfeed customers including full names, addresses, and phone numbers. Therefore, all displayed metrics and stats are a high-level overview of the analysis without specific data points displayed.
 
 ### Analysis Methods
 PCA and linear regression were attempted on the data set, but failed due to a lack of numerical data and numerous gaps in client reporting. As a result, most of the 
