@@ -197,6 +197,8 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
           <CountyOverlay map={map} selection={boundarySelection ?? null} />
         )}
 
+        <LibrariesClusterOverlay map={map} idSuffix="-libraries" />
+
         {/* Distribution overlays */}
         {map && geojsonUrl && (
           <>
@@ -214,8 +216,6 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
             />
           </>
         )}
-
-        <LibrariesClusterOverlay map={map} idSuffix="-libraries" />
       </div>
     );
   }

@@ -307,7 +307,7 @@ export default function DistributionOverlay({
         source: SRC_ID,
         minzoom: 12,
         paint: {
-          "fill-color": "#7c908299",
+          "fill-color": "#72e3ad99",
           "fill-opacity": 0.65,
         },
       });

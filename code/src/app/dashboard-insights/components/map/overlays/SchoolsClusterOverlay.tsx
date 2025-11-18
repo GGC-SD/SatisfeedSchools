@@ -141,11 +141,11 @@ export default function SchoolsClusterOverlay({
           "circle-color": [
             "step",
             ["get", "point_count"],
-            "#d4190f",
+            "#b00b58",
             50,
-            "#8c201b",
+            "#b5286c",
             150,
-            "#520d08",
+            "#96064c",
           ],
           "circle-stroke-color": "#fff",
           "circle-stroke-width": 1.5,
@@ -174,7 +174,7 @@ export default function SchoolsClusterOverlay({
         filter: ["!", ["has", "point_count"]],
         paint: {
           "circle-radius": 10,
-          "circle-color": "#fc4238",
+          "circle-color": "#a84f79",
           "circle-stroke-color": "#fff",
           "circle-stroke-width": 1.5,
         },

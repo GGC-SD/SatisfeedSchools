@@ -15,7 +15,7 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
           <p>Selected Area</p>
         </div>
         <div className="flex gap-1">
-          <div className="w-6 h-6 bg-[#7c908299] rounded-full"></div>
+          <div className="w-6 h-6 bg-[#72e3ad99] rounded-full"></div>
           <p>Unique Households Served</p>
         </div>
 
@@ -23,7 +23,7 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
         {currentMap == "school" && (
           <>
             <div className="flex gap-1">
-              <div className="w-6 h-6 bg-[#fc4238] rounded-full border-2 border-white"></div>
+              <div className="w-6 h-6 bg-[#a84f79] rounded-full border-2 border-white"></div>
               <p>Single School</p>
             </div>
             <div className="flex gap-1">
