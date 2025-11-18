@@ -2,7 +2,9 @@
 
 import DataCard from "../ui/data-card";
 import SearchableDropdown from "../filters/searchable-dropdown";
-import DashboardLibraryMap, { DashboardLibraryMapHandle } from "../map/dashboard-library-map";
+import DashboardLibraryMap, {
+  DashboardLibraryMapHandle,
+} from "../map/dashboard-library-map";
 import { useCallback, useRef, useState, useEffect } from "react";
 import CountyStatsCard from "../ui/county-stats-card";
 import * as turf from "@turf/turf";
@@ -53,8 +55,9 @@ export default function LibraryDisplay() {
     useState<BoundarySelection>(null);
 
   /** Total households within the selected boundary. */
-  const [householdsInBoundary, setHouseholdsInBoundary] =
-    useState<number | null>(null);
+  const [householdsInBoundary, setHouseholdsInBoundary] = useState<
+    number | null
+  >(null);
 
   /** Called when a new boundary is chosen in the dropdown. */
   const handleBoundarySelect = useCallback(
@@ -120,9 +123,7 @@ export default function LibraryDisplay() {
       const poly =
         feature.geometry.type === "Polygon" ||
         feature.geometry.type === "MultiPolygon"
-          ? (feature as GeoJSON.Feature<
-              GeoJSON.Polygon | GeoJSON.MultiPolygon
-            >)
+          ? (feature as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>)
           : null;
 
       if (!poly) {
@@ -133,9 +134,8 @@ export default function LibraryDisplay() {
       try {
         const resp = await fetch(HOUSEHOLD_POINTS_URL, { cache: "no-cache" });
         if (!resp.ok) throw new Error("household geojson load failed");
-        const pts = (await resp.json()) as GeoJSON.FeatureCollection<
-          GeoJSON.Point
-        >;
+        const pts =
+          (await resp.json()) as GeoJSON.FeatureCollection<GeoJSON.Point>;
 
         let hh = 0;
         for (const f of pts.features) {
@@ -186,13 +186,13 @@ export default function LibraryDisplay() {
             selection={boundarySelection}
             households={householdsInBoundary}
             // librariesTotal={librariesInBoundary} // will require this prop
-           />
+          />
 
           <DataCard
             title={""} // placeholder title
             value={0} // placeholder value
             record={null}
-            type={'Library'}
+            type={"Library"}
             onClear={handleSidebarClear}
           />
         </div>
