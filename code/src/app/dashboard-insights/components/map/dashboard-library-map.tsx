@@ -11,6 +11,7 @@ import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay"
 import GeorgiaOutlineOverlay from "./overlays/GeorgiaOutlineOverlay";
 import DistributionOverlay from "./overlays/distribution-overlay";
 import CountyOverlay from "./overlays/county-overlay";
+import KeyOverlay from "./overlays/key-overlay";
 
 /**
  * Utility type for map padding. Mirrors MapLibre's padding shape while also
@@ -148,8 +149,14 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(functio
   useImperativeHandle(ref, () => ({ clearSelection: handleClear }), [handleClear]);
 
   return (
-    <>
+    <div className={`relative ${className}`}>
+       {/* Map container fills the parent */}
       <div ref={containerRef} className={`${className} library-map`} />
+
+      {/* Map Key */}
+      <div className="absolute bottom-0 left-0 z-10 w-full pointer-events-none opacity-95">
+        <KeyOverlay currentMap={"library"} />
+      </div>
 
       {/* Georgia outline */}
       {map && <GeorgiaOutlineOverlay map={map} />}
@@ -174,7 +181,7 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(functio
           />
         </>
       )}
-    </>
+    </div>
   );
 });
 
