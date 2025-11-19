@@ -235,7 +235,7 @@ export default function DistributionHeatmapOverlay({
             "#00000000",
 
             0.25,
-            "#e8e6e130",
+            "#72e3ad30",
 
             0.45,
             "#cbd0c750",
@@ -247,7 +247,7 @@ export default function DistributionHeatmapOverlay({
             "#6f837599",
 
             1.0,
-            "#7c908299",
+            "#72e3ad99",
           ],
 
           // Fade heatmap when zoomed in
