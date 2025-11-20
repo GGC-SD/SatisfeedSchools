@@ -1,6 +1,9 @@
 "use client";
 
 import DataCard from "../ui/data-card";
+import { LibraryDoc } from "@/data/libraryTypes";
+import { getFirestore, query, doc, getDoc, getDocs, collection} from "firebase/firestore";
+import { app } from "@/firebase/firebaseConfig";
 import SearchableDropdown from "../filters/searchable-dropdown";
 import DashboardLibraryMap, {
   DashboardLibraryMapHandle,
@@ -17,6 +20,11 @@ type BoundarySelection =
   | { type: "county"; countyName: string }
   | { type: "zip"; countyName: string; zcta: string }
   | null;
+
+   /**
+ * Structure describing school counts by category.
+ */
+type LibraryTotal = number;
 
 /**
  * Path to the point dataset used for household counting.
@@ -41,6 +49,11 @@ const countyZipFile = (countyName: string) =>
     .replace(/^-+|-+$/g, "")}.geojson`;
 
 /**
+ * Utility to add a message for null phone number, website, and hours
+ * fields.
+ */
+
+/**
  * LibraryDisplay
  *
  * Displays:
@@ -50,14 +63,76 @@ const countyZipFile = (countyName: string) =>
  *  - Persistent DataCard placeholder (no active selection logic yet)
  */
 export default function LibraryDisplay() {
-  /** County or ZIP selection passed down to the map. */
-  const [boundarySelection, setBoundarySelection] =
-    useState<BoundarySelection>(null);
+   /** Track the current library selection and its household count. */
+  const [selectionInfo, setSelectionInfo] = useState<{
+    libraryName: string;
+    householdCount: number;
+    libraryDocId: string;
+  }>({ libraryName: "", householdCount: 0, libraryDocId: ""});
 
-  /** Total households within the selected boundary. */
+  /**
+   * state for the library record
+   */
+  const [libraryDoc, setLibraryDoc] = useState<LibraryDoc | null>(null);
+
+   /**
+   * Fetch detailed library record from Firestore
+   * when a new library is selected on the map.
+   */
+  useEffect(() => {
+    const fetchLibraryDoc = async () => {
+      console.log("selectionInfo = ", selectionInfo);
+
+      if (!selectionInfo.libraryDocId) {
+        setLibraryDoc(null);
+        return;
+      }
+      try {
+        const db = getFirestore(app);
+        const ref = doc(db, "libraries", selectionInfo.libraryDocId);
+        const snapshot = await getDoc(ref);
+
+      if (!snapshot.exists()) {
+        console.log("No library doc found for id:", selectionInfo.libraryDocId);
+        setLibraryDoc(null);
+        return;
+      }
+
+      const docData = snapshot.data() as LibraryDoc;
+      console.log("Firestore libraryDoc:", docData);
+      setLibraryDoc(docData);
+    } catch (error) {
+      console.error("Error fetching library doc:", error);
+      setLibraryDoc(null);
+      }
+    };
+    fetchLibraryDoc();
+  }, [selectionInfo.libraryDocId]);
+
+  
+  /** Sync school + household info emitted from the map. */
+  const handleSelectionChange = useCallback(
+    (info: { libraryName: string; householdCount: number; libraryDocId: string }) => {
+      setSelectionInfo(info);
+    },
+    []
+  );
+
+
+//---------------------------------------------------
+  
+  /** County or ZIP selection passed down to the map. */
+  const [boundarySelection, setBoundarySelection] = useState<BoundarySelection>(null);
+
+/** Total households within the selected boundary. 
+   *  Total Libraries within the selected boundary
+  */
   const [householdsInBoundary, setHouseholdsInBoundary] = useState<
     number | null
   >(null);
+  const [librariesInBoundary, setLibrariesInBoundary] = useState<LibraryTotal | null>(
+    null
+  );
 
   /** Called when a new boundary is chosen in the dropdown. */
   const handleBoundarySelect = useCallback(
@@ -117,6 +192,7 @@ export default function LibraryDisplay() {
       const feature = await getBoundaryFeature(sel);
       if (cancelled || !feature || !feature.geometry) {
         setHouseholdsInBoundary(null);
+        setLibrariesInBoundary(null);
         return;
       }
 
@@ -128,6 +204,7 @@ export default function LibraryDisplay() {
 
       if (!poly) {
         setHouseholdsInBoundary(null);
+        setLibrariesInBoundary(null);
         return;
       }
 
@@ -146,10 +223,40 @@ export default function LibraryDisplay() {
       } catch {
         if (!cancelled) setHouseholdsInBoundary(null);
       }
+
+      // Count libraries inside the boundary
+      try {
+        const db = getFirestore(app);
+        const qy = query(collection(db, "libraries"));
+        const snap = await getDocs(qy);
+
+        var acc = 0;
+
+        for (const doc of snap.docs) {
+          const d = doc.data() as any;
+          const lat = d?.coords?.lat;
+          const lng = d?.coords?.lng;
+          if (typeof lat !== "number" || typeof lng !== "number") continue;
+
+          const inside = turf.booleanPointInPolygon(
+            turf.point([lng, lat]),
+            poly as any
+          );
+          if (!inside) continue;
+
+          acc++;
+        }
+
+        if (!cancelled) setLibrariesInBoundary(acc);
+      } catch {
+        if (!cancelled) setLibrariesInBoundary(null);
+      }
     }
 
+    //early exit when nothing is selected
     if (!boundarySelection) {
       setHouseholdsInBoundary(null);
+      setLibrariesInBoundary(null);
       return;
     }
 
@@ -159,6 +266,9 @@ export default function LibraryDisplay() {
       cancelled = true;
     };
   }, [boundarySelection]);
+
+  // ----------sanity check
+    console.log("libraryDoc loaded:", libraryDoc);
 
   return (
     <div className="p-4">
@@ -171,6 +281,7 @@ export default function LibraryDisplay() {
               className="w-full min-h-[40rem] lg:min-h-fit h-full"
               geojsonUrl={HOUSEHOLD_POINTS_URL}
               boundarySelection={boundarySelection}
+              onSelectionChange={handleSelectionChange}
             />
           </div>
         </div>
@@ -185,13 +296,13 @@ export default function LibraryDisplay() {
           <CountyStatsCard
             selection={boundarySelection}
             households={householdsInBoundary}
-            // librariesTotal={librariesInBoundary} // will require this prop
+            librariesTotal={librariesInBoundary ?? null}
           />
 
           <DataCard
-            title={""} // placeholder title
-            value={0} // placeholder value
-            record={null}
+            title={selectionInfo.libraryName}
+            value={selectionInfo.householdCount} 
+            record={libraryDoc}
             type={"Library"}
             onClear={handleSidebarClear}
           />

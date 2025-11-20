@@ -13,6 +13,7 @@ import maplibregl, {
   LngLatLike,
   LngLatBounds,
 } from "maplibre-gl";
+import type { PolygonFeature } from "./overlays/click-radius";
 
 import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
 import GeorgiaOutlineOverlay from "./overlays/GeorgiaOutlineOverlay";
@@ -41,6 +42,7 @@ type Props = {
   jitterMeters?: number;
   onClearSelection?: () => void;
   viewPadding?: Padding;
+  onSelectionChange?: (info: { libraryName: string; householdCount: number, libraryDocId: string; }) => void;
   boundarySelection?:
     | { type: "county"; countyName: string }
     | { type: "zip"; countyName: string; zcta: string }
@@ -72,7 +74,7 @@ const GA_BOUNDS: [[number, number], [number, number]] = [
  *  - renders a County/ZIP boundary overlay passed in from the UI,
  *  - exposes a simple imperative clear hook.
  *
- * Note: All school-related logic and overlays have been removed.
+ * Note: All library-related logic and overlays have been removed.
  */
 const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
   function DashboardLibraryMap(
@@ -85,6 +87,7 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
       jitterMeters = 0,
       onClearSelection,
       viewPadding,
+      onSelectionChange,
       boundarySelection,
     }: Props,
     ref
@@ -98,6 +101,38 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
     /** Guard to prevent multiple initializations if React re-renders quickly. */
     const initializedRef = useRef(false);
 
+    /**
+       * Local selection state:
+       * - poly: the current radius polygon drawn around the clicked library (or null).
+       * - libraryName: the name of the currently selected library (or null).
+       */
+      const [selection, setSelection] = useState<{
+        poly: PolygonFeature | null;
+        libraryName: string | null;
+        libraryDocId: string | null;
+      }>({ poly: null, libraryName: null, libraryDocId: null });
+
+      /**
+   * Count of households within the current `selection.poly`.
+   * This is updated by the DistributionOverlay via `onHouseholdCount`.
+   */
+  const [householdCount, setHouseholdCount] = useState(0);
+
+  /**
+   * Bubble selection info upward whenever either the library name or the
+   * computed household count changes. Parent components can subscribe
+   * (e.g., to update sidebar DataCard content).
+   */
+  useEffect(() => {
+    if (!onSelectionChange) return;
+    
+      onSelectionChange({
+        libraryName: selection.libraryName ?? "",
+        householdCount,
+        libraryDocId: selection.libraryDocId ?? ""
+      });
+  }, [selection.libraryName, selection.libraryDocId, householdCount, onSelectionChange]);
+    
     const clampToGeorgia = (c: LngLatLike): [number, number] => {
       const ll = maplibregl.LngLat.convert(c);
       const ga = new LngLatBounds(GA_BOUNDS[0], GA_BOUNDS[1]);
@@ -163,6 +198,15 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
       };
     }, [onClearSelection, viewPadding]);
 
+    /**
+   * Handler called by SchoolsClusterOverlay when a school is clicked.
+   * Stores the new selection polygon and school name. The DistributionOverlay
+   * will then recompute household counts based on this polygon.
+   */
+  const handleAreaSelect = useCallback((poly: PolygonFeature | null, name?: string, docId?: string) => {
+    setSelection({ poly, libraryName: name ?? null , libraryDocId: docId ?? null,});
+  }, []);
+
     /** Placeholder clear handler for future Library selection logic. */
     const handleClear = useCallback(() => {
       try {
@@ -205,6 +249,8 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
               geojsonUrl={geojsonUrl}
               privacyRadiusMeters={privacyRadiusMeters}
               jitterMeters={jitterMeters}
+              selectedArea={selection.poly}
+              onHouseholdCount={setHouseholdCount}
             />
             <DistributionHeatmapOverlay
               map={map}
@@ -215,7 +261,10 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
           </>
         )}
 
-        <LibrariesClusterOverlay map={map} idSuffix="-libraries" />
+        <LibrariesClusterOverlay 
+          map={map} 
+          idSuffix="-libraries" 
+          onAreaSelect={handleAreaSelect}/>
       </div>
     );
   }

@@ -323,7 +323,7 @@ export default function SchoolDisplay() {
             title={selectionInfo.schoolName}
             value={selectionInfo.householdCount}
             record={schoolRecord}
-            type={'School'}
+            type={"School"}
             onClear={handleSidebarClear}
           />
         </div>
