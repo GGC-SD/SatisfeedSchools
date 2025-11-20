@@ -14,7 +14,7 @@ import maplibregl, {
   LngLatBounds,
 } from "maplibre-gl";
 import type { PolygonFeature } from "./overlays/click-radius";
-
+import { clearFixedRadius } from "./overlays/click-radius";
 import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
 import GeorgiaOutlineOverlay from "./overlays/GeorgiaOutlineOverlay";
 import DistributionOverlay from "./overlays/distribution-overlay";
@@ -210,13 +210,23 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
     /** Placeholder clear handler for future Library selection logic. */
     const handleClear = useCallback(() => {
       try {
-        // If you later add a Library selection ring/marker, clean up layers/sources here.
-      } finally {
-        try {
-          onClearSelection?.();
-        } catch {}
-      }
-    }, [onClearSelection]);
+      const map = mapRef.current;
+      if (!map) return;
+
+      // Remove the radius ring drawn by click-radius helpers for the "-schools" overlay.
+      clearFixedRadius(map, { idSuffix: "-schools" });
+
+      // Also remove the selected school highlight point (if present).
+      const SELECTED_ID = "selected-point-schools";
+      if (map.getLayer(SELECTED_ID)) map.removeLayer(SELECTED_ID);
+      if (map.getSource(SELECTED_ID)) map.removeSource(SELECTED_ID);
+    } catch {}
+    // Reset local UI state.
+    setSelection({ libraryName: null, poly: null, libraryDocId: null });
+    setHouseholdCount(0);
+    // Optional external notification.
+    try { onClearSelection?.(); } catch {}
+  }, [onClearSelection]);
 
     /** Expose clearSelection() to parents. */
     useImperativeHandle(ref, () => ({ clearSelection: handleClear }), [
