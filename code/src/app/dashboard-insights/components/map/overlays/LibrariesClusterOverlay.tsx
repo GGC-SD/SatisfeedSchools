@@ -16,7 +16,8 @@ import {
 } from "./click-radius";
 
 export type LibrarySelection = {
-  id: string;
+  docId: string; //firestore document id
+  id?: string;
   name: string;
   address?: string;
   city?: string;
@@ -30,7 +31,7 @@ export type LibrarySelection = {
 type Props = {
   map: MLMap | null;
   idSuffix?: string;
-  onAreaSelect?: (poly: PolygonFeature | null, info?: LibrarySelection) => void;
+  onAreaSelect?: (poly: PolygonFeature | null, libraryName?: string, libraryDocId?: string) => void;
 };
 
 type LibraryDoc = {
@@ -76,7 +77,7 @@ export default function LibrariesClusterOverlay({
           {
             type: "Feature" as const,
             properties: {
-              id: docSnap.id,
+              docId: docSnap.id,
               name: d.name ?? "Library",
               address: d.address ?? "",
               city: d.city ?? "",
@@ -183,7 +184,7 @@ export default function LibrariesClusterOverlay({
         });
 
         const selection: LibrarySelection = {
-          id: String(p.id ?? ""),
+          docId: String(p.docId ?? ""),
           name: String(p.name ?? "Library"),
           address: p.address || "",
           city: p.city || "",
@@ -194,7 +195,7 @@ export default function LibrariesClusterOverlay({
           website: p.website || "",
         };
 
-        onAreaSelect?.(poly, selection);
+        onAreaSelect?.(poly, selection.name, selection.docId);
 
         try {
           if (m.getLayer(SELECTED_ID)) m.removeLayer(SELECTED_ID);

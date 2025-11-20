@@ -1,6 +1,7 @@
 "use client"
 
 import { SchoolRecord } from "@/data/schoolTypes";
+import { LibraryDoc } from "@/data/libraryTypes";
 
 /**
  * Props for the DataCard.
@@ -11,10 +12,10 @@ import { SchoolRecord } from "@/data/schoolTypes";
  * @property onClear   Optional handler invoked when the "Clear Selected School" button is clicked.
  *                     Intended to call the map's imperative `clearSelection()` from the parent.
  */
-type DataCardProps = {
+type DataCardProps ={
   title: string;
   value: number;
-  record: SchoolRecord | null;
+  record: SchoolRecord | LibraryDoc | null;
   type: string;
   onClear?: () => void;
 };
@@ -22,40 +23,63 @@ type DataCardProps = {
 /**
  * DataCard
  *
- * Presentation-only component that displays the current school selection summary.
- * When a school is selected, shows its name and the computed household count.
- * The "Clear Selected School" button (if `onClear` is provided) triggers the parent’s
+ * Presentation-only component that displays the current school or library selection summary.
+ * When a school or library is selected, shows its name and the computed household count.
+ * The "Clear Selected School/Library" button (if `onClear` is provided) triggers the parent’s
  * clear logic (e.g., calls the map’s `clearSelection()` via ref). No internal state here.
  *
- * @returns A card reflecting the selected school's data, or a placeholder when none is selected.
+ * @returns A card reflecting the selected school's/librarie's data, or a placeholder when none is selected.
  */
 export default function DataCard({ title, value, record, type, onClear }: DataCardProps) {
+
+  const isSchool = type === "School";
+  const typeLabel = isSchool ? "School" : "Library";
 
      if (!record && !title) {
     return (
       <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center">
-        <h1 className="text-lg text-neutral-700">Select a {type} To Begin</h1>
+        <h1 className="text-lg text-neutral-700">Select a {typeLabel} To Begin</h1>
       </div>
     );
   }
 
-  const displayOrder: string[] = [
+  const displayOrder: string[] = isSchool
+  ? [
     "address",
     "city",
     "county",
     "zip",
     "enrollment",
     "phone",
+  ]
+  :[
+    "address",
+    "city",
+    "county",
+    "zip",
+    "phone",
+    "hours",
+    "website",
   ];
 
   // Human-readable labels for display
-  const fieldLabels: Record<string, string> = {
+  const fieldLabels: Record<string, string> = isSchool
+  ? {
     address: "Address",
     city: "City",
     county: "County",
     zip: "ZIP Code",
     enrollment: "Enrollment",
     phone: "Phone Number",
+  }
+  : {
+    address: "Address",
+    city: "City",
+    county: "County",
+    zip: "ZIP Code",
+    phone: "Phone Number",
+    hours: "Hours",
+    website: "Website",
   };
 
     return (
@@ -76,7 +100,17 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           <div className="text-md">
             {displayOrder.map((key) => {
               const val = (record as Record<string, unknown>)[key];
-              if (!val) return null;
+              if (val === undefined || val === null) {
+                return (
+                  <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
+                    <div className="font-medium uppercase">
+                      {fieldLabels[key] || key}:
+                    </div>
+                    <div>Not Available</div>
+                  </div>
+                );
+              }
+
               return (
                 <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
                     <div className="font-medium uppercase">{fieldLabels[key] || key}:</div>
@@ -96,7 +130,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
             className="button-insights"
             aria-label="Clear selected school"
           >
-            Clear Selected {type}
+            Clear Selected {typeLabel}
           </button>
         </div>
       </div>
