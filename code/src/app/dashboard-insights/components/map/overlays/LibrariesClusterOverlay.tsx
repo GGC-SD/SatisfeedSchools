@@ -182,7 +182,7 @@ export default function LibrariesClusterOverlay({
         const poly = replaceFixedRadiusFromCenter(m, [lng, lat], 3, {
           idSuffix,
         });
-
+        
         const selection: LibrarySelection = {
           docId: String(p.docId ?? ""),
           name: String(p.name ?? "Library"),

@@ -214,10 +214,10 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
       if (!map) return;
 
       // Remove the radius ring drawn by click-radius helpers for the "-schools" overlay.
-      clearFixedRadius(map, { idSuffix: "-schools" });
+      clearFixedRadius(map, { idSuffix: "-libraries" });
 
       // Also remove the selected school highlight point (if present).
-      const SELECTED_ID = "selected-point-schools";
+      const SELECTED_ID = "selected-point-libraries";
       if (map.getLayer(SELECTED_ID)) map.removeLayer(SELECTED_ID);
       if (map.getSource(SELECTED_ID)) map.removeSource(SELECTED_ID);
     } catch {}
