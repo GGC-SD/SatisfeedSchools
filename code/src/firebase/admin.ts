@@ -1,14 +1,16 @@
-// src/firebase/admin.ts
-import admin from "firebase-admin";
-import fs from "fs";
-import path from "path";
+// code/scripts/firebaseAdmin.ts
+import admin from 'firebase-admin';
+import type { ServiceAccount } from 'firebase-admin';
 
-// Load service account safely
-const serviceAccountPath = path.resolve("serviceAccountKey.json"); // outside src
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
+const serviceAccount = require('../../serviceaccountkey.json') as ServiceAccount;
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+//only initialize once (important when multiple scripts import this)
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 
-export const db = admin.firestore();
+const db = admin.firestore();
+
+export { admin, db };

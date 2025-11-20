@@ -17,28 +17,28 @@ import type { PolygonFeature } from "./click-radius";
  * Props for the distribution overlay component.
  *
  * @property map                    Active MapLibre GL map instance. If null, the overlay does nothing.
- * 
+ *
  * @property geojsonUrl             URL to a GeoJSON FeatureCollection<Point>. Each feature represents a household
  *                                  or data point and can include an optional numeric `properties.weight` for intensity.
- * 
+ *
  * @property privacyRadiusMeters    Distance in meters used to buffer each point into a small circle before dissolving
  *                                  into polygons. Controls the apparent “coverage area” size. Defaults to 500.
- * 
+ *
  * @property jitterMeters           Optional random offset (in meters) applied to each point’s coordinates for privacy.
  *                                  Set to 0 to disable. Default: 0.
- * 
+ *
  * @property idSuffix               Optional suffix appended to source/layer IDs to prevent collisions when multiple
  *                                  overlays are mounted on the same map instance.
- * 
+ *
  * @property selectedArea           Optional polygon feature representing a user-selected region (e.g., a radius around
  *                                  a school). Used to count how many data points fall within that boundary.
- * 
+ *
  * @property onHouseholdCount       Callback function that receives the number of household points located inside the
  *                                  selected area polygon. Invoked whenever selection or data changes.
  */
 type Props = {
   map: MLMap | null;
-  geojsonUrl: string; 
+  geojsonUrl: string;
   privacyRadiusMeters?: number;
   jitterMeters?: number;
   idSuffix?: string;
@@ -79,7 +79,6 @@ export default function DistributionOverlay({
   selectedArea,
   onHouseholdCount,
 }: Props) {
-
   /**
    * Count effect (decoupled from drawing):
    * When the user selects an area (e.g., a 3-mile ring around a school), we:
@@ -89,13 +88,16 @@ export default function DistributionOverlay({
    *
    * This runs independently of the overlay draw effect to avoid re-adding layers on each click.
    */
-   useEffect(() => {
+  useEffect(() => {
     if (!map || !selectedArea?.geometry || !onHouseholdCount) return;
 
     (async () => {
       try {
         const res = await fetch(geojsonUrl, { cache: "no-cache" });
-        const points = (await res.json()) as GJFeatureCollection<Point, GeoJsonProperties>;
+        const points = (await res.json()) as GJFeatureCollection<
+          Point,
+          GeoJsonProperties
+        >;
 
         let count = 0;
         for (const f of points.features) {
@@ -202,7 +204,7 @@ export default function DistributionOverlay({
         );
       }
 
-       // If no data, remove existing layers/source and exit cleanly.
+      // If no data, remove existing layers/source and exit cleanly.
       if (circles.length === 0) {
         try {
           if (m.getLayer(OUTLINE_ID)) m.removeLayer(OUTLINE_ID);
@@ -212,7 +214,7 @@ export default function DistributionOverlay({
         return;
       }
 
-     // 2) Prepare FC<Polygon> for dissolve (group tag is optional; used by some turf versions)
+      // 2) Prepare FC<Polygon> for dissolve (group tag is optional; used by some turf versions)
       const fcForDissolve: GJFeatureCollection<Polygon, GeoJsonProperties> = {
         type: "FeatureCollection",
         features: circles.map((g) => {
@@ -277,7 +279,7 @@ export default function DistributionOverlay({
                 >)
               : next;
           } catch {
-             // If a union fails, skip that feature and keep going.
+            // If a union fails, skip that feature and keep going.
           }
         }
 
@@ -286,7 +288,7 @@ export default function DistributionOverlay({
           : { type: "FeatureCollection", features: [] };
       }
 
-       // 5) Replace source/layers atomically to avoid duplicates
+      // 5) Replace source/layers atomically to avoid duplicates
       try {
         if (m.getLayer(OUTLINE_ID)) m.removeLayer(OUTLINE_ID);
         if (m.getLayer(FILL_ID)) m.removeLayer(FILL_ID);
@@ -305,7 +307,7 @@ export default function DistributionOverlay({
         source: SRC_ID,
         minzoom: 12,
         paint: {
-          "fill-color": "#e8b90e",
+          "fill-color": "#72e3ad99",
           "fill-opacity": 0.65,
         },
       });
@@ -317,7 +319,7 @@ export default function DistributionOverlay({
         source: SRC_ID,
         minzoom: 12,
         paint: {
-          "line-color": "#d6670d",
+          "line-color": "#4b5a51",
           "line-opacity": 0.25,
           "line-width": 1.25,
         },
@@ -344,13 +346,7 @@ export default function DistributionOverlay({
         if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
       } catch {}
     };
-  }, [
-    map,
-    geojsonUrl,
-    privacyRadiusMeters,
-    jitterMeters,
-    idSuffix,
-  ]);
+  }, [map, geojsonUrl, privacyRadiusMeters, jitterMeters, idSuffix]);
 
   return null;
 }

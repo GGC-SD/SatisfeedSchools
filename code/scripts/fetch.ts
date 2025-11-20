@@ -3,7 +3,8 @@ import 'dotenv/config';
 import fetch from 'node-fetch';
 import { recordToSchoolDoc } from '../src/data/transform';
 import { db } from './fetchadmin';
-import type { SchoolDoc, SchoolApiResponse, SchoolApiRecord } from '../src/data/schoolTypes';
+import type { SchoolDoc, SchoolApiResponse } from '../src/data/schoolTypes';
+
 
 const BASE_URL =
   "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/us-public-schools/records";
@@ -73,7 +74,7 @@ async function saveSchoolsInChunks(docs: SchoolDoc[]) {
 
     console.log(`Preparing to store ${docs.length} documents...`);
     await saveSchoolsInChunks(docs);
-    console.log("Finshed savving all documents.");
+    console.log("Finshed saving all documents.");
   } catch (err) {
     console.error("Error fetching or saving data: ", err);
   }

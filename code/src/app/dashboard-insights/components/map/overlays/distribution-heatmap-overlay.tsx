@@ -13,17 +13,17 @@ import type {
  * Props for the heatmap overlay component.
  *
  * @property map                    Active MapLibre GL map instance. If null, the overlay does nothing.
- * 
- * @property geojsonUrl             URL to a GeoJSON FeatureCollection<Point>. Each feature can include a numeric 
+ *
+ * @property geojsonUrl             URL to a GeoJSON FeatureCollection<Point>. Each feature can include a numeric
  *                                  `properties.weight` used for heatmap intensity; defaults to 1 when missing.
- * 
+ *
  * @property privacyRadiusMeters    Conceptual smoothing scale used to derive heatmap radius (in pixels) so the
  *                                  visual blur roughly matches the privacy buffer you use elsewhere.
- * 
- * @property jitterMeters           Optional randomization (in meters) applied to each point to avoid exact 
+ *
+ * @property jitterMeters           Optional randomization (in meters) applied to each point to avoid exact
  *                                  coordinate re-identification. Set to 0 to disable.
- * 
- * @property idSuffix               Optional suffix appended to source/layer IDs to avoid collisions when 
+ *
+ * @property idSuffix               Optional suffix appended to source/layer IDs to avoid collisions when
  *                                  mounting multiple instances of this overlay (e.g., per map).
  */
 type Props = {
@@ -102,7 +102,7 @@ export default function DistributionHeatmapOverlay({
       return [lon + dLon, lat + dLat];
     };
 
-     /**
+    /**
      * Fetch the GeoJSON, normalize (apply jitter, ensure `weight`), then
      * (re)create the source and heatmap layer with consistent styling.
      *
@@ -200,10 +200,14 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            8, 0.6,
-            10, 1.0,
-            12, 1.6,
-            14, 2.0,
+            8,
+            0.6,
+            10,
+            1.0,
+            12,
+            1.6,
+            14,
+            2.0,
           ],
 
           // Radius in px scaled by zoom; tied loosely to privacyRadiusMeters for parity
@@ -211,10 +215,14 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            8, Math.round(radiusBasePx * 0.6),
-            10, radiusBasePx,
-            12, Math.round(radiusBasePx * 1.4),
-            14, Math.round(radiusBasePx * 1.8),
+            8,
+            Math.round(radiusBasePx * 0.6),
+            10,
+            radiusBasePx,
+            12,
+            Math.round(radiusBasePx * 1.4),
+            14,
+            Math.round(radiusBasePx * 1.8),
           ],
 
           // Color ramp by heatmap-density
@@ -222,10 +230,24 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["heatmap-density"],
-            0.0, "rgba(0,0,0,0)",
-            0.15, "rgba(207, 163, 19, 0.45)",
-            0.3, "rgba(232, 145, 14, 0.65)",
-            1.15, "rgba(247, 206, 22, 0.65)",
+
+            0.0,
+            "#00000000",
+
+            0.25,
+            "#72e3ad30",
+
+            0.45,
+            "#cbd0c750",
+
+            0.7,
+            "#a0aa8870",
+
+            0.9,
+            "#6f837599",
+
+            1.0,
+            "#72e3ad99",
           ],
 
           // Fade heatmap when zoomed in
@@ -233,8 +255,10 @@ export default function DistributionHeatmapOverlay({
             "interpolate",
             ["linear"],
             ["zoom"],
-            11.5, 1,
-            13, 0.5,
+            11.5,
+            1,
+            13,
+            0.5,
           ],
         },
       } as any);
@@ -251,7 +275,7 @@ export default function DistributionHeatmapOverlay({
       void draw();
     }
 
-     // Cleanup: remove layer/source when props change or component unmounts
+    // Cleanup: remove layer/source when props change or component unmounts
     return () => {
       aborted = true;
       try {
