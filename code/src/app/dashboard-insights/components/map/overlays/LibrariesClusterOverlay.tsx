@@ -63,7 +63,6 @@ export default function LibrariesClusterOverlay({
     const CLUST_ID = `libraries-clusters${idSuffix}`;
     const CNT_ID = `libraries-cluster-count${idSuffix}`;
     const PT_ID = `libraries-unclustered${idSuffix}`;
-    // 🔴 CHANGED: match DashboardLibraryMap clearSelection id
     const SELECTED_ID = `selected-point${idSuffix}`;
 
     let unmounted = false;
