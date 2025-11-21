@@ -16,9 +16,17 @@ h6 {
   @apply font-bold;
 }
 
+.satisfeed-orange{
+  @apply bg-[#FF9700]
+}
+
 /* Dashboard Header */
+.dashboard-header-logo{
+  @apply pt-10 pb-2 md:py-1 px-2 md:px-8 satisfeed-orange w-full text-center md:text-start;
+}
+
 .dashboard-header{
-  @apply pt-10 pb-2 md:py-4 px-6 md:px-10 bg-yellow-400 w-full text-center md:text-start;
+  @apply pt-10 pb-2 md:py-4 px-2 md:px-10 satisfeed-orange w-full text-center md:text-start;
 }
 
 /* Tabs */
@@ -37,7 +45,7 @@ h6 {
 
 /* button */
 .button-insights{
-  @apply bg-yellow-400 py-1 px-2 rounded-lg font-semibold text-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95
+  @apply bg-[#FF9700] py-1 px-2 rounded-lg font-semibold text-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-[#cf7c00] active:scale-95
 }
 
 /* Card Styling */
@@ -46,7 +54,7 @@ h6 {
 }
 
 .child-component-borders {
-  @apply border-4 border-yellow-400 rounded-lg;
+  @apply border-4 border-[#FF9700] rounded-lg;
 }
 
 .dropdown-container {
@@ -54,7 +62,7 @@ h6 {
 }
 
 .dropdown-basic{
-  @apply w-full border-4 border-yellow-400 rounded-lg font-bold py-2 px-3 focus:outline-none focus:ring-2 focus:ring-yellow-600
+  @apply w-full border-4 border-[#FF9700] rounded-lg font-bold py-2 px-3 focus:outline-none focus:ring-2 focus:ring-yellow-600
 }
 
 /* Header Styling */
@@ -172,8 +180,8 @@ h6 {
 }
 
 :root {
-  --map-btn-bg: #facc14;
-  --map-btn-bg-hover: #e0b800;
+  --map-btn-bg: #FF9700;
+  --map-btn-bg-hover: #cf7c00;
   --map-btn-radius: 4px;
   --map-btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   --map-btn-border: 0.5px solid #1d3b32;
@@ -195,6 +203,15 @@ h6 {
     @apply bg-[var(--map-btn-bg)] border border-[0.5px] border-[#1d3b32];
   }
   .school-map .maplibregl-ctrl-group button:hover {
+    @apply bg-[var(--map-btn-bg-hover)];
+  }
+}
+
+@layer components {
+  .library-map .maplibregl-ctrl-group button {
+    @apply bg-[var(--map-btn-bg)] border border-[0.5px] border-[#1d3b32];
+  }
+  .library-map .maplibregl-ctrl-group button:hover {
     @apply bg-[var(--map-btn-bg-hover)];
   }
 }

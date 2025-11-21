@@ -30,6 +30,8 @@ type Padding =
   | number
   | { top: number; right: number; bottom: number; left: number };
 
+const LIBRARY_ID_SUFFIX = "-libraries";  
+
 /**
  * Props for the dashboard Library map component.
  */
@@ -203,10 +205,10 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
    * Stores the new selection polygon and school name. The DistributionOverlay
    * will then recompute household counts based on this polygon.
    */
-  const handleAreaSelect = useCallback((poly: PolygonFeature | null, name?: string, docId?: string) => {
-    setSelection({ poly, libraryName: name ?? null , libraryDocId: docId ?? null,});
-  }, []);
-
+    const handleAreaSelect = useCallback((poly: PolygonFeature | null, name?: string, docId?: string) => {
+      setSelection({ poly, libraryName: name ?? null , libraryDocId: docId ?? null,});
+    }, []);
+ 
     /** Placeholder clear handler for future Library selection logic. */
     const handleClear = useCallback(() => {
       try {
@@ -214,10 +216,10 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
       if (!map) return;
 
       // Remove the radius ring drawn by click-radius helpers for the "-schools" overlay.
-      clearFixedRadius(map, { idSuffix: "-libraries" });
+      clearFixedRadius(map, { idSuffix: LIBRARY_ID_SUFFIX });
 
       // Also remove the selected school highlight point (if present).
-      const SELECTED_ID = "selected-point-libraries";
+      const SELECTED_ID = `selected-point${LIBRARY_ID_SUFFIX}`;
       if (map.getLayer(SELECTED_ID)) map.removeLayer(SELECTED_ID);
       if (map.getSource(SELECTED_ID)) map.removeSource(SELECTED_ID);
     } catch {}
@@ -273,7 +275,7 @@ const DashboardLibraryMap = forwardRef<DashboardLibraryMapHandle, Props>(
 
         <LibrariesClusterOverlay 
           map={map} 
-          idSuffix="-libraries" 
+          idSuffix={LIBRARY_ID_SUFFIX}
           onAreaSelect={handleAreaSelect}/>
       </div>
     );

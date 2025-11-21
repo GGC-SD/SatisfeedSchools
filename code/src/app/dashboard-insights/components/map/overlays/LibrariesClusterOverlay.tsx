@@ -31,7 +31,11 @@ export type LibrarySelection = {
 type Props = {
   map: MLMap | null;
   idSuffix?: string;
-  onAreaSelect?: (poly: PolygonFeature | null, libraryName?: string, libraryDocId?: string) => void;
+  onAreaSelect?: (
+    poly: PolygonFeature | null,
+    libraryName?: string,
+    libraryDocId?: string
+  ) => void;
 };
 
 type LibraryDoc = {
@@ -59,7 +63,7 @@ export default function LibrariesClusterOverlay({
     const CLUST_ID = `libraries-clusters${idSuffix}`;
     const CNT_ID = `libraries-cluster-count${idSuffix}`;
     const PT_ID = `libraries-unclustered${idSuffix}`;
-    const SELECTED_ID = `libraries-selected${idSuffix}`;
+    const SELECTED_ID = `selected-point${idSuffix}`;
 
     let unmounted = false;
 
@@ -182,7 +186,7 @@ export default function LibrariesClusterOverlay({
         const poly = replaceFixedRadiusFromCenter(m, [lng, lat], 3, {
           idSuffix,
         });
-        
+
         const selection: LibrarySelection = {
           docId: String(p.docId ?? ""),
           name: String(p.name ?? "Library"),

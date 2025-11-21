@@ -149,7 +149,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
                     key={county}
                     value={county}
                     className={({ active }) =>
-                      `cursor-pointer px-3 py-2 ${active ? "bg-yellow-400" : ""}`
+                      `cursor-pointer px-3 py-2 ${active ? "bg-[#FF9700]" : ""}`
                     }
                   >
                     {county}
