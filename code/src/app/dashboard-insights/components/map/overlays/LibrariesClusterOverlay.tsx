@@ -101,6 +101,10 @@ export default function LibrariesClusterOverlay({
 
       const geojson = { type: "FeatureCollection" as const, features };
 
+      const canvas = m.getCanvas() as HTMLCanvasElement;
+      canvas.setAttribute("data-has-libraries", "true");
+      canvas.setAttribute("data-libraries-count", String(features.length));
+
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);
@@ -200,6 +204,10 @@ export default function LibrariesClusterOverlay({
         };
 
         onAreaSelect?.(poly, selection.name, selection.docId);
+
+        const canvas = m.getCanvas() as HTMLCanvasElement;
+        canvas.setAttribute("data-selected-library-docid", selection.docId);
+        canvas.setAttribute("data-selected-library-name", selection.name);
 
         try {
           if (m.getLayer(SELECTED_ID)) m.removeLayer(SELECTED_ID);

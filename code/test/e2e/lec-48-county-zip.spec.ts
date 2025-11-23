@@ -1,28 +1,19 @@
-// LEC-48
-// As a user, when I filter by County / ZIP code I expect the map to move to that location
+// LEC-57
+// As a user, I do not want the food distribution to be yellow
 
 import { test, expect } from "@playwright/test";
 
-test("test", async ({ page }) => {
+test("Unique Households Served is not yellow", async ({ page }) => {
   await page.goto("http://localhost:3000/dashboard-insights");
-  await page.locator("#headlessui-combobox-button-_R_aqml9bn5rlb_").click();
-  await page.getByRole("option", { name: "APPLING" }).click();
-  await page.locator("#headlessui-combobox-button-_R_aqml9bn5rlb_").click();
-  await page.getByRole("option", { name: "BARROW" }).click();
-  await page.getByRole("combobox", { name: "Select a county..." }).dblclick();
-  await page.getByRole("combobox", { name: "Select a county..." }).fill("Gw");
-  await page
-    .getByRole("combobox", { name: "Select a county..." })
-    .press("Enter");
-  await page.getByRole("combobox", { name: "Select a ZIP code" }).click();
-  await page.locator("#headlessui-combobox-button-_R_aqml9bn5rlb_").click();
-  await page.getByRole("combobox", { name: "Select a county..." }).fill("Gw");
-  await page
-    .getByRole("combobox", { name: "Select a county..." })
-    .press("Enter");
-  await page.getByRole("combobox", { name: "Select a ZIP code" }).click();
-  await page.getByRole("combobox", { name: "Select a ZIP code" }).fill("30019");
-  await page
-    .getByRole("combobox", { name: "Select a ZIP code" })
-    .press("Enter");
+
+  const swatch = page.getByTestId("legend-unique-households-swatch");
+  await expect(swatch).toBeVisible();
+
+  const color = await swatch.evaluate(
+    (el) => window.getComputedStyle(el).backgroundColor
+  );
+
+  console.log("Unique Households Swatch Color:", color);
+
+  expect(color).not.toBe("rgb(255, 255, 0)");
 });
