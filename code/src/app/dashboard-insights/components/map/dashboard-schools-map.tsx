@@ -15,6 +15,7 @@ import DistributionOverlay from "./overlays/distribution-overlay";
 import type { PolygonFeature } from "./overlays/click-radius";
 import { clearFixedRadius } from "./overlays/click-radius";
 import CountyOverlay from "./overlays/county-overlay";
+import KeyOverlay from "./overlays/key-overlay";
 
 /**
  * Utility type for map padding. Mirrors MapLibre's padding shape while also
@@ -278,8 +279,14 @@ const DashboardSchoolsMap = forwardRef<DashboardSchoolsMapHandle, Props>(functio
   useImperativeHandle(ref, () => ({ clearSelection: handleClear }), [handleClear]);
 
   return (
-    <>
+    <div className={`relative ${className}`}>
+      {/* Map container fills the parent */}
       <div ref={containerRef} className={`${className} school-map`} />
+
+      {/* Map Key */}
+      <div className="absolute bottom-0 left-0 z-10 w-full pointer-events-none opacity-95">
+        <KeyOverlay currentMap={"school"} />
+      </div>
 
       {/* Very noticeable Georgia outline */}
       {map && <GeorgiaOutlineOverlay map={map} />}
@@ -315,7 +322,7 @@ const DashboardSchoolsMap = forwardRef<DashboardSchoolsMapHandle, Props>(functio
           onAreaSelect={handleAreaSelect}
         />
       )}
-    </>
+    </div>
   );
 });
 

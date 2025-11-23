@@ -8,92 +8,88 @@ import maplibregl, {
 } from "maplibre-gl";
 import { db } from "@/firebase/firebaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
+
 import {
   replaceFixedRadiusFromCenter,
   clearFixedRadius,
   PolygonFeature,
 } from "./click-radius";
 
-/**
- * Props for the schools cluster overlay component.
- *
- * @property map                    Live MapLibre GL map instance. If null, nothing is rendered/attached.
- *
- * @property idSuffix               Optional suffix appended to all internal source/layer IDs so multiple
- *                                  instances can coexist without collisions (e.g., "-schools").
- *
- * @property onAreaSelect           Callback fired when a user clicks an **unclustered** school point.
- *                                  Receives the freshly drawn fixed-radius polygon (Feature<Polygon>)
- *                                  and the school's display name. Use this to update app state/sidebars.
- */
-type Props = {
-  map: MLMap | null;
-  idSuffix?: string; // to avoid id clashes if you mount multiple overlays
-  onAreaSelect?: (poly: PolygonFeature | null, schoolName?: string) => void;
+export type LibrarySelection = {
+  docId: string; //firestore document id
+  id?: string;
+  name: string;
+  address?: string;
+  city?: string;
+  county?: string;
+  state?: string;
+  zip?: string;
+  phone?: string;
+  website?: string;
 };
 
-/**
- * Shape of the school document in Firestore. Coordinates are expected to be
- * WGS84 lon/lat. Missing or non-numeric coords are skipped.
- */
-type SchoolDoc = {
+type Props = {
+  map: MLMap | null;
+  idSuffix?: string;
+  onAreaSelect?: (
+    poly: PolygonFeature | null,
+    libraryName?: string,
+    libraryDocId?: string
+  ) => void;
+};
+
+type LibraryDoc = {
   name?: string;
+  address?: string;
+  city?: string;
+  county?: string;
   state?: string;
+  zip?: string;
+  phone?: string;
+  website?: string;
   coords?: { lat: number; lng: number };
 };
 
-/**
- * SchoolsClusterOverlay
- *
- * Renders clustered school points from Firestore:
- *  - Adds a clustered circle layer + count label for clusters.
- *  - Adds a circle layer for **unclustered** (single) school points.
- *  - On clicking an unclustered point, draws/replaces a fixed-radius ring centered on the school
- *    (via `replaceFixedRadiusFromCenter`), highlights the selected school point with a distinct
- *    marker, and emits the polygon + name via `onAreaSelect`.
- *
- * Layer/Source IDs are derived from `idSuffix` to avoid collisions when mounting
- * multiple overlays. Cleanup removes all layers/sources and resets cursor/selection.
- */
-export default function SchoolsClusterOverlay({
+export default function LibrariesClusterOverlay({
   map,
-  idSuffix = "",
+  idSuffix = "-libraries",
   onAreaSelect,
 }: Props) {
   useEffect(() => {
     if (!map) return;
     const m = map;
 
-    // Stable IDs to make add/remove idempotent across re-renders
-    const SRC_ID = `schools${idSuffix}`;
-    const CLUST_ID = `clusters${idSuffix}`;
-    const CNT_ID = `cluster-count${idSuffix}`;
-    const PT_ID = `unclustered-point${idSuffix}`;
-    const SELECTED_ID = `selected-point${idSuffix}`; // Highlight overlay for the currently-selected school
+    const SRC_ID = `libraries-src${idSuffix}`;
+    const CLUST_ID = `libraries-clusters${idSuffix}`;
+    const CNT_ID = `libraries-cluster-count${idSuffix}`;
+    const PT_ID = `libraries-unclustered${idSuffix}`;
+    const SELECTED_ID = `selected-point${idSuffix}`;
 
     let unmounted = false;
 
-    /**
-     * Fetch school docs from Firestore, build a FeatureCollection<Point>, then
-     * add a clustered source with 3 layers: clusters, cluster-count symbol, and unclustered points.
-     */
     async function draw() {
-      const q = query(collection(db, "schools"));
-      const snap = await getDocs(q);
+      const qSnap = await getDocs(query(collection(db, "libraries")));
       if (unmounted) return;
 
-      const features = snap.docs.flatMap((docSnap) => {
-        const d = docSnap.data() as SchoolDoc;
+      const features = qSnap.docs.flatMap((docSnap) => {
+        const d = docSnap.data() as LibraryDoc;
         const lat = d?.coords?.lat;
         const lng = d?.coords?.lng;
         if (typeof lat !== "number" || typeof lng !== "number") return [];
+
         return [
           {
             type: "Feature" as const,
             properties: {
-              id: docSnap.id,
-              name: d.name ?? "School",
+              docId: docSnap.id,
+              name: d.name ?? "Library",
+              address: d.address ?? "",
+              city: d.city ?? "",
+              county: d.county ?? "",
               state: d.state ?? "",
+              zip: d.zip ?? "",
+              phone: d.phone ?? "",
+              website: d.website ?? "",
             },
             geometry: {
               type: "Point" as const,
@@ -105,15 +101,19 @@ export default function SchoolsClusterOverlay({
 
       const geojson = { type: "FeatureCollection" as const, features };
 
-      // Defensive remove before re-adding to avoid duplicate IDs
+      const canvas = m.getCanvas() as HTMLCanvasElement;
+      canvas.setAttribute("data-has-libraries", "true");
+      canvas.setAttribute("data-libraries-count", String(features.length));
+
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);
         if (m.getLayer(PT_ID)) m.removeLayer(PT_ID);
+        if (m.getLayer(SELECTED_ID)) m.removeLayer(SELECTED_ID);
+        if (m.getSource(SELECTED_ID)) m.removeSource(SELECTED_ID);
         if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
       } catch {}
 
-      // Clustered source
       m.addSource(SRC_ID, {
         type: "geojson",
         data: geojson,
@@ -141,11 +141,11 @@ export default function SchoolsClusterOverlay({
           "circle-color": [
             "step",
             ["get", "point_count"],
-            "#b00b58",
+            "#1d7c4f",
             50,
-            "#b5286c",
+            "#15613e",
             150,
-            "#96064c",
+            "#0d3c27",
           ],
           "circle-stroke-color": "#fff",
           "circle-stroke-width": 1.5,
@@ -166,7 +166,7 @@ export default function SchoolsClusterOverlay({
         paint: { "text-color": "#fff" },
       } as any);
 
-      // Unclustered single points (click targets)
+      // Unclustered library points
       m.addLayer({
         id: PT_ID,
         type: "circle",
@@ -174,37 +174,41 @@ export default function SchoolsClusterOverlay({
         filter: ["!", ["has", "point_count"]],
         paint: {
           "circle-radius": 10,
-          "circle-color": "#a84f79",
+          "circle-color": "#1fb874",
           "circle-stroke-color": "#fff",
           "circle-stroke-width": 1.5,
         },
       } as any);
 
-      /**
-       * Handle click on an **unclustered** school:
-       *  - Draw/replace a fixed 3-mile radius polygon centered on the school.
-       *  - Emit selection via onAreaSelect.
-       *  - Highlight the clicked school with a distinct marker (SELECTED_ID).
-       *  - Show a small popup with name/id/state.
-       */
       const onPointClick = (e: MapLayerMouseEvent) => {
         const f = e.features?.[0] as MapGeoJSONFeature | undefined;
         if (!f) return;
 
         const [lng, lat] = (f.geometry as any).coordinates as [number, number];
-        const { id, name, state } = (f.properties ?? {}) as {
-          id?: string;
-          name?: string;
-          state?: string;
-        };
+        const p = (f.properties ?? {}) as any;
 
-        // Draw/replace a fixed-radius ring (3 miles) around the clicked school
         const poly = replaceFixedRadiusFromCenter(m, [lng, lat], 3, {
           idSuffix,
         });
-        onAreaSelect?.(poly, name ?? "School");
 
-        // Remove any previous highlight marker, then add this one on top
+        const selection: LibrarySelection = {
+          docId: String(p.docId ?? ""),
+          name: String(p.name ?? "Library"),
+          address: p.address || "",
+          city: p.city || "",
+          county: p.county || "",
+          state: p.state || "",
+          zip: p.zip || "",
+          phone: p.phone || "",
+          website: p.website || "",
+        };
+
+        onAreaSelect?.(poly, selection.name, selection.docId);
+
+        const canvas = m.getCanvas() as HTMLCanvasElement;
+        canvas.setAttribute("data-selected-library-docid", selection.docId);
+        canvas.setAttribute("data-selected-library-name", selection.name);
+
         try {
           if (m.getLayer(SELECTED_ID)) m.removeLayer(SELECTED_ID);
           if (m.getSource(SELECTED_ID)) m.removeSource(SELECTED_ID);
@@ -225,27 +229,13 @@ export default function SchoolsClusterOverlay({
           source: SELECTED_ID,
           paint: {
             "circle-radius": 14,
-            "circle-color": "#107de3", // highlight color
+            "circle-color": "#2563eb",
             "circle-stroke-color": "#fff",
             "circle-stroke-width": 2,
           },
         } as any);
-
-        // Lightweight info popup
-        // new maplibregl.Popup({ offset: 12 })
-        //   .setLngLat([lng, lat])
-        //   .setHTML(
-        //     `<strong>${name ?? "School"}</strong><br/>${id ?? ""}${
-        //       state ? ` • ${state}` : ""
-        //     }`
-        //   )
-        //   .addTo(m);
       };
 
-      /**
-       * Handle click on a **cluster** bubble:
-       *  - Expand the clicked cluster to the appropriate zoom level and center.
-       */
       const onClusterClick = (e: MapLayerMouseEvent) => {
         const feats = m.queryRenderedFeatures(e.point, { layers: [CLUST_ID] });
         if (!feats?.length) return;
@@ -263,45 +253,29 @@ export default function SchoolsClusterOverlay({
         );
       };
 
-      // Cursor affordances (hand over clickable things)
       const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      const onEnterPoint = () => setCursor("pointer");
-      const onLeavePoint = () => setCursor("");
-      const onEnterCluster = () => setCursor("pointer");
-      const onLeaveCluster = () => setCursor("");
+      const onEnter = () => setCursor("pointer");
+      const onLeave = () => setCursor("");
 
-      // Wire events
       m.on("click", PT_ID, onPointClick);
       m.on("click", CLUST_ID, onClusterClick);
-      m.on("mouseenter", PT_ID, onEnterPoint);
-      m.on("mouseleave", PT_ID, onLeavePoint);
-      m.on("mouseenter", CLUST_ID, onEnterCluster);
-      m.on("mouseleave", CLUST_ID, onLeaveCluster);
+      m.on("mouseenter", PT_ID, onEnter);
+      m.on("mouseleave", PT_ID, onLeave);
+      m.on("mouseenter", CLUST_ID, onEnter);
+      m.on("mouseleave", CLUST_ID, onLeave);
 
-      // Per-effect cleanup for listeners
       return () => {
         try {
           m.off("click", PT_ID, onPointClick);
-        } catch {}
-        try {
           m.off("click", CLUST_ID, onClusterClick);
-        } catch {}
-        try {
-          m.off("mouseenter", PT_ID, onEnterPoint);
-        } catch {}
-        try {
-          m.off("mouseleave", PT_ID, onLeavePoint);
-        } catch {}
-        try {
-          m.off("mouseenter", CLUST_ID, onEnterCluster);
-        } catch {}
-        try {
-          m.off("mouseleave", CLUST_ID, onLeaveCluster);
+          m.off("mouseenter", PT_ID, onEnter);
+          m.off("mouseleave", PT_ID, onLeave);
+          m.off("mouseenter", CLUST_ID, onEnter);
+          m.off("mouseleave", CLUST_ID, onLeave);
         } catch {}
       };
     }
 
-    // Defer drawing until the style is ready
     if (!m.isStyleLoaded()) {
       const onLoad = () => {
         void draw();
@@ -312,33 +286,18 @@ export default function SchoolsClusterOverlay({
       void draw();
     }
 
-    // Full overlay cleanup on unmount or dependency change
     return () => {
       unmounted = true;
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
-      } catch {}
-      try {
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);
-      } catch {}
-      try {
         if (m.getLayer(PT_ID)) m.removeLayer(PT_ID);
-      } catch {}
-      try {
-        if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
-      } catch {}
-      try {
-        m.getCanvas().style.cursor = "";
-      } catch {}
-      try {
-        clearFixedRadius(m, { idSuffix });
-      } catch {}
-      try {
-        onAreaSelect?.(null);
-      } catch {}
-      try {
         if (m.getLayer(SELECTED_ID)) m.removeLayer(SELECTED_ID);
         if (m.getSource(SELECTED_ID)) m.removeSource(SELECTED_ID);
+        if (m.getSource(SRC_ID)) m.removeSource(SRC_ID);
+        m.getCanvas().style.cursor = "";
+        clearFixedRadius(m, { idSuffix });
+        onAreaSelect?.(null);
       } catch {}
     };
   }, [map, idSuffix, onAreaSelect]);
