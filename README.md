@@ -7,13 +7,15 @@ In Spring 2025, Team Satisfeed partnered with the nonprofit Satisfeed, which pro
 This semester’s work expands the original dashboard by integrating a new dashboard section with an interactive map. The goal is to help Satisfeed identify trends in food insecurity around Georgia's schools / libraries in relation to food distribution geographical data to improve distribution planning.
 
 ## Project Documentation:
-Project Demo [(https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)]
+[Project Demo](https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)\
+[Project Website](https://satisfeeddashboardproject.carrd.co)\
+Project Poster (in the Docs folder)\
+[Final Report](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx)
 
-Project Website [https://satisfeeddashboardproject.carrd.co] 
-
-Project Poster [STARS/CREATE Poster in the Docs folder] 
-
-Final Report [([Final_Report-_Team_Satisfeed.docx](https://github.com/user-attachments/files/20028096/Final_Report-_Team_Satisfeed.docx))]
+### Updates Fall 2025
+[Project Demo Vlog](https://youtu.be/BCJqnT96kgE)\
+[Project Poster](#)\
+[Final Report](#)
 
 ## Technologies
 - Next.js
