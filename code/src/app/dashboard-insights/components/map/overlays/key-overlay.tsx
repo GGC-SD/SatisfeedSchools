@@ -6,7 +6,10 @@ type KeyProps = {
 
 export default function KeyOverlay({ currentMap }: KeyProps) {
   return (
-    <div className="border-t-2 border-[#FF9700] h-auto bg-neutral-200 text-sm py-1 px-2">
+    <div
+      className="border-t-2 border-[#FF9700] h-auto bg-neutral-200 text-sm py-1 px-2"
+      data-testid="legend-key"
+    >
       <h1 className="text-lg">Legend</h1>
       <div className="flex flex-wrap gap-y-0 gap-x-2">
         {/** BOTH MAPS WILL HAVE THESE */}
@@ -15,7 +18,10 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
           <p>Selected Area</p>
         </div>
         <div className="flex gap-1">
-          <div className="w-6 h-6 bg-[#72e3ad99] rounded-full"></div>
+          <div
+            className="w-6 h-6 bg-[#72e3ad99] rounded-full"
+            data-testid="legend-unique-households-swatch"
+          ></div>
           <p>Unique Households Served</p>
         </div>
 
