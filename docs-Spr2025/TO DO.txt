@@ -1,0 +1,14 @@
+To Do:
+1. Highlights schools that have a high number of students on free and reduced lunch. Display the percentage/count of students receiving free/reduced lunch in the data card.
+
+2. Display opulation per School (With Date)
+
+3. Display population per Impact Zone and/or County/Zip
+
+4. Search Schools
+
+5. Save / Highlight Schools/ Map Markers
+
+6. Identify food distribution hotspots on heatmap by color
+
+7. Collect unemployment data from census/job bureau, track over time and updates regularly. Trend against food pantry visits.
