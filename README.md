@@ -15,7 +15,7 @@ Project Poster (in the Docs folder)\
 ### Updates Fall 2025
 [Project Demo Vlog](https://youtu.be/BCJqnT96kgE)\
 [Project Poster](https://github.com/GGC-SD/SatisfeedSchools/blob/main/docs-Fall2025/Satisfeed-flyer.pdf)\
-[Final Report](#)
+[Final Report](https://github.com/GGC-SD/SatisfeedSchools/blob/main/docs-Fall2025/Satisfeed%20Dashboard%20Final%20Report.pdf)
 
 ## Technologies
 - Next.js
