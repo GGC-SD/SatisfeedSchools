@@ -106,7 +106,7 @@ Sam Keller - Code Architecture / Lead programmer, UI/UX designer, Client liaison
 Dylan Long - Testing lead / Team manager 🦉  
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
-## Fall 2026 Team
+## Fall 2026 Team - Frenzy Farmers
 Clark Newell - Project Manager, Testing Lead
 <br>
 Carlos Matos - UI/UX designer, Documentation Lead
