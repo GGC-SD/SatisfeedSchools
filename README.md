@@ -107,6 +107,7 @@ Dylan Long - Testing lead / Team manager 🦉
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
 ## Fall 2026 Team
+Clark Newell - Project Manager, Testing Lead
 Carlos Matos - UI/UX designer, Documentation Lead
 
 ## Outreach Activities
