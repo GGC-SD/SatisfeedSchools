@@ -110,7 +110,7 @@ Ewura Ama Awere - Data Modeler, Documentation Lead
 Clark Newell - Project Manager, Testing Lead
 Carlos Matos - UI/UX designer, Documentation Lead
 Hugo Padilla - Lead Programmer, Client Liaison 
-<img width="480" height="360" alt="Satisfeed" src="https://github.com/user-attachments/assets/883e7014-a84b-45a9-8f1f-369d0b5b6eec" />
+<img width="480" height="360" alt="Satisfeed" src="https://github.com/user-attachments/assets/883e7014-a84b-45a9-8f1f-369d0b5b6eec" /n>
 
 
 
