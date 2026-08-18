@@ -106,6 +106,9 @@ Sam Keller - Code Architecture / Lead programmer, UI/UX designer, Client liaison
 Dylan Long - Testing lead / Team manager 🦉  
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
+## Fall 2026 Team
+Carlos Matos - UI/UX designer, Documentation Lead
+
 ## Outreach Activities
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
 2. Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 4/24/2025
