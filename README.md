@@ -109,6 +109,7 @@ Ewura Ama Awere - Data Modeler, Documentation Lead
 ## Fall 2026 Team
 Clark Newell - Project Manager, Testing Lead
 Carlos Matos - UI/UX designer, Documentation Lead
+Hugo Padilla - Lead Programmer, Client Liaison 
 
 ## Outreach Activities
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
