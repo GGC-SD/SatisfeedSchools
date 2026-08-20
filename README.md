@@ -106,9 +106,17 @@ Sam Keller - Code Architecture / Lead programmer, UI/UX designer, Client liaison
 Dylan Long - Testing lead / Team manager 🦉  
 Ewura Ama Awere - Data Modeler, Documentation Lead 
 
-## Fall 2026 Team
+## Fall 2026 Team - Frenzy Farmers
 Clark Newell - Project Manager, Testing Lead
+<br>
 Carlos Matos - UI/UX designer, Documentation Lead
+<br>
+Hugo Padilla - Lead Programmer, Client Liaison 
+<br>
+<br>
+<img width="480" height="360" alt="Satisfeed" src="https://github.com/user-attachments/assets/883e7014-a84b-45a9-8f1f-369d0b5b6eec" />
+
+
 
 ## Outreach Activities
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
