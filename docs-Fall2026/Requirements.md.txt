@@ -1,0 +1,4 @@
+Non-Functional: Mobile Friendly
+User friendly
+Functional: User can Search Zip Code
+Domain-Requirements: All Users with Smartphones and Computer 
