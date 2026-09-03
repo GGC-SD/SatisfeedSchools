@@ -21,9 +21,10 @@ h6 {
 }
 
 /* Dashboard Header */
+
 .dashboard-header-logo{
   @apply pt-10 pb-2 md:py-1 px-2 md:px-8 satisfeed-orange w-full text-center md:text-start;
-}
+} 
 
 .dashboard-header{
   @apply pt-10 pb-2 md:py-4 px-2 md:px-10 satisfeed-orange w-full text-center md:text-start;

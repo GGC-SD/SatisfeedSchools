@@ -17,12 +17,13 @@
     "csv-parse": "^5.6.0",
     "d3": "^7.9.0",
     "d3-geo": "^3.1.1",
-    "firebase": "^11.3.1",
+    "firebase": "^11.10.0",
+    "firebase-admin": "^14.3.0",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
-    "maplibre-gl": "^5.7.1",
-    "next": "^15.5.3",
+    "maplibre-gl": "^5.24.0",
+    "next": "^16.3.3",
     "node-fetch": "^3.3.2",
     "papaparse": "^5.5.3",
     "react": "^19.0.0",
@@ -59,5 +60,12 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
+  },
+  "allowScripts": {
+    "@firebase/util@1.12.1": true,
+    "@firebase/util@1.15.3": true,
+    "esbuild@0.28.2": true,
+    "protobufjs@7.6.5": true,
+    "unrs-resolver@1.12.2": true
   }
 }
