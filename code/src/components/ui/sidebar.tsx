@@ -49,6 +49,13 @@ export default function SidebarNav() {
             {/* Desktop Sidebar */}
             <div className="d-none d-md-block bg-dark text-white p-3" style={{ minHeight: "100vh", width: "240px" }}>
                 <Navbar bg="dark" variant="dark" className="flex-column align-items-start">
+                    <div className = "w-100 text-center">
+                        <img
+                            src = "/Satisfeed logo white.png"
+                            alt = "Satisfeed logo"
+                            className = "satisfeed-sidebar-logo img-fluid mb-3"
+                        />
+                    </div>
                     <Navbar.Brand className="mb-4">Navigation</Navbar.Brand>
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
@@ -81,6 +88,13 @@ export default function SidebarNav() {
                 placement="start"
             >
                 <Offcanvas.Header closeButton closeVariant="white">
+                    <div>
+                        <img
+                        src = "/Satisfeed logo white.png"
+                        alt = "Satisfeed logo"
+                        className = "satisfeed-sidebar-logo img-fluid mb-2"
+                        />
+                    </div>
                     <Offcanvas.Title>Navigation</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>

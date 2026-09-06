@@ -187,6 +187,17 @@ h6 {
   --map-btn-border: 0.5px solid #1d3b32;
   --map-btn-padding: 6px 10px;
   --map-btn-font-size: 14px;
+  --satisfeed-sidebar-logo-width: clamp(110px, 12vw, 150px);
+  --dashboard-title-font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.satisfeed-sidebar-logo {
+  width: var(--satisfeed-sidebar-logo-width);
+  height: auto;
+}
+
+.dashboard-page-title {
+  font-size: var(--dashboard-title-font-size);
 }
 
 @layer components {
