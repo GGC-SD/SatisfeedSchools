@@ -189,7 +189,7 @@ export default function Dashboard() {
                         )}
                     </div>
                     <footer className="mt-auto text-center text-muted small pt-3">
-                        © 2025 Georgia Gwinnett College – Team Satisfeed
+                        © 2026 Georgia Gwinnett College – Team Satisfeed
                     </footer>
                 </Col>
             </Row>
