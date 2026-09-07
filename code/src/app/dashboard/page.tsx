@@ -96,7 +96,7 @@ export default function Dashboard() {
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
                         <div className="text-center py-6">
-                            <h1 className="text-4xl font-bold text-gray-800">Satisfeed Dashboard</h1>
+                            <h1 className="dashboard-page-title font-bold text-gray-800">Satisfeed Dashboard</h1>
                         </div>
 
                         {/* Version Selector */}
