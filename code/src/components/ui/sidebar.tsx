@@ -23,7 +23,9 @@ const NavLink = ({ href, active, children, onClick = () => {} }) => {
 }
 
 export default function SidebarNav() {
+    /* Side Bar Navigation*/
     const [showMobileMenu, setShowMobileMenu] = useState(false)
+    const [showDesktopMenu, setShowDesktopMenu] = useState(false)
     const pathname = usePathname()
 
     const navItems = [
@@ -46,8 +48,22 @@ export default function SidebarNav() {
 
     return (
         <>
+        <Button
+            variant="dark"
+            className="d-none d-md-block position-fixed top-0 m-2"
+            style={{
+                left: showDesktopMenu ? "var(--sidebar-width)" : "0px",
+                zIndex: 9999,
+                transition: "left 0.3s ease"
+            }}
+            onClick={() => setShowDesktopMenu(!showDesktopMenu)}
+            aria-label="Toggle navigation menu"
+        >
+            ☰
+        </Button>
+
             {/* Desktop Sidebar */}
-            <div className="d-none d-md-block bg-dark text-white p-3" style={{ minHeight: "100vh", width: "240px" }}>
+            <div className={`position-fixed top-0 start-0 m-2 z-3 ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
                 <Navbar bg="dark" variant="dark" className="flex-column align-items-start">
                     <div className = "w-100 text-center">
                         <img
