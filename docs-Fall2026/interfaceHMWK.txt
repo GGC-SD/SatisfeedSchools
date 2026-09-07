@@ -1,0 +1,10 @@
+Carlos Matos Implemented variable .sidebar-open in the file globals.css and the corresponding page src/components/ui/sidebar.tsk
+
+Carlos Matos Implemented variable .sidebar-closed in the file globals.css and the corresponding page src/components/ui/sidebar.tsk
+
+Clark Newell Implemented variable .dashboard-page-title in the file globals.css and the corresponding page src/app/dashboard/page.tsk
+
+Clark Newell Implemented variable .satisfeed-sidebar-logo in the file globals.css and the corresponding page src/app/dashboard/page.tsk
+
+
+
