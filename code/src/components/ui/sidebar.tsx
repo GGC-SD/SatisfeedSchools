@@ -63,8 +63,8 @@ export default function SidebarNav() {
         </Button>
 
             {/* Desktop Sidebar */}
-            <div className={`position-fixed top-0 start-0 m-2 z-3 ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
-                <Navbar bg="dark" variant="dark" className="flex-column align-items-start">
+            <div className={`position-fixed top-0 start-0 sidebar-container ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
+                <Navbar bg="dark" variant="dark" className="flex-column align-items-start"style={{ width: "100%", height: "100%" }}>
                     <div className = "w-100 text-center">
                         <img
                             src = "/Satisfeed logo white.png"
@@ -72,7 +72,7 @@ export default function SidebarNav() {
                             className = "satisfeed-sidebar-logo img-fluid mb-3"
                         />
                     </div>
-                    <Navbar.Brand className="mb-4">Navigation</Navbar.Brand>
+                    <Navbar.Brand className="sidebar-navigation-title mb-4 w-100">Navigation</Navbar.Brand>
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>

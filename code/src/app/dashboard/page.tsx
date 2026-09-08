@@ -117,7 +117,7 @@ export default function Dashboard() {
                             <>
                                 {versionData?.dataset_info && (
                                     <p className="text-center text-sm text-gray-600 mb-4">
-                                        Data collected from <b>{versionData.dataset_info.startDate}</b> to
+                                        Data collected from <b>{versionData.dataset_info.startDate}</b> &nbsp;to&nbsp;
                                         <b>{versionData.dataset_info.endDate}</b> — {versionData.dataset_info.recordCount} records
                                     </p>
                                 )}
