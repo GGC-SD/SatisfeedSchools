@@ -26,15 +26,45 @@ export default function SidebarNav() {
     /* Side Bar Navigation*/
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showDesktopMenu, setShowDesktopMenu] = useState(false)
+    const [language, setLanguage] = useState("en")
     const pathname = usePathname()
 
+
+    const translations = {
+    en: {
+        navigation: "Navigation",
+        dashboard: "Dashboard Summary",
+        insights: "Dashboard Insights",
+        summary: "Summary Detail",
+        upload: "Upload Raw Data",
+        versions: "Manage Versions",
+        logout: "Log Out",
+        spanish: "Español",
+    },
+
+    es: {
+        navigation: "Navegación",
+        dashboard: "Resumen del Dashboard",
+        insights: "Perspectivas del Dashboard",
+        summary: "Detalle del Resumen",
+        upload: "Subir Datos sin Procesar",
+        versions: "Administrar Versiones",
+        logout: "Cerrar Sesión",
+        english: "English",
+    },
+    
+    
+    
+}
+   const t = translations[language]
+    
     const navItems = [
-        { path: "/dashboard", label: "Dashboard Summary" },
-        {path: "/dashboard-insights", label: "Dashboard Insights" },
-        { path: "/summary", label: "Summary Detail" },
-        { path: "/upload", label: "Upload Raw Data" },
-        { path: "/manage-versions", label: "Manage Versions" },
-    ]
+    { path: "/dashboard", label: "dashboard" },
+    { path: "/dashboard-insights", label: "insights" },
+    { path: "/summary", label: "summary" },
+    { path: "/upload", label: "upload" },
+    { path: "/manage-versions", label: "versions" },
+]
 
     const handleLogout = async () => {
         const auth = getAuth()
@@ -76,12 +106,17 @@ export default function SidebarNav() {
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>
-                                {item.label}
+                                {t[item.label]}
                             </NavLink>
                         ))}
+                        <Button variant="outline-light" className="mt-2" onClick={() => setLanguage(language === "en" ? "es" : "en")}>
+                            {language === "en" ? "Español" : "English"}
+                        </Button>
                         <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
                             Log Out
                         </Button>
+                        
+
                     </Nav>
                 </Navbar>
             </div>
