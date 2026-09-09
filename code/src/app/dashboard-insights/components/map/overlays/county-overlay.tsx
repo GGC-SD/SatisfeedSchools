@@ -10,8 +10,8 @@ import type { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
  *  - Accepts a boundary selection from outside the map
  *    ({ type: "county" | "zip", countyName, zcta? }).
  *  - Fetches the corresponding GeoJSON:
- *      • county → /data/ga-counties.geojson (match `properties.NAME`)
- *      • zip    → /data/zips/ga-zips-{kebab(county)}.geojson (match `properties.zcta`)
+ *      • county → /schools/data/ga-counties.geojson (match `properties.NAME`)
+ *      • zip    → /schools/data/zips/ga-zips-{kebab(county)}.geojson (match `properties.zcta`)
  *  - Adds **one** GeoJSON source with the single selected feature.
  *  - Renders a translucent fill + a visible outline (never both county and ZIP at once).
  *  - Fits the camera to that feature’s bbox.
@@ -36,14 +36,14 @@ type Props = {
   selection: BoundarySelection;
 };
 
-const COUNTIES_URL = "/data/ga-counties.geojson";
+const COUNTIES_URL = "/schools/data/ga-counties.geojson";
 
 /**
  * Build the county-specific ZIP GeoJSON path.
  * Filename is kebab-cased and ASCII-normalized to avoid diacritics/whitespace issues.
  */
 const countyZipFile = (countyName: string) =>
-  `/data/zips/ga-zips-${countyName
+  `/schools/data/zips/ga-zips-${countyName
     .toLowerCase()
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")

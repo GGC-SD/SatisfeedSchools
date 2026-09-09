@@ -13,7 +13,7 @@ type Props = {
 
 export default function GeorgiaOutlineOverlay({
   map,
-  url = "/data/georgia-boundary.geojson",
+  url = "/schools/data/georgia-boundary.geojson",
   lineColor = "#000000",
   lineWidth = 4,
   showHalo = true,

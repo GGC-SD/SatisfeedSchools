@@ -31,17 +31,17 @@ type LibraryTotal = number;
  * This is the same dataset visualized on the map overlays.
  */
 const HOUSEHOLD_POINTS_URL =
-  "/data/heatmap-2025-10-12T04-04-48-925Z-k0-r2-cap0.geojson";
+  "/schools/data/heatmap-2025-10-12T04-04-48-925Z-k0-r2-cap0.geojson";
 
 /** Path to statewide county boundaries. */
-const COUNTIES_URL = "/data/ga-counties.geojson";
+const COUNTIES_URL = "/schools/data/ga-counties.geojson";
 
 /**
  * Utility to build a path to a county’s ZIP GeoJSON file.
  * File naming follows a normalized kebab-case convention.
  */
 const countyZipFile = (countyName: string) =>
-  `/data/zips/ga-zips-${countyName
+  `/schools/data/zips/ga-zips-${countyName
     .toLowerCase()
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")

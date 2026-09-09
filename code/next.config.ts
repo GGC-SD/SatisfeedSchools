@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+    basePath: "/schools",
+    trailingSlash: true,
+    output: "standalone",
     eslint: {
         ignoreDuringBuilds: true,
     },

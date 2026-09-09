@@ -29,7 +29,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
   const [zipQuery, setZipQuery] = useState("");
 
   useEffect(() => {
-    fetch("/data/Zip_City_Mapping.csv")
+    fetch("/schools/data/Zip_City_Mapping.csv")
       .then((res) => res.text())
       .then((csvText) => {
         const response = parse(csvText, {

@@ -41,7 +41,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
     useEffect(() => {
         const fetchGeoJSON = async () => {
             try {
-                const response = await fetch("/data/gz_2010_us_050_00_5m.json");
+                const response = await fetch("/schools/data/gz_2010_us_050_00_5m.json");
                 const geojson = await response.json();
 
                 const georgiaFeatures = geojson.features.filter(
@@ -80,7 +80,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
             if (!versionId) return;
 
             try {
-                const response = await fetch(`/api/getResults?id=${versionId}`);
+                const response = await fetch(`/schools/api/getResults/?id=${versionId}`);
                 const { data } = await response.json();
 
                 if (!data) return;

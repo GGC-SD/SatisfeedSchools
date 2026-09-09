@@ -63,7 +63,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
             if (!versionId) return
             setLoading(true);
             try {
-                const response = await fetch(`/api/getResults?id=${versionId}`)
+                const response = await fetch(`/schools/api/getResults/?id=${versionId}`)
                 const { data } = await response.json()
 
                 if (!data) return
@@ -100,7 +100,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     useEffect(() => {
         const loadMap = async () => {
             try {
-                const response = await fetch("/data/ga_georgia_zip_codes_geo.min.json")
+                const response = await fetch("/schools/data/ga_georgia_zip_codes_geo.min.json")
                 const geoData = await response.json()
 
                 const projection = d3.geoMercator().scale(8000).center([-83.5, 32.8]).translate([480, 300])

@@ -69,7 +69,7 @@ function ChartContainer({
         async function fetchData() {
             if (!versionId) return;
             try {
-                const response = await fetch(`/api/getResults?id=${versionId}`);
+                const response = await fetch(`/schools/api/getResults/?id=${versionId}`);
                 const result = await response.json();
                 const chartData = result?.data?.[`${chartType}_summary`] || [];
                 setData(chartData.filter((entry: any) => entry[timeKey] !== "Unknown"));

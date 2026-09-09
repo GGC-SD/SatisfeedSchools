@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     await fs.writeFile(filePath, JSON.stringify(fc));
 
     // public URL
-    const geojsonUrl = `/data/${fname}`;
+    const geojsonUrl = `/schools/data/${fname}`;
 
     // ================================================================================
 

@@ -47,7 +47,7 @@ export default function Dashboard() {
 
         try {
             console.log(`Fetching data for version: ${versionId}`)
-            const response = await fetch(`/api/getResults?id=${versionId}`)
+            const response = await fetch(`/schools/api/getResults/?id=${versionId}`)
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch data: ${response.statusText}`)

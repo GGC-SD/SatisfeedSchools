@@ -42,7 +42,7 @@ export default function Page() {
 
     const fetchSummaryData = async (versionId: string) => {
         try {
-            const response = await fetch(`/api/getResults?id=${versionId}`);
+            const response = await fetch(`/schools/api/getResults/?id=${versionId}`);
             const json = await response.json();
             const summaries: { [key: string]: any[] } = {
                 county_summary: json.data?.county_summary || [],
