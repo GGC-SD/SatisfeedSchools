@@ -6,5 +6,9 @@ Clark Newell Implemented variable .dashboard-page-title in the file globals.css 
 
 Clark Newell Implemented variable .satisfeed-sidebar-logo in the file globals.css and the corresponding page src/app/dashboard/page.tsk
 
+Hugo Padilla Implemented variable .dashboard-main-header in the fiile globals.css and the corresponding page src/app/dashboard/page.tsk
 
+Hugo Padilla Implemented variable .dashboard-header-padding in the file globals.css and the corresponding page src/app/dashboard/page.tsk
+
+Hugo Padilla created variable .satisfeed-primary in the file globals.css for further optimization when the primary color is needed.
 

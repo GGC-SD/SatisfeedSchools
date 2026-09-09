@@ -191,6 +191,26 @@ h6 {
   --satisfeed-sidebar-logo-width: clamp(110px, 12vw, 150px);
   --dashboard-title-font-size: clamp(1.75rem, 4vw, 2.25rem);
   --sidebar-width: clamp(190px, 4vw, 220px);
+  --dashboard-header-logo-size: clamp(140px, 25vw, 260px);
+  --dashboard-header-padding: clamp(2rem, 6vw, 4.5rem);
+  --satisfeed-primary: #FF9700 /* This code can be further implemented if we want to re-use the main Satisfeed Color easily. */
+}
+
+.dashboard-main-header {
+  position: relative;
+  text-align: center;
+  padding: var(--dashboard-header-padding) 1rem;
+
+  background-image:
+          linear-gradient(
+                  rgba(255, 255, 255, 0.78),
+                  rgba(255, 255, 255, 0.78)
+          ),
+          url("/Satisfeed logo.png");
+
+  background-repeat: repeat;
+  background-position: center;
+  background-size: var(--dashboard-header-logo-size);
 }
 
 .satisfeed-sidebar-logo {
