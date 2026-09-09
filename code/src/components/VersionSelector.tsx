@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { db } from "../firebase/firebaseConfig"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
+import { Row, Col, Container, Button, ButtonGroup, Form, Card } from "react-bootstrap"
 
 interface Version {
     id: string
