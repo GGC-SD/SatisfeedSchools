@@ -70,6 +70,7 @@ export default function SchoolsClusterOverlay({
     const CNT_ID = `cluster-count${idSuffix}`;
     const PT_ID = `unclustered-point${idSuffix}`;
     const SELECTED_ID = `selected-point${idSuffix}`; // Highlight overlay for the currently-selected school
+    const SCHOOL_ICON_ID = `satisfeed-school-icon${idSuffix}`;
 
     let unmounted = false;
 
@@ -104,6 +105,13 @@ export default function SchoolsClusterOverlay({
       });
 
       const geojson = { type: "FeatureCollection" as const, features };
+
+      // Add logo for individual school markers
+      if (!m.hasImage(SCHOOL_ICON_ID)) {
+        const schoolIcon = await m.loadImage("/SmallSatisfeedLogoTransp.png");
+        if (unmounted) return;
+        m.addImage(SCHOOL_ICON_ID, schoolIcon.data);
+      }
 
       // Defensive remove before re-adding to avoid duplicate IDs
       try {
@@ -169,14 +177,14 @@ export default function SchoolsClusterOverlay({
       // Unclustered single points (click targets)
       m.addLayer({
         id: PT_ID,
-        type: "circle",
+        type: "symbol",
         source: SRC_ID,
         filter: ["!", ["has", "point_count"]],
-        paint: {
-          "circle-radius": 10,
-          "circle-color": "#a84f79",
-          "circle-stroke-color": "#fff",
-          "circle-stroke-width": 1.5,
+        layout: {
+          "icon-image": SCHOOL_ICON_ID,
+          "icon-size": 0.045,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
         },
       } as any);
 
@@ -219,15 +227,16 @@ export default function SchoolsClusterOverlay({
           },
         } as any);
 
+        // Switched from a coverup highlighted circle into an outline circle
         m.addLayer({
           id: SELECTED_ID,
           type: "circle",
           source: SELECTED_ID,
           paint: {
             "circle-radius": 14,
-            "circle-color": "#107de3", // highlight color
-            "circle-stroke-color": "#fff",
-            "circle-stroke-width": 2,
+            "circle-color": "rgba(0, 0, 0, 0)",
+            "circle-stroke-color": "#1d3b32",
+            "circle-stroke-width": 3,
           },
         } as any);
 
