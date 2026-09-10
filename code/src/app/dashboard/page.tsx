@@ -31,7 +31,32 @@ export default function Dashboard() {
     const [selectedTimeCreated, setSelectedTimeCreated] = useState<Date | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
+    const [language, setLanguage] = useState<"en" | "es">("en");
+    const translations = {
+        en: {
+            title: "Satisfeed Dashboard",
+            dataCollected: "Data collected from",
+            to: "to",
+            records: "records",
+            loading: "Loading dashboard data...",
+            zipMap: "ZIP Map",
+            countyMap: "County Map",
+            footer: "© 2026 Georgia Gwinnett College – Team Satisfeed"
+        },
 
+        es: {
+            title: "Panel de Satisfeed",
+            dataCollected: "Datos recopilados desde",
+            to: "hasta",
+            records: "registros",
+            loading: "Cargando datos del panel...",
+            zipMap: "Mapa por Código Postal",
+            countyMap: "Mapa por Condado",
+            footer: "© 2026 Georgia Gwinnett College – Equipo Satisfeed"
+        }
+    };
+
+    const t = translations[language];
     const [selectedZip, setSelectedZip] = useState<string | null>(null);
     const [timeframe, setTimeframe] = useState("latest");
     const [specificTime, setSpecificTime] = useState("");
@@ -89,7 +114,10 @@ export default function Dashboard() {
         <Container fluid className="p-0">
             <Row className="m-0">
                 <Col md={2} className="d-none d-md-block p-0" style={{ position: "sticky", top: 0, height: "100vh", overflowY: "auto" }}>
-                    <SidebarNav />
+                    <SidebarNav
+                        language={language}
+                        setLanguage={setLanguage}
+                    />
                 </Col>
 
                 <Col md={10} lg={10} className="pt-5 pb-2 d-flex flex-column min-vh-100">
@@ -97,7 +125,7 @@ export default function Dashboard() {
                         {/* Dashboard Header */}
                         <div className="dashboard-main-header">
                             <h1 className="dashboard-page-title font-bold text-gray-800">
-                                Satisfeed Dashboard
+                                {t.title}
                             </h1>
                         </div>
 
@@ -113,14 +141,18 @@ export default function Dashboard() {
 
                         {isLoading ? (
                             <div className="text-center py-8">
-                                <p className="text-gray-600">Loading dashboard data...</p>
+                                <p className="text-gray-600">{t.loading}</p>
                             </div>
                         ) : (
                             <>
                                 {versionData?.dataset_info && (
                                     <p className="text-center text-sm text-gray-600 mb-4">
-                                        Data collected from <b>{versionData.dataset_info.startDate}</b> &nbsp;to&nbsp;
-                                        <b>{versionData.dataset_info.endDate}</b> — {versionData.dataset_info.recordCount} records
+                                        {t.dataCollected}{" "}
+                                        <b>{versionData.dataset_info.startDate}</b>
+                                        &nbsp;{t.to}&nbsp;
+                                        <b>{versionData.dataset_info.endDate}</b>
+                                        {" — "}
+                                        {versionData.dataset_info.recordCount} {t.records}
                                     </p>
                                 )}
 
@@ -140,7 +172,11 @@ export default function Dashboard() {
                                         <ButtonGroup className="mb-3">
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${mapView === "zip" ? "bg-warning text-dark border border-dark" : "btn-secondary"}`}
+                                                className={`border border-dark px-4 py-2 ${
+                                                    mapView === "zip"
+                                                        ? "bg-warning text-dark border border-dark"
+                                                        : "btn-secondary"
+                                                }`}
                                                 onClick={() => {
                                                     setMapView("zip");
                                                     setSelectedCounty(null);
@@ -149,11 +185,15 @@ export default function Dashboard() {
                                                     setSpecificTime("");
                                                 }}
                                             >
-                                                ZIP Map
+                                                {t.zipMap}
                                             </Button>
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${mapView === "county" ? "bg-warning text-dark border border-dark" : "btn-secondary"}`}
+                                                className={`border border-dark px-4 py-2 ${
+                                                    mapView === "county"
+                                                        ? "bg-warning text-dark border border-dark"
+                                                        : "btn-secondary"
+                                                }`}
                                                 onClick={() => {
                                                     setMapView("county");
                                                     setSelectedZip(null);
@@ -162,7 +202,7 @@ export default function Dashboard() {
                                                     setSpecificTime("");
                                                 }}
                                             >
-                                                County Map
+                                                {t.countyMap}
                                             </Button>
                                         </ButtonGroup>
                                         {mapView === "zip" ? (
@@ -191,7 +231,7 @@ export default function Dashboard() {
                         )}
                     </div>
                     <footer className="mt-auto text-center text-muted small pt-3">
-                        © 2026 Georgia Gwinnett College – Team Satisfeed
+                        {t.footer}
                     </footer>
                 </Col>
             </Row>

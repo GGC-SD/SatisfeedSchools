@@ -22,11 +22,17 @@ const NavLink = ({ href, active, children, onClick = () => {} }) => {
     )
 }
 
-export default function SidebarNav() {
-    /* Side Bar Navigation*/
+interface SidebarNavProps {
+    language: "en" | "es";
+    setLanguage: React.Dispatch<React.SetStateAction<"en" | "es">>;
+}
+
+export default function SidebarNav({
+                                       language,
+                                       setLanguage
+                                   }: SidebarNavProps) {
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showDesktopMenu, setShowDesktopMenu] = useState(false)
-    const [language, setLanguage] = useState("en")
     const pathname = usePathname()
 
 
@@ -109,7 +115,11 @@ export default function SidebarNav() {
                                 {t[item.label]}
                             </NavLink>
                         ))}
-                        <Button variant="outline-light" className="mt-2" onClick={() => setLanguage(language === "en" ? "es" : "en")}>
+                        <Button
+                            variant="outline-light"
+                            className="mt-2"
+                            onClick={() => setLanguage(language === "en" ? "es" : "en")}
+                        >
                             {language === "en" ? "Español" : "English"}
                         </Button>
                         <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
