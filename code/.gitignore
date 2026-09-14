@@ -24,6 +24,13 @@
 .DS_Store
 *.pem
 
+# Private keys and certificates
+*.key
+*.p12
+*.pfx
+certs/
+/docker/nginx/certs/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

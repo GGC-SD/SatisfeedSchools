@@ -1,0 +1,9 @@
+{
+  "name": "satisfeed-docker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "docker build -f Dockerfile --secret id=app_env,src=../.env.local -t satisfeed-schools:latest .. && docker build -f nginx/Dockerfile -t satisfeed-nginx:latest nginx",
+    "start": "docker compose up -d"
+  }
+}
