@@ -1,0 +1,10 @@
+.git
+.gitignore
+.next
+node_modules
+docker
+*.log
+test-results
+
+# Keep secret files out of the build.
+**/.env*

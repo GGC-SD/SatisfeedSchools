@@ -1,0 +1,22 @@
+services:
+  frontend:
+    image: satisfeed-nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs:ro
+
+  backend:
+    image: satisfeed-schools:latest
+    env_file:
+      - ../.env.local
+    expose:
+      - "3000"
+    volumes:
+      - schools-data:/app/public/data
+
+volumes:
+  schools-data:
