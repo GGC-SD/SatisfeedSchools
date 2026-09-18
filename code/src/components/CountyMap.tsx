@@ -80,7 +80,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
             if (!versionId) return;
 
             try {
-                const response = await fetch(`/api/getResults/?id=${versionId}`);
+                const response = await fetch(`/api/getResults?id=${versionId}`);
                 const { data } = await response.json();
 
                 if (!data) return;

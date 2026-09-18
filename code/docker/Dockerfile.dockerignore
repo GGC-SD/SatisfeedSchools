@@ -1,33 +1,10 @@
 .git
 .gitignore
-.idea
 .next
 node_modules
-coverage
-out
-build
 docker
 *.log
-*.tsbuildinfo
 test-results
-playwright-report
 
 # Keep secret files out of the build.
 **/.env*
-**/*.pem
-**/*.key
-**/*.p12
-**/*.pfx
-**/*.jks
-**/certs
-**/.ssh
-**/id_rsa*
-**/id_ed25519*
-**/.npmrc
-**/.netrc
-**/serviceaccount*.json
-**/serviceAccount*.json
-**/service-account*.json
-**/auth.json
-**/credentials.json
-**/secrets.json

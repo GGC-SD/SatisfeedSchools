@@ -63,7 +63,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
             if (!versionId) return
             setLoading(true);
             try {
-                const response = await fetch(`/api/getResults/?id=${versionId}`)
+                const response = await fetch(`/api/getResults?id=${versionId}`)
                 const { data } = await response.json()
 
                 if (!data) return
