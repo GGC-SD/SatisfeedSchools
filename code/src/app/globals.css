@@ -201,12 +201,7 @@ h6 {
   text-align: center;
   padding: var(--dashboard-header-padding) 1rem;
 
-  background-image:
-          linear-gradient(
-                  rgba(255, 255, 255, 0.78),
-                  rgba(255, 255, 255, 0.78)
-          ),
-          url("/Satisfeed logo.png");
+
 
   background-repeat: repeat;
   background-position: center;
