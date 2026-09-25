@@ -4,8 +4,6 @@ import SidebarNav from "@/components/ui/sidebar";
 import { Container, Row, Col } from "react-bootstrap";
 import VersionSelector from "@/components/VersionSelector";
 import ZipMap from "@/components/ZipMap";
-import {useAuth} from "@/firebase/authContext";
-import {useRouter} from "next/navigation";
 import DemographicCharts from "@/components/ui/DemographicCharts";
 import CountyMap from "@/components/CountyMap";
 import {Button, ButtonGroup} from "react-bootstrap";
@@ -16,16 +14,6 @@ interface Metrics {
 }
 
 export default function Dashboard() {
-    //Add logic to navigate the user back to the login page if user does not sign in
-    const { user, loading } = useAuth();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (!loading && !user) {
-            router.push("/");
-        }
-    }, [user, loading]);
-
     const [totalMetrics, setTotalMetrics] = useState<Metrics | null>(null);
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
     const [selectedTimeCreated, setSelectedTimeCreated] = useState<Date | null>(null);

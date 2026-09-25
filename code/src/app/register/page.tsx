@@ -101,7 +101,7 @@ export default function Register() {
                         <Button type="submit" variant="primary" className="w-100">Register</Button>
                     </Form>
                     <p className="mt-3 text-center">
-                        Already have an account? <Link href="/">Login</Link>
+                        Already have an account? <Link href="/login">Login</Link>
                     </p>
                 </Card>
             </Col>

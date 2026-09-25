@@ -1,13 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Form, Button, Alert, Spinner, Row, Col } from "react-bootstrap";
 import SidebarNav from "@/components/ui/sidebar";
+import { useAuth } from "@/firebase/authContext";
+import { useRouter } from "next/navigation";
 
 export default function UploadPage() {
+    const { user, loading } = useAuth();
+    const router = useRouter();
     const [files, setFiles] = useState<FileList | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+    }, [user, loading, router]);
+
+    if (loading || !user) {
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <Spinner animation="border" />
+            </div>
+        );
+    }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFiles(event.target.files);

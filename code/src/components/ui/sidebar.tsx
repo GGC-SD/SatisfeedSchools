@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
+import { useAuth } from "@/firebase/authContext"
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }) => {
@@ -25,14 +26,22 @@ const NavLink = ({ href, active, children, onClick = () => {} }) => {
 export default function SidebarNav() {
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const pathname = usePathname()
+    const { user, loading } = useAuth()
 
-    const navItems = [
+    const publicNavItems = [
         { path: "/dashboard", label: "Dashboard Summary" },
         {path: "/dashboard-insights", label: "Dashboard Insights" },
         { path: "/summary", label: "Summary Detail" },
+    ]
+
+    const protectedNavItems = [
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },
     ]
+
+    const navItems = user
+        ? [...publicNavItems, ...protectedNavItems]
+        : publicNavItems
 
     const handleLogout = async () => {
         const auth = getAuth()
@@ -56,9 +65,15 @@ export default function SidebarNav() {
                                 {item.label}
                             </NavLink>
                         ))}
-                        <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
-                            Log Out
-                        </Button>
+                        {!loading && (user ? (
+                            <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
+                                Log Out
+                            </Button>
+                        ) : (
+                            <Button variant="outline-light" className="mt-4" onClick={() => { window.location.href = "/login" }}>
+                                Log In
+                            </Button>
+                        ))}
                     </Nav>
                 </Navbar>
             </div>
@@ -95,16 +110,26 @@ export default function SidebarNav() {
                                 {item.label}
                             </NavLink>
                         ))}
-                        <Button
-                            variant="outline-light"
-                            className="mt-4"
-                            onClick={() => {
-                                setShowMobileMenu(false)
-                                handleLogout()
-                            }}
-                        >
-                            Log Out
-                        </Button>
+                        {!loading && (user ? (
+                            <Button
+                                variant="outline-light"
+                                className="mt-4"
+                                onClick={() => {
+                                    setShowMobileMenu(false)
+                                    handleLogout()
+                                }}
+                            >
+                                Log Out
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="outline-light"
+                                className="mt-4"
+                                onClick={() => { window.location.href = "/login" }}
+                            >
+                                Log In
+                            </Button>
+                        ))}
                     </Nav>
                 </Offcanvas.Body>
             </Offcanvas>

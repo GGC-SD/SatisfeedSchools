@@ -9,7 +9,13 @@ type PanelProps = {
 export default function Panel({ currentTab }: PanelProps) {
   return (
     <div className="w-full h-fit rounded-b-md rounded-r-md bg-neutral-200 drop-shadow-lg">
-      {currentTab == 1 ? <SchoolDisplay /> : <LibraryDisplay />}
+      <div hidden={currentTab != 1}>
+        <SchoolDisplay />
+      </div>
+
+      <div hidden={currentTab != 2}>
+        <LibraryDisplay />
+      </div>
     </div>
   );
 }
