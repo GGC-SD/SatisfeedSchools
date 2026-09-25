@@ -93,9 +93,6 @@ export default function Login() {
               <Link href="/register">Create Account</Link> |{" "}
               <Link href="/forgot-password">Forgot Password?</Link>
             </p>
-            <p className="mt-3 text-center">
-              <Link href="/dashboard">View Public Dashboard</Link>
-            </p>
           </Card>
         </Col>
       </Row>
