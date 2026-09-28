@@ -6,11 +6,38 @@
 - Node.js and npm
 - A valid `code/.env.local` file
 
-The environment file and certificate files are not included in Git.
+## DuckDNS and HTTPS
+
+The test hostname is (`Replace satisfeed.duckdns.org in the Nginx config and certbot commands.`):
+
+```text
+satisfeed.duckdns.org
+```
+
+Create certificate folder:
+
+```powershell
+New-Item -ItemType Directory -Force certbot\conf
+```
+
+Request the certificate:
+
+```powershell
+docker run --rm -it -p 80:80 `
+  -v "${PWD}\certbot\conf:/etc/letsencrypt" `
+  certbot/certbot certonly `
+  --standalone `
+  --email YOUR_EMAIL_ADDRESS `
+  --agree-tos `
+  --no-eff-email `
+  -d satisfeed.duckdns.org
+```
+
+Replace `YOUR_EMAIL_ADDRESS` with a valid email address.
 
 ## Run the application
 
-This folder runs the Next.js application and Nginx together:
+This folder runs the Next.js app and nginx together:
 
 ```text
 Nginx :80/:443 -> app:3000
@@ -23,46 +50,10 @@ npm run build
 npm run start
 ```
 
-Check the containers:
+## Renew the certificate
 
 ```powershell
-docker compose ps
-```
-
-Stop the application:
-
-```powershell
-docker compose down
-```
-
-The application build uses `../.env.local` as a BuildKit secret.
-
-## DuckDNS and HTTPS
-
-The test hostname is:
-
-```text
-satisfeed.duckdns.org
-```
-
-Create the certificate folders:
-
-```powershell
-New-Item -ItemType Directory -Force certbot\conf
-New-Item -ItemType Directory -Force certbot\www
-```
-
-Request the certificate:
-
-```powershell
-docker run --rm -it `
+docker run --rm -it -p 80:80 `
   -v "${PWD}\certbot\conf:/etc/letsencrypt" `
-  -v "${PWD}\certbot\www:/var/www/certbot" `
-  certbot/certbot certonly `
-  --webroot `
-  --webroot-path /var/www/certbot `
-  --email YOUR_EMAIL_ADDRESS `
-  --agree-tos `
-  --no-eff-email `
-  -d satisfeed.duckdns.org
+  certbot/certbot renew
 ```
