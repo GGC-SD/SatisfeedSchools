@@ -95,11 +95,9 @@ export default function Dashboard() {
                 <Col md={10} lg={10} className="pt-5 pb-2 d-flex flex-column min-vh-100">
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
-                        <div className="dashboard-main-header">
-                            <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" /><img/>
-                            <h1 className="dashboard-page-title font-bold text-gray-800">
-                                Satisfeed Dashboard
-                            </h1>
+                        <div className="dashboard-main-header flex items-center justify-center gap-4 w-full"> 
+                        <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo h-1 w-4" />
+                        <h1 className="dashboard-page-title font-bold text-gray-800 text-2xl"> Dashboard </h1> 
                         </div>
 
                         {/* Version Selector */}
