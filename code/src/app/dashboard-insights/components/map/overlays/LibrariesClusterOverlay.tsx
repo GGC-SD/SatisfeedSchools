@@ -64,6 +64,7 @@ export default function LibrariesClusterOverlay({
     const CNT_ID = `libraries-cluster-count${idSuffix}`;
     const PT_ID = `libraries-unclustered${idSuffix}`;
     const SELECTED_ID = `selected-point${idSuffix}`;
+    const LIBARY_ICON_ID = `library-icon${idSuffix}`;
 
     let unmounted = false;
 
@@ -100,6 +101,15 @@ export default function LibrariesClusterOverlay({
       });
 
       const geojson = { type: "FeatureCollection" as const, features };
+
+      
+      //Add logo for libary points
+      if(!m.hasImage(LIBARY_ICON_ID)) {
+        const libIcon= await m.loadImage("/libary-icon.png");
+        if (unmounted) return;
+        m.addImage(LIBARY_ICON_ID, libIcon.data);
+      }
+
 
       const canvas = m.getCanvas() as HTMLCanvasElement;
       canvas.setAttribute("data-has-libraries", "true");
@@ -169,16 +179,18 @@ export default function LibrariesClusterOverlay({
       // Unclustered library points
       m.addLayer({
         id: PT_ID,
-        type: "circle",
+        type: "symbol",
         source: SRC_ID,
         filter: ["!", ["has", "point_count"]],
-        paint: {
-          "circle-radius": 10,
-          "circle-color": "#1fb874",
-          "circle-stroke-color": "#fff",
-          "circle-stroke-width": 1.5,
+        layout: {
+          "icon-image": LIBARY_ICON_ID,
+          "icon-size": 0.045,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
         },
       } as any);
+
+  
 
       const onPointClick = (e: MapLayerMouseEvent) => {
         const f = e.features?.[0] as MapGeoJSONFeature | undefined;
@@ -223,15 +235,16 @@ export default function LibrariesClusterOverlay({
           },
         } as any);
 
+        // Switch from cover highlighted circle to an outline circle for the selected point
         m.addLayer({
           id: SELECTED_ID,
           type: "circle",
           source: SELECTED_ID,
           paint: {
             "circle-radius": 14,
-            "circle-color": "#2563eb",
-            "circle-stroke-color": "#fff",
-            "circle-stroke-width": 2,
+            "circle-color": "rgba(248, 248, 249, 0.5)",
+            "circle-stroke-color": "#1d3b32",
+            "circle-stroke-width": 3,
           },
         } as any);
       };

@@ -68,7 +68,13 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
         {currentMap == "library" && (
           <>
             <div className="flex gap-1">
-              <div className="w-6 h-6 bg-[#1fb874] rounded-full border-2 border-white"></div>
+              <div className="flex gap-1 item-center">
+                <img
+                  src="/libary-icon.png"
+                  alt="Single Library"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
               <p>Single Library</p>
             </div>
 
@@ -79,8 +85,14 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
               <p>Library Cluster</p>
             </div>
 
-            <div className="flex gap-1">
-              <div className="w-6 h-6 bg-[#2563eb] rounded-full border-2 border-white"></div>
+            <div className="flex gap-1" items-center="true">
+              <div className="w-7 h-7 rounded-full border-[3px] border-[#1d3b32] flex items-center justify-center">
+                <img
+                  src="/libary-icon.png"
+                  alt="Selected Library"
+                  className="w-5 h-5 object-contain"
+                />
+              </div>
               <p>Selected Library</p>
             </div>
 
