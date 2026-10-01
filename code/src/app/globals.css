@@ -211,6 +211,8 @@ h6 {
 .satisfeed-sidebar-logo {
   width: var(--satisfeed-sidebar-logo-width);
   height: auto;
+  border: 2px ridge #edc07e;
+  
 }
 
 .dashboard-page-title {

@@ -124,6 +124,7 @@ export default function Dashboard() {
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
                         <div className="dashboard-main-header">
+                            <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" /><img/>
                             <h1 className="dashboard-page-title font-bold text-gray-800">
                                 {t.title}
                             </h1>
