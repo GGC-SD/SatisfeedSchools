@@ -34,6 +34,17 @@ export default function Tabs({onSelect}: TabsProp) {
             >
                 Libraries
             </button>
+            <button
+             /*Placeholder for pantry tab, make sure to add functionality for this tab in the future */
+             /* Currently just redirect to libary map tab with all it functionality, */
+             /* Create pantry-display.tsk, dashboard-pantry-map.tsk, PantryClusterOverlay.tsk*/
+                id="3"
+                className={`tab-basic
+                    ${selectedTab == 3 ? 'tab-selected' : 'tab-unselected' }`} 
+                onClick={handleSelectedTab}
+            >
+                Pantry
+            </button>
         </div>
         
     );
