@@ -4,7 +4,7 @@
 
 - Docker Desktop
 - Node.js and npm
-- A valid `code/.env.local` file
+- A valid `code/.env` file
 
 ## DuckDNS and HTTPS
 
