@@ -29,12 +29,12 @@ export default function SidebarNav() {
     const { user, loading } = useAuth()
 
     const publicNavItems = [
-        { path: "/dashboard", label: "Dashboard Summary" },
-        {path: "/dashboard-insights", label: "Dashboard Insights" },
-        { path: "/summary", label: "Summary Detail" },
+        { path: "/dashboard-insights", label: "Dashboard Insights" },
     ]
 
     const protectedNavItems = [
+        { path: "/dashboard", label: "Dashboard Summary" },
+        { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },
     ]

@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import SidebarNav from "../../components/ui/sidebar";
 import VersionSelector from "@/components/VersionSelector";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Spinner } from "react-bootstrap";
 import {MonthlyChart, WeeklyChart, YearlyChart} from "@/components/ui/chart";
+import { useAuth } from "@/firebase/authContext";
+import { useRouter } from "next/navigation";
 
 const summarySections = [
     { name: "Yearly Summary", key: "yearly_summary" },
@@ -30,6 +32,8 @@ const sectionKeyOrders: Record<string, string[]> = {
 };
 
 export default function Page() {
+    const { user, loading } = useAuth();
+    const router = useRouter();
     const [data, setData] = useState<{ [key: string]: any[] }>({});
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
     const [selectedTimeCreated, setSelectedTimeCreated] = useState<Date | null>(null);
@@ -66,6 +70,20 @@ export default function Page() {
             fetchSummaryData(selectedVersionId);
         }
     }, [selectedVersionId]);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+    }, [user, loading, router]);
+
+    if (loading || !user) {
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <Spinner animation="border" />
+            </div>
+        );
+    }
 
     return (
         <Container fluid>
