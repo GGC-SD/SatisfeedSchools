@@ -107,8 +107,8 @@ export default function Page() {
                     <Row className="g-4 mt-4">
                         <Col>
                             <Button
-                                variant="warning"
-                                className="mb-2"
+                                variant="custom"
+                                className="mb-2 satisfeed-orange-button"
                                 onClick={() => setShowYearly(!showYearly)}
                             >
                                 {showYearly ? "▼ Hide Yearly Summary" : "▶ Show Yearly Summary"}
@@ -120,8 +120,8 @@ export default function Page() {
                     <Row className="g-4 mt-4">
                         <Col>
                             <Button
-                                variant="warning"
-                                className="mb-2"
+                                variant="custom"
+                                className="mb-2 satisfeed-orange-button"
                                 onClick={() => setShowMonthly(!showMonthly)}
                             >
                                 {showMonthly ? "▼ Hide Monthly Summary" : "▶ Show Monthly Summary"}
@@ -133,8 +133,8 @@ export default function Page() {
                     <Row className="g-4 mt-4">
                         <Col>
                             <Button
-                                variant="warning"
-                                className="mb-2"
+                                variant="custom"
+                                className="mb-2 satisfeed-orange-button"
                                 onClick={() => setShowWeekly(!showWeekly)}
                             >
                                 {showWeekly ? "▼ Hide Weekly Summary" : "▶ Show Weekly Summary"}
@@ -147,8 +147,8 @@ export default function Page() {
                             {data.county_summary && (
                                 <>
                                     <Button
-                                        variant="warning"
-                                        className="mb-2"
+                                        variant="custom"
+                                        className="mb-2 satisfeed-orange-button"
                                         onClick={() => setShowCountyTable(!showCountyTable)}
                                     >
                                         {showCountyTable ? "▼ Hide County Summary" : "▶ Show County Summary"}

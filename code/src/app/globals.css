@@ -20,6 +20,20 @@ h6 {
   @apply bg-[#FF9700]
 }
 
+.satisfeed-orange-button {
+  background-color: #FF9700 !important;
+  border-color: #1d3b32 !important;
+  color: #212529 !important;
+}
+
+.satisfeed-orange-button:hover {
+  background-color: #FF9700 !important;
+}
+
+.satisfeed-orange-light {
+  background-color: #FF9700 !important;
+}
+
 /* Dashboard Header */
 .dashboard-header-logo{
   @apply pt-10 pb-2 md:py-1 px-2 md:px-8 satisfeed-orange w-full text-center md:text-start;
@@ -62,7 +76,7 @@ h6 {
 }
 
 .dropdown-basic{
-  @apply w-full border-4 border-[#FF9700] rounded-lg font-bold py-2 px-3 focus:outline-none focus:ring-2 focus:ring-yellow-600
+  @apply w-full border-4 border-[#FF9700] rounded-lg font-bold py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#FF9700]
 }
 
 /* Header Styling */

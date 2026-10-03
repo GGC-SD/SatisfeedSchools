@@ -144,7 +144,7 @@ export default function Dashboard() {
                                         <ButtonGroup className="mb-3">
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${mapView === "zip" ? "bg-warning text-dark border border-dark" : "btn-secondary"}`}
+                                                className={`border border-dark px-4 py-2 ${mapView === "zip" ? "satisfeed-orange-button" : "btn-secondary"}`}
                                                 onClick={() => {
                                                     setMapView("zip");
                                                     setSelectedCounty(null);
@@ -157,7 +157,7 @@ export default function Dashboard() {
                                             </Button>
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${mapView === "county" ? "bg-warning text-dark border border-dark" : "btn-secondary"}`}
+                                                className={`border border-dark px-4 py-2 ${mapView === "county" ? "satisfeed-orange-button" : "btn-secondary"}`}
                                                 onClick={() => {
                                                     setMapView("county");
                                                     setSelectedZip(null);
