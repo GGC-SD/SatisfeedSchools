@@ -5,14 +5,24 @@ import { Container, Row, Col, Table, Button, Spinner, Modal, Alert } from "react
 import SidebarNav from "@/components/ui/sidebar";
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
+import { useAuth } from "@/firebase/authContext";
+import { useRouter } from "next/navigation";
 
 export default function ManageVersionsPage() {
+    const { user, loading: authLoading } = useAuth();
+    const router = useRouter();
     const [versions, setVersions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [versionToDelete, setVersionToDelete] = useState<any>(null);
     const [message, setMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!authLoading && !user) {
+            router.replace("/login");
+        }
+    }, [user, authLoading, router]);
 
     // Fetch all versions from csv_results
     useEffect(() => {
@@ -32,8 +42,18 @@ export default function ManageVersionsPage() {
             }
         };
 
-        fetchVersions();
-    }, []);
+        if (user) {
+            fetchVersions();
+        }
+    }, [user]);
+
+    if (authLoading || !user) {
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <Spinner animation="border" />
+            </div>
+        );
+    }
 
     const handleDeleteClick = (version: any) => {
         setVersionToDelete(version);
