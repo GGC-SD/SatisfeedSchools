@@ -36,19 +36,22 @@ SERVER_NAME=domain.com
 ```bash
 source ../.env
 mkdir -p certbot/conf
+docker compose stop frontend
 ```
 
-3. Request the certificate:
+3. Request the certificate and check:
 
 ```bash
-docker run --rm -it -p 80:80 \
-  -v "$(pwd)/certbot/conf:/etc/letsencrypt" \
+MSYS_NO_PATHCONV=1 docker run --rm -it -p 80:80 \
+  --mount "type=bind,source=$(pwd)/certbot/conf,target=/etc/letsencrypt" \
   certbot/certbot certonly \
   --standalone \
   --email YOUR_EMAIL_ADDRESS \
   --agree-tos \
-  --no-eff-email \
-  -d ${SERVER_NAME}
+  -d "$SERVER_NAME"
+
+ls certbot/conf/live/"$SERVER_NAME"
+ls certbot/conf/archive/"$SERVER_NAME"
 ```
 
 4. Build and start the application:

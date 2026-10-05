@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "docker build -f Dockerfile --secret id=app_env,src=../.env -t satisfeed-schools:latest .. && docker build -f nginx/Dockerfile --secret id=app_env,src=../.env --build-context certs=certbot -t satisfeed-nginx:latest nginx",
+    "build": "docker build -f Dockerfile --secret id=app_env,src=../.env -t satisfeed-schools:latest .. && docker build -f nginx/Dockerfile --secret id=app_env,src=../.env --build-context certs=certbot/conf/archive -t satisfeed-nginx:latest nginx",
     "build-local": "docker build -f Dockerfile --secret id=app_env,src=../.env -t satisfeed-schools:latest .. && docker build -f nginx/Dockerfile --build-arg BUILD_TYPE=dev -t satisfeed-nginx:latest nginx",
     "start": "docker compose up -d"
   }
