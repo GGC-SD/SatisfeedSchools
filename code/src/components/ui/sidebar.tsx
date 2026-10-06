@@ -112,7 +112,7 @@ export default function SidebarNav({
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>
-                                {t[item.label]}
+                                {[item.label]}
                             </NavLink>
                         ))}
                         <Button

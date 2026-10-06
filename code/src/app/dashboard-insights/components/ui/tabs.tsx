@@ -2,50 +2,44 @@
 
 import { useState } from "react";
 
+export type DashboardTab = 1 | 2 | 3;
+
 type TabsProp = {
-    onSelect: (tab: number) => void;
+  onSelect: (tab: DashboardTab) => void;
 };
 
-export default function Tabs({onSelect}: TabsProp) {
-    
-    const [selectedTab, setSelectedTab] = useState(1);
+const tabs: readonly { id: DashboardTab; label: string }[] = [
+  { id: 1, label: "Schools" },
+  { id: 2, label: "Libraries" },
+  { id: 3, label: "Pantry" },
+];
 
-    const handleSelectedTab = (e: any) => {
-        const tab = e.target.id;
-        setSelectedTab(tab);
-        onSelect(tab);
-    }
+export default function Tabs({ onSelect }: TabsProp) {
+  const [selectedTab, setSelectedTab] = useState<DashboardTab>(1);
 
-    return(
-        <div className="flex text-lg">
-            <button 
-                id="1"
-                className={`tab-basic
-                    ${selectedTab == 1 ? 'tab-selected' : 'tab-unselected' }`}
-                onClick={handleSelectedTab}
-            >
-                Schools
-            </button>
-            <button 
-                id="2"
-                className={`tab-basic
-                    ${selectedTab == 2 ? 'tab-selected' : 'tab-unselected' }`}
-                onClick={handleSelectedTab}
-            >
-                Libraries
-            </button>
-            <button
-             /*Placeholder for pantry tab, make sure to add functionality for this tab in the future */
-             /* Currently just redirect to libary map tab with all it functionality, */
-             /* Create pantry-display.tsk, dashboard-pantry-map.tsk, PantryClusterOverlay.tsk*/
-                id="3"
-                className={`tab-basic
-                    ${selectedTab == 3 ? 'tab-selected' : 'tab-unselected' }`} 
-                onClick={handleSelectedTab}
-            >
-                Pantry
-            </button>
-        </div>
-        
-    );
+  const handleSelectedTab = (tab: DashboardTab) => {
+    setSelectedTab(tab);
+    onSelect(tab);
+  };
+
+  return (
+    <div aria-label="Dashboard insight maps" className="flex text-lg" role="tablist">
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          id={`dashboard-tab-${tab.id}`}
+          type="button"
+          role="tab"
+          aria-controls="dashboard-insights-panel"
+          aria-selected={selectedTab === tab.id}
+          className={`tab-basic ${
+            selectedTab === tab.id ? "tab-selected" : "tab-unselected"
+          }`}
+          onClick={() => handleSelectedTab(tab.id)}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
 }
