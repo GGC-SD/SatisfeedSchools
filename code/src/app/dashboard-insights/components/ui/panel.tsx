@@ -1,7 +1,7 @@
 "use client";
 import LibraryDisplay from "../displays/library-display";
 import SchoolDisplay from "../displays/school-display";
-import DashboardPantryMap from "../map/dashboard-pantry-map";
+import PantryDisplay from "../displays/pantry-display";
 import type { DashboardTab } from "./tabs";
 
 type PanelProps = {
@@ -16,13 +16,7 @@ export default function Panel({ currentTab }: PanelProps) {
   } else if (currentTab === 2) {
     content = <LibraryDisplay />;
   } else {
-    content = (
-      <div className="p-4">
-        <div className="min-h-[40rem] child-component-borders">
-          <DashboardPantryMap className="h-full min-h-[40rem] w-full" />
-        </div>
-      </div>
-    );
+    content = <PantryDisplay />;
   }
 
   return (
