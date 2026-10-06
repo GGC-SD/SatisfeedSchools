@@ -51,6 +51,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     "zip",
     "enrollment",
     "phone",
+    "website"
   ]
   :[
     "address",
@@ -71,6 +72,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     zip: "ZIP Code",
     enrollment: "Enrollment",
     phone: "Phone Number",
+    website: "Website",
   }
   : {
     address: "Address",

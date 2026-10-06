@@ -40,6 +40,7 @@ describe("recordToSchoolDoc()", () => {
       state: "GA",
       zip: "31032",
       telephone: "(478) 986-5444",
+      website: "https://example-school.org",
       county: "JONES",
       level: "HIGH",
       enrollment: "1581",
@@ -50,6 +51,7 @@ describe("recordToSchoolDoc()", () => {
     expect(doc.coords).toEqual({ lat: 32.992651488, lng: -83.530693955 });
     expect(doc.level).toBe("HIGH");
     expect(doc.enrollment).toBe(1581);
+    expect(doc.website).toBe("https://example-school.org");
   });
 
   it("throws if ncesid missing (via buildId)", () => {
