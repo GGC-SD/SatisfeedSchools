@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/firebase/authContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DashboardPages from "@/components/DashboardPages";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <DashboardPages>{children}</DashboardPages>
+        </AuthProvider>
       </body>
     </html>
   );
