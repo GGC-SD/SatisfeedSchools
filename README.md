@@ -65,7 +65,7 @@ Involved working with exisiting GEOJson data which allows users to select needed
 ## Installation Steps
 1. Clone the repo: git clone https://github.com/nhuthanhtran/Satisfeed
 2. Install dependencies: install npm with "npm install"
-3. Add environment variables to .env.local file in root directory
+3. Add environment variables to .env file in root directory
 ### Updates Fall 2025 
 4. Ensure MapLibre is installed
 ```
