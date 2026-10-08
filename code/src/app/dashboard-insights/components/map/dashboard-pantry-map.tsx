@@ -39,6 +39,13 @@ export type PantryLocation = {
   name?: string;
   address?: string;
   email?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  resourceType?: string;
+  dataSource?: string;
+  lastVerifiedDate?: string;
+  sourceUrl?: string;
   coordinates?: {
     lat: number;
     lng: number;
@@ -358,6 +365,57 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
                 <dt className="font-semibold">Email</dt>
                 <dd>{displayValue(selectedPantry.email)}</dd>
               </div>
+              {selectedPantry.phone && (
+                <div>
+                  <dt className="font-semibold">Phone</dt>
+                  <dd>{selectedPantry.phone}</dd>
+                </div>
+              )}
+              {selectedPantry.website && (
+                <div>
+                  <dt className="font-semibold">Website</dt>
+                  <dd>{selectedPantry.website}</dd>
+                </div>
+              )}
+              {selectedPantry.hours && (
+                <div>
+                  <dt className="font-semibold">Hours</dt>
+                  <dd>{selectedPantry.hours}</dd>
+                </div>
+              )}
+              {selectedPantry.resourceType && (
+                <div>
+                  <dt className="font-semibold">Resource type</dt>
+                  <dd>{selectedPantry.resourceType}</dd>
+                </div>
+              )}
+              {selectedPantry.dataSource && (
+                <div>
+                  <dt className="font-semibold">Data source</dt>
+                  <dd>{selectedPantry.dataSource}</dd>
+                </div>
+              )}
+              {selectedPantry.lastVerifiedDate && (
+                <div>
+                  <dt className="font-semibold">Last verified</dt>
+                  <dd>{selectedPantry.lastVerifiedDate}</dd>
+                </div>
+              )}
+              {selectedPantry.sourceUrl && (
+                <div>
+                  <dt className="font-semibold">FeedAM listing</dt>
+                  <dd>
+                    <a
+                      className="underline"
+                      href={selectedPantry.sourceUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      View source
+                    </a>
+                  </dd>
+                </div>
+              )}
               <div>
                 <dt className="font-semibold">Service radius</dt>
                 <dd>

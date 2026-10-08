@@ -14,6 +14,13 @@ type PantryFirestoreDocument = {
     name?: string;
     address?: string;
     email?: string;
+    phone?: string;
+    website?: string;
+    hours?: string;
+    resourceType?: string;
+    dataSource?: string;
+    lastVerifiedDate?: string;
+    sourceUrl?: string;
 
     coords?: {
         lat?: number;
@@ -52,6 +59,13 @@ export default function PantryDisplay() {
                         name: data.name,
                         address: data.address,
                         email: data.email,
+                        phone: data.phone,
+                        website: data.website,
+                        hours: data.hours,
+                        resourceType: data.resourceType,
+                        dataSource: data.dataSource,
+                        lastVerifiedDate: data.lastVerifiedDate,
+                        sourceUrl: data.sourceUrl,
                         coordinates:
                             typeof lat === "number" && typeof lng === "number"
                                 ? { lat, lng }
