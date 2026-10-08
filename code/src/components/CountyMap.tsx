@@ -37,6 +37,11 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
     const [mapData, setMapData] = useState<CountyData[]>([]);
     const [fullData, setFullData] = useState<any>(null);
     const [selectedCounty, setLocalSelectedCounty] = useState<string | null>(null);
+    const [sliderTime, setSliderTime] = useState(specificTime);
+
+    useEffect(() => {
+        setSliderTime(specificTime);
+    }, [specificTime, timeframe, versionId]);
 
     useEffect(() => {
         const fetchGeoJSON = async () => {
@@ -76,6 +81,8 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
     }, []);
 
     useEffect(() => {
+
+        let cancelled = false;
         const loadData = async () => {
             if (!versionId) return;
 
@@ -83,7 +90,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
                 const response = await fetch(`/api/getResults?id=${versionId}`);
                 const { data } = await response.json();
 
-                if (!data) return;
+                if (!data || cancelled) return;
                 setFullData(data);
 
                 if (timeframe === "latest") {
@@ -102,12 +109,17 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
                     setMapData(data.county_yearly?.yearly?.[selected] || []);
                 }
             } catch (err) {
-                console.error("Error loading data from Firebase API:", err);
+                if (!cancelled) {
+                    console.error("Error loading data from Firebase API:", err);
+                }
             }
         };
 
         loadData();
-    }, [versionId, timeframe, specificTime]);
+        return () => {
+            cancelled = true;
+        };
+        }, [versionId, timeframe, specificTime]);
 
     useEffect(() => {
         if (Object.keys(geoPaths).length > 0) {
@@ -152,18 +164,21 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
     const renderSlider = () => {
         const options = timeframe === "monthly" ? availableMonths : availableYears;
         if (!options.length) return null;
-        const currentIndex = options.indexOf(specificTime);
+        const currentIndex = options.indexOf(sliderTime);
 
         return (
             <div className="mb-3">
                 <Form.Range
                     min={0}
                     max={options.length - 1}
-                    step={1}
                     value={currentIndex >= 0 ? currentIndex : 0}
-                    onChange={(e) => setSpecificTime(options[parseInt(e.target.value)])}
+                    onChange={(e) => { setSliderTime(options[Number(e.target.value)]); }}
+                    onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); }}
+                    onPointerUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onKeyUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onPointerCancel={() => { setSliderTime(specificTime); }}
                 />
-                <div className="fw-semibold">Selected: {specificTime}</div>
+                <div className="fw-semibold">Selected: {sliderTime}</div>
             </div>
         );
     };
