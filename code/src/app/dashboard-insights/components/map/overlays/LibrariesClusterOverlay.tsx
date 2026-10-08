@@ -279,10 +279,11 @@ export default function LibrariesClusterOverlay({
     if (!m.isStyleLoaded()) {
       const onLoad = () => {
         void draw();
-        m.off("load", onLoad);
+        m.off("idle", onLoad);
       };
-      m.on("load", onLoad);
-    } else {
+      m.on("idle", onLoad);
+    } 
+    else {
       void draw();
     }
 
