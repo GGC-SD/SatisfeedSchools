@@ -51,6 +51,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     "zip",
     "enrollment",
     "phone",
+    "website", //going to need to make it not a if-else to allow more fields to be added in the future.
   ]
   :[
     "address",
@@ -71,6 +72,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     zip: "ZIP Code",
     enrollment: "Enrollment",
     phone: "Phone Number",
+    website: "website",
   }
   : {
     address: "Address",
