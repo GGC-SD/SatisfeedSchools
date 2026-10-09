@@ -72,6 +72,14 @@ export default function SchoolsClusterOverlay({
     const SELECTED_ID = `selected-point${idSuffix}`; // Highlight overlay for the currently-selected school
 
     let unmounted = false;
+    let removeListeners = () => {};
+
+    const tooltip = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "bottom",
+      offset: 15,
+    });
 
     /**
      * Fetch school docs from Firestore, build a FeatureCollection<Point>, then
@@ -264,11 +272,32 @@ export default function SchoolsClusterOverlay({
       };
 
       // Cursor affordances (hand over clickable things)
-      const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      const onEnterPoint = () => setCursor("pointer");
-      const onLeavePoint = () => setCursor("");
-      const onEnterCluster = () => setCursor("pointer");
-      const onLeaveCluster = () => setCursor("");
+      const onEnterPoint = (e: MapLayerMouseEvent) => {
+        m.getCanvas().style.cursor = "pointer";
+        tooltip
+          .setLngLat(
+            (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
+          )
+          .setText("Click to show school details.")
+          .addTo(m);
+      };
+
+      const onEnterCluster = (e: MapLayerMouseEvent) => {
+        m.getCanvas().style.cursor = "pointer";
+        tooltip
+          .setLngLat(
+            (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
+          )
+          .setText("Zoom in to see individual schools.")
+          .addTo(m);
+      };
+
+      const onLeavePoint = () => {
+        m.getCanvas().style.cursor = "";
+        tooltip.remove();
+      };
+
+      const onLeaveCluster = onLeavePoint;
 
       // Wire events
       m.on("click", PT_ID, onPointClick);
@@ -279,7 +308,7 @@ export default function SchoolsClusterOverlay({
       m.on("mouseleave", CLUST_ID, onLeaveCluster);
 
       // Per-effect cleanup for listeners
-      return () => {
+      removeListeners = () => {
         try {
           m.off("click", PT_ID, onPointClick);
         } catch {}
@@ -315,6 +344,8 @@ export default function SchoolsClusterOverlay({
     // Full overlay cleanup on unmount or dependency change
     return () => {
       unmounted = true;
+      removeListeners();
+      tooltip.remove();
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
       } catch {}

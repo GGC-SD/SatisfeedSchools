@@ -66,6 +66,14 @@ export default function LibrariesClusterOverlay({
     const SELECTED_ID = `selected-point${idSuffix}`;
 
     let unmounted = false;
+    let removeListeners = () => {};
+
+    const tooltip = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "bottom",
+      offset: 15,
+    });
 
     async function draw() {
       const qSnap = await getDocs(query(collection(db, "libraries")));
@@ -253,26 +261,47 @@ export default function LibrariesClusterOverlay({
         );
       };
 
-      const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      const onEnter = () => setCursor("pointer");
-      const onLeave = () => setCursor("");
+      const onEnter = (e: MapLayerMouseEvent) => {
+        canvas.style.cursor = "pointer";
+
+        tooltip
+          .setLngLat(
+              (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
+          )
+          .setText("Click to show library details.")
+          .addTo(m);
+      };
+
+      const onClusterEnter = (e: MapLayerMouseEvent) => {
+        canvas.style.cursor = "pointer";
+
+        tooltip
+          .setLngLat(
+              (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
+          )
+          .setText("Zoom in to see individual libraries.")
+          .addTo(m);
+      };
+
+      const onLeave = () => {
+        canvas.style.cursor = "";
+        tooltip.remove();
+      };
 
       m.on("click", PT_ID, onPointClick);
       m.on("click", CLUST_ID, onClusterClick);
       m.on("mouseenter", PT_ID, onEnter);
       m.on("mouseleave", PT_ID, onLeave);
-      m.on("mouseenter", CLUST_ID, onEnter);
+      m.on("mouseenter", CLUST_ID, onClusterEnter);
       m.on("mouseleave", CLUST_ID, onLeave);
 
-      return () => {
-        try {
-          m.off("click", PT_ID, onPointClick);
-          m.off("click", CLUST_ID, onClusterClick);
-          m.off("mouseenter", PT_ID, onEnter);
-          m.off("mouseleave", PT_ID, onLeave);
-          m.off("mouseenter", CLUST_ID, onEnter);
-          m.off("mouseleave", CLUST_ID, onLeave);
-        } catch {}
+      removeListeners = () => {
+        m.off("click", PT_ID, onPointClick);
+        m.off("click", CLUST_ID, onClusterClick);
+        m.off("mouseenter", PT_ID, onEnter);
+        m.off("mouseleave", PT_ID, onLeave);
+        m.off("mouseenter", CLUST_ID, onClusterEnter);
+        m.off("mouseleave", CLUST_ID, onLeave);
       };
     }
 
@@ -289,6 +318,9 @@ export default function LibrariesClusterOverlay({
 
     return () => {
       unmounted = true;
+      removeListeners();
+      tooltip.remove();
+
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);
