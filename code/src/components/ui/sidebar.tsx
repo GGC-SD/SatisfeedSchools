@@ -94,13 +94,16 @@ export default function SidebarNav() {
 
             {/* Desktop Sidebar */}
             <div className={`position-fixed top-0 start-0 sidebar-container ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
-                <Navbar bg="dark" variant="dark" className="flex-column align-items-start"style={{ width: "100%", height: "100%" }}>
-                    <div className = "w-100 text-center">
-                        <img
-                            src = "/Satisfeed logo white.png"
-                            alt = "Satisfeed logo"
-                            className = "satisfeed-sidebar-logo img-fluid mb-3"
-                        />
+                <Navbar bg="dark" variant="dark" className="flex-column align-items-start" style={{ width: "100%", height: "100%" }}>
+                    <div className="w-100 text-center">
+                        {/*https://www.satisfeed.org/ */}
+                        <NavLink href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 d-block"> 
+                            <img
+                                src="/Satisfeed logo white.png"
+                                alt="Satisfeed logo"
+                                className="satisfeed-sidebar-logo img-fluid mb-3"
+                            />
+                        </NavLink>
                     </div>
                     <Navbar.Brand className="sidebar-navigation-title mb-4 w-100">Navigation</Navbar.Brand>
                     <Nav className="flex-column w-100">
@@ -115,8 +118,6 @@ export default function SidebarNav() {
                         <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
                             Log Out
                         </Button>
-                        
-
                     </Nav>
                 </Navbar>
             </div>
