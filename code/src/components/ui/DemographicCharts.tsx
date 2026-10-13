@@ -389,7 +389,7 @@ function IncomeDistributionChart({ data }) {
         <Card id="income-bin" className="h-100" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between mb-2">
-                    <h3 className="fs-5 fw-bold mb-3">Income Distribution by Bins</h3>
+                    <h3 className="fs-5 fw-bold mb-3">Income Distribution by Ranges</h3>
                     <Button
                         className="export-button"
                         variant="outline-dark"

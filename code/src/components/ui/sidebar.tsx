@@ -29,11 +29,11 @@ export default function SidebarNav() {
     const { user, loading } = useAuth()
 
     const publicNavItems = [
-        { path: "/dashboard-insights", label: "Dashboard Insights" },
+        { path: "/dashboard-insights", label: "Schools and Libraries" },
     ]
 
     const protectedNavItems = [
-        { path: "/dashboard", label: "Dashboard Summary" },
+        { path: "/dashboard", label: "Demographics" },
         { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },
@@ -58,7 +58,7 @@ export default function SidebarNav() {
             {/* Desktop Sidebar */}
             <div className="d-none d-md-block bg-dark text-white p-3" style={{ minHeight: "100vh", width: "240px" }}>
                 <Navbar bg="dark" variant="dark" className="flex-column align-items-start">
-                    <Navbar.Brand className="mb-4">Navigation</Navbar.Brand>
+                    <Navbar.Brand className="mb-4">Dashboard</Navbar.Brand>
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>
@@ -96,7 +96,7 @@ export default function SidebarNav() {
                 placement="start"
             >
                 <Offcanvas.Header closeButton closeVariant="white">
-                    <Offcanvas.Title>Navigation</Offcanvas.Title>
+                    <Offcanvas.Title>Dashboard</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav className="flex-column">
