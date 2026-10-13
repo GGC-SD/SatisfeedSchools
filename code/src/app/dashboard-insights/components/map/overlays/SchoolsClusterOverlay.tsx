@@ -271,25 +271,56 @@ export default function SchoolsClusterOverlay({
         );
       };
 
-      // Cursor affordances (hand over clickable things)
+      // Single School Hover
       const onEnterPoint = (e: MapLayerMouseEvent) => {
-        m.getCanvas().style.cursor = "pointer";
-        tooltip
-          .setLngLat(
-            (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
-          )
-          .setText("Click to show school details.")
-          .addTo(m);
+      const school = e.features?.[0];
+      if (!school) return;
+
+      m.getCanvas().style.cursor = "pointer";
+
+      const content = document.createElement("div");
+      content.style.whiteSpace = "pre-line";
+      content.style.lineHeight = "1.6";
+      content.textContent = "Click to see more info for:\n" + (school.properties?.name ?? "School");
+
+      tooltip
+        .setLngLat((school.geometry as GeoJSON.Point).coordinates as [number, number])
+        .setDOMContent(content)
+        .addTo(m);
       };
 
-      const onEnterCluster = (e: MapLayerMouseEvent) => {
+      // Cluster School Hover
+      const onEnterCluster = async (e: MapLayerMouseEvent) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+
         m.getCanvas().style.cursor = "pointer";
-        tooltip
-          .setLngLat(
-            (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
-          )
-          .setText("Zoom in to see individual schools.")
-          .addTo(m);
+        tooltip.remove();
+        tooltip.setLngLat((e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]);
+
+        try {
+          const source = m.getSource(SRC_ID) as maplibregl.GeoJSONSource;
+          const schools = await source.getClusterLeaves(Number(feature.properties.cluster_id), 3, 0);
+
+          if (unmounted || m.getCanvas().style.cursor !== "pointer") return;
+
+          const list = document.createElement("div");
+          list.style.whiteSpace = "pre-line";
+          list.style.lineHeight = "1.4";
+          list.textContent = "Zoom in to see schools in this cluster:";
+          for (const school of schools) {
+            list.textContent += "\n• " + (school.properties?.name ?? "School");
+          }
+
+          const remaining = Number(feature.properties.point_count) - schools.length;
+          if (remaining > 0) {
+            list.textContent += "\nAnd " + remaining + " more. Zoom in to see them.";
+          }
+          tooltip.setDOMContent(list).addTo(m);
+        } 
+        catch {
+          console.error("Could not load school names.");
+        }
       };
 
       const onLeavePoint = () => {

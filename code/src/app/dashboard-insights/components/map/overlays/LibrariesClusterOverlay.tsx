@@ -261,26 +261,56 @@ export default function LibrariesClusterOverlay({
         );
       };
 
+      // Single Library Hover
       const onEnter = (e: MapLayerMouseEvent) => {
+      const library = e.features?.[0];
+      if (!library) return;
+      canvas.style.cursor = "pointer";
+
+      const content = document.createElement("div");
+      content.style.whiteSpace = "pre-line";
+      content.style.lineHeight = "1.4";
+      content.textContent = "Click to see more info for:\n" + (library.properties?.name ?? "Library");
+
+      tooltip
+        .setLngLat((library.geometry as GeoJSON.Point).coordinates as [number, number])
+        .setDOMContent(content)
+        .addTo(m);
+    };
+
+      // Cluster Library Hover
+      const onClusterEnter = async (e: MapLayerMouseEvent) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+
         canvas.style.cursor = "pointer";
+        tooltip.remove();
+        tooltip.setLngLat((feature.geometry as GeoJSON.Point).coordinates as [number, number]);
 
-        tooltip
-          .setLngLat(
-              (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
-          )
-          .setText("Click to show library details.")
-          .addTo(m);
-      };
+        try {
+          const source = m.getSource(SRC_ID) as maplibregl.GeoJSONSource;
+          const libraries = await source.getClusterLeaves(Number(feature.properties.cluster_id), 3, 0);
 
-      const onClusterEnter = (e: MapLayerMouseEvent) => {
-        canvas.style.cursor = "pointer";
+          if (unmounted || canvas.style.cursor !== "pointer") return;
 
-        tooltip
-          .setLngLat(
-              (e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]
-          )
-          .setText("Zoom in to see individual libraries.")
-          .addTo(m);
+          const list = document.createElement("div");
+          list.style.whiteSpace = "pre-line";
+          list.style.lineHeight = "1.4";
+          list.textContent = "Zoom in to see libraries in this cluster:";
+          for (const library of libraries) {
+            list.textContent += "\n• " + (library.properties?.name ?? "Library");
+          }
+
+          const remaining = Number(feature.properties.point_count) - libraries.length;
+          if (remaining > 0) {
+            list.textContent += "\nAnd " + remaining + " more.";
+          }
+
+          tooltip.setDOMContent(list).addTo(m);
+        } 
+        catch {
+          console.error("Could not load library names.");
+        }
       };
 
       const onLeave = () => {
