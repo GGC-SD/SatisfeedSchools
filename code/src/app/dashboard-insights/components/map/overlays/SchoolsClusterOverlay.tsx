@@ -314,7 +314,7 @@ export default function SchoolsClusterOverlay({
 
           const remaining = Number(feature.properties.point_count) - schools.length;
           if (remaining > 0) {
-            list.textContent += "\nAnd " + remaining + " more. Zoom in to see them.";
+            list.textContent += "\nAnd " + remaining + " more.";
           }
           tooltip.setDOMContent(list).addTo(m);
         } 
