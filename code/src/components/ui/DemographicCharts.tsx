@@ -6,7 +6,7 @@ import html2canvas from "html2canvas";
 
 // Custom color palette to match the design
 const RACE_COLOR_MAP = {
-    "Hispanic, Latino, or Spanish Origin": "#F7CA18",
+    "Hispanic, Latino, or Spanish Origin": "#FF9700",
     "Black or African-American": "#36b700",
     "White": "#003a7d",
     "Asian": "#008dff",
@@ -18,7 +18,7 @@ const RACE_COLOR_MAP = {
 };
 const EDUCATION_COLOR_MAP = {
     "Unknown": "#c8c8c8",
-    "Highschool/GED": "#F7CA18",
+    "Highschool/GED": "#FF9700",
     "College": "#36b700",
     "Highschool-Incomplete": "#003a7d",
     "Prefers not to answer": "#8fd7d7",
@@ -243,7 +243,7 @@ function RaceDistributionChart({ data }) {
     }))
 
     return (
-        <Card id="race-chart" className="d-flex" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+        <Card id="race-chart" className="d-flex" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h3 className="fs-5 fw-bold mb-3">Race Distribution</h3>
@@ -329,7 +329,7 @@ function EmploymentStatusChart({data}) {
         .sort((a, b) => b.value - a.value)
 
     return (
-        <Card id="employment-chart" className="h-100" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+        <Card id="employment-chart" className="h-100" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h3 className="fs-5 fw-bold mb-3">Employment Status</h3>
@@ -355,7 +355,7 @@ function EmploymentStatusChart({data}) {
                                 formatter={(value, name, props) => [`${props.payload.percentage}%`, name]}
                                 contentStyle={{borderRadius: "8px", border: "1px solid #e2e8f0"}}
                             />
-                            <Bar dataKey="percentage" fill="#F7CA18" radius={[0, 4, 4, 0]}>
+                            <Bar dataKey="percentage" fill="#FF9700" radius={[0, 4, 4, 0]}>
                                 <LabelList
                                     dataKey="percentage"
                                     position="right"
@@ -386,7 +386,7 @@ function IncomeDistributionChart({ data }) {
     const chartData = sortedData.filter((item) => item.label !== "Total")
 
     return (
-        <Card id="income-bin" className="h-100" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+        <Card id="income-bin" className="h-100" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h3 className="fs-5 fw-bold mb-3">Income Distribution by Bins</h3>
@@ -412,7 +412,7 @@ function IncomeDistributionChart({ data }) {
                             formatter={(value) => [`${value} cases`, "Count"]}
                             contentStyle={{borderRadius: "8px", border: "1px solid #e2e8f0"}}
                         />
-                        <Bar dataKey="count" fill="#F7CA18" radius={[0, 4, 4, 0]}>
+                        <Bar dataKey="count" fill="#FF9700" radius={[0, 4, 4, 0]}>
                             <LabelList dataKey="count" position="right" style={{fontSize: "12px"}}/>
                         </Bar>
                     </BarChart>
@@ -437,7 +437,7 @@ function EducationAchievedChart({data}) {
 
     return (
         <Card id="education-achieved" className="h-100"
-              style={{border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+              style={{border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h3 className="fs-5 fw-bold mb-3">Education Achieved</h3>

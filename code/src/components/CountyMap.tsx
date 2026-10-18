@@ -208,7 +208,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
             <Row className="justify-content-center mb-4">
                     <>
                         <Col lg={6}>
-                            <Card className="text-center mb-1" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+                            <Card className="text-center mb-1" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
                                 <Card.Body>
                                     <Card.Subtitle className="mb-1 text-bold">Total Family Reached</Card.Subtitle>
                                     <Card.Title className="fw-bold fs-3">{summaryData? summaryData.peopleHelped : "0"}</Card.Title>
@@ -216,7 +216,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
                             </Card>
                         </Col>
                         <Col lg={6}>
-                            <Card className="text-center mb-1" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+                            <Card className="text-center mb-1" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
                                 <Card.Body>
                                     <Card.Subtitle className="mb-1 text-bold">Total People Helped</Card.Subtitle>
                                     <Card.Title className="fw-bold fs-3">{summaryData? summaryData.peopleReached : "0"}</Card.Title>
@@ -245,7 +245,7 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
                         }}
                         disabled={!selectedCounty}
                         style={{
-                            backgroundColor: selectedCounty ? "#E67E22" : "#F5CBA7",
+                            backgroundColor: "#FF9700",
                             color: selectedCounty ? "#fff" : "#555",
                             border: "2px solid black",
                             cursor: selectedCounty ? "pointer" : "not-allowed",
@@ -260,20 +260,20 @@ export default function CountyMap({ versionId, timeframe, specificTime, setTimef
                 <Col lg={12} className="text-center">
                     <ButtonGroup className="mb-3">
                         <Button variant="custom"
-                                className={timeframe === "latest" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "latest" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("latest"); setSpecificTime("") }}>All Time</Button>
                         <Button variant="custom"
-                                className={timeframe === "monthly" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "monthly" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("monthly"); setSpecificTime("") }}>Monthly</Button>
                         <Button variant="custom"
-                                className={timeframe === "yearly" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "yearly" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("yearly"); setSpecificTime("") }}>Yearly</Button>
                     </ButtonGroup>
                     {(timeframe === "monthly" || timeframe === "yearly") && renderSlider()}
 
                     <div
                         className="position-relative d-flex justify-content-center align-items-center bg-light p-3 rounded shadow-lg"
-                        style={{minHeight: "400px", border: "3px solid #F7CA18",
+                        style={{minHeight: "400px", border: "3px solid #FF9700",
                             boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)",
                             borderRadius: "12px"}}>
                         <svg ref={svgRef} width="100%" height="auto" viewBox={viewBox}

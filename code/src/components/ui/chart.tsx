@@ -81,7 +81,7 @@ function ChartContainer({
     }, [versionId, chartType]);
 
     return (
-        <Card className="shadow-sm p-3 mb-4">
+        <Card className="shadow-sm p-3 mb-4" style={{ border: "3px solid #FF9700" }}>
             <Card.Body>
                 <Card.Title className="text-center fw-bold">{title}</Card.Title>
                 <div style={{display: "flex", justifyContent: "center"}}>
