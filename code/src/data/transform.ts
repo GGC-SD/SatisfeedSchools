@@ -39,6 +39,7 @@ export function recordToSchoolDoc({
   state,
   zip,
   telephone,
+  website,
   county,
   website,
   level,
@@ -56,6 +57,10 @@ export function recordToSchoolDoc({
     state: state ?? null,
     zip: zip ?? null,
     phone: telephone ?? null,
+    website:
+      website && website.trim().toUpperCase() !== "NOT AVAILABLE"
+        ? website.trim()
+        : null,
     county: county ?? null,
     website: website ?? null,
     level: level ?? null,

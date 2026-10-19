@@ -7,6 +7,7 @@ export interface SchoolRecord {
   state?: string;
   zip?: string;
   telephone?: string;
+  website?: string;
   county?: string;
   website?: string;
   level?: string; // elementary, middle, high, etc.
@@ -23,6 +24,7 @@ export interface SchoolDoc {
   state: string | null;
   zip: string | null;
   phone: string | null;
+  website: string | null;
   county: string | null;
   website: string | null;
   level: string | null;
