@@ -65,11 +65,11 @@ export default function SidebarNav({
    const t = translations[language]
     
     const navItems = [
-    { path: "/dashboard", label: "dashboard" },
-    { path: "/dashboard-insights", label: "insights" },
-    { path: "/summary", label: "summary" },
-    { path: "/upload", label: "upload" },
-    { path: "/manage-versions", label: "versions" },
+    { path: "/dashboard", label: "Dashboard" },
+    { path: "/dashboard-insights", label: "Insights" },
+    { path: "/summary", label: "Summary" },
+    { path: "/upload", label: "Upload" },
+    { path: "/manage-versions", label: "Versions" },
 ]
 
     const handleLogout = async () => {
