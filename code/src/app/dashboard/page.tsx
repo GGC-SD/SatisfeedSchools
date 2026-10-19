@@ -34,7 +34,7 @@ export default function Dashboard() {
     const [language, setLanguage] = useState<"en" | "es">("en");
     const translations = {
         en: {
-            title: "Satisfeed Dashboard",
+            title: " Dashboard",
             dataCollected: "Data collected from",
             to: "to",
             records: "records",
@@ -123,7 +123,7 @@ export default function Dashboard() {
                 <Col md={10} lg={10} className="pt-5 pb-2 d-flex flex-column min-vh-100">
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
-                        <div className="dashboard-main-header">
+                        <div className="dashboard-main-header d-flex align-items-center justify-content-center gap-2">
                             <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" /><img/>
                             <h1 className="dashboard-page-title font-bold text-gray-800">
                                 {t.title}

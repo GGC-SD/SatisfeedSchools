@@ -1,229 +1,366 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  Map as MLMap,
+  type Map as MLMap,
   type MapLayerMouseEvent,
-  type MapGeoJSONFeature,
   type GeoJSONSource,
 } from "maplibre-gl";
-import { db } from "@/firebase/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
 
-type PantryClusterOverlayProps = {
-  map: MLMap;
-  idSuffix?: string;
-  selectedPantryId?: string | null;
-  onPantryClick: (pantryId: string) => void;
-};
+//const PANTRY_ICON_PATH = "/pantry-icon.png";
 
-type PantryDoc = {
-  feedAmId: number;
-  coords: {
-    lat: number;
-    lng: number;
-  };
+export type PantryLocation = {
+  /** Firestore document ID; used to identify a pantry. */
+  id: string;
+
+  feedAmId?: number;
   name?: string;
   organization?: string;
   address?: string;
   city?: string;
   state?: string;
   zip?: string;
+
+  /** Preferred Firestore coordinate field. */
+  coords?: {
+    lat: number;
+    lng: number;
+  };
+
+  /** Optional support for older data. */
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+
+  email?: string;
   phone?: string;
   website?: string;
   hours?: string;
   resourceType?: string;
   dataSource?: string;
   lastVerifiedDate?: string;
-  sourceUrl: string;
+  sourceUrl?: string;
+  serviceRadiusMiles?: number;
+  affectedSchools?: readonly (
+    | string
+    | { id?: string; name?: string }
+  )[];
+  foodStats?: Readonly<
+    Record<string, string | number | boolean | null>
+  >;
 };
+
+type Props = {
+  map: MLMap | null;
+  pantries: readonly PantryLocation[];
+  idSuffix?: string;
+  selectedPantryId: string | null;
+  onPantryClick: (pantryId: string) => void;
+};
+
+type PantryFeatureProperties = {
+  id: string;
+  name: string;
+  state: string;
+  feedAmId: number | null;
+};
+
+function getCoordinates(pantry: PantryLocation) {
+  return pantry.coords ?? pantry.coordinates ?? null;
+}
+
+function hasValidCoordinates(pantry: PantryLocation) {
+  const coords = getCoordinates(pantry);
+
+  return (
+    coords !== null &&
+    typeof coords.lat === "number" &&
+    Number.isFinite(coords.lat) &&
+    coords.lat >= -90 &&
+    coords.lat <= 90 &&
+    typeof coords.lng === "number" &&
+    Number.isFinite(coords.lng) &&
+    coords.lng >= -180 &&
+    coords.lng <= 180
+  );
+}
+
+function makePantryGeoJSON(
+  pantries: readonly PantryLocation[]
+): GeoJSON.FeatureCollection<
+  GeoJSON.Point,
+  PantryFeatureProperties
+> {
+  const seenIds = new Set<string>();
+
+  const features: GeoJSON.Feature<
+    GeoJSON.Point,
+    PantryFeatureProperties
+  >[] = [];
+
+  for (const pantry of pantries) {
+    if (!pantry.id || seenIds.has(pantry.id)) continue;
+    if (!hasValidCoordinates(pantry)) continue;
+
+    const coords = getCoordinates(pantry);
+    if (!coords) continue;
+
+    seenIds.add(pantry.id);
+
+    features.push({
+      type: "Feature",
+      id: pantry.id,
+      properties: {
+        id: pantry.id,
+        name: pantry.name?.trim() || "Food pantry",
+        state: pantry.state ?? "",
+        feedAmId: pantry.feedAmId ?? null,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [coords.lng, coords.lat],
+      },
+    });
+  }
+
+  return {
+    type: "FeatureCollection",
+    features,
+  };
+}
 
 export default function PantryClusterOverlay({
   map,
-  idSuffix = "",
-  selectedPantryId = null,
+  pantries,
+  idSuffix = "-pantries",
+  selectedPantryId,
   onPantryClick,
-}: PantryClusterOverlayProps) {
+}: Props) {
+  const [layersReady, setLayersReady] = useState(false);
+
+  const onPantryClickRef = useRef(onPantryClick);
+  const selectedPantryIdRef = useRef(selectedPantryId);
+
+  // Keep callbacks and selection current without rebuilding the layers.
+  onPantryClickRef.current = onPantryClick;
+  selectedPantryIdRef.current = selectedPantryId;
+
+  const sourceId = `pantries${idSuffix}`;
+  const clusterLayerId = `pantry-clusters${idSuffix}`;
+  const clusterCountLayerId = `pantry-cluster-count${idSuffix}`;
+  const pointLayerId = `pantry-unclustered-point${idSuffix}`;
+  const selectedLayerId = `pantry-selected-layer${idSuffix}`;
+  const pantryIconId = `pantry-marker-icon${idSuffix}`;
+
+  /*
+   * Initialize pantry sources and layers.
+   *
+   * This listens for style.load so the overlay can recover
+   * if MapLibre reloads its style.
+   */
   useEffect(() => {
-    const m = map;
-    let cancelled = false;
-    let cleanupEvents: (() => void) | undefined;
-
-    const SRC_ID = `pantries${idSuffix}`;
-    const CLUST_ID = `pantry-clusters${idSuffix}`;
-    const CNT_ID = `pantry-cluster-count${idSuffix}`;
-    const PT_ID = `unclustered-pantry-point${idSuffix}`;
-    const SELECTED_ID = `selected-point${idSuffix}`;
-    const PANTRY_ICON_ID = `pantry-icon${idSuffix}`;
-
-    const removeLayer = (id: string) => {
-      try {
-        if (m.getLayer(id)) m.removeLayer(id);
-      } catch {}
-    };
-
-    const removeSource = (id: string) => {
-      try {
-        if (m.getSource(id)) m.removeSource(id);
-      } catch {}
-    };
-
-    const removeOverlay = () => {
-      cleanupEvents?.();
-      cleanupEvents = undefined;
-
-      removeLayer(CNT_ID);
-      removeLayer(CLUST_ID);
-      removeLayer(PT_ID);
-      removeLayer(SELECTED_ID);
-      removeSource(SELECTED_ID);
-      removeLayerAndSource(SRC_ID);
-
-      try {
-        m.getCanvas().style.cursor = "";
-      } catch {}
-    };
-
-    function removeLayerAndSource(id: string) {
-      removeLayer(id);
-      removeSource(id);
+    if (!map) {
+      setLayersReady(false);
+      return;
     }
 
-    async function draw() {
+    const m = map;
+
+    let cancelled = false;
+    let ready = false;
+    let initializing = false;
+    let addedPantryImage = false;
+
+    let clickPoint:
+      | ((event: MapLayerMouseEvent) => void)
+      | undefined;
+
+    let clickCluster:
+      | ((event: MapLayerMouseEvent) => void)
+      | undefined;
+
+    let enterPoint: (() => void) | undefined;
+    let leavePoint: (() => void) | undefined;
+    let enterCluster: (() => void) | undefined;
+    let leaveCluster: (() => void) | undefined;
+
+    const setCursor = (value: string) => {
+      if (!m.getCanvasContainer()) return;
+      m.getCanvas().style.cursor = value;
+    };
+
+    function removeOwnedLayersAndSource() {
+      const layerIds = [
+        selectedLayerId,
+        clusterCountLayerId,
+        clusterLayerId,
+        pointLayerId,
+      ];
+
+      for (const layerId of layerIds) {
+        if (m.getLayer(layerId)) {
+          m.removeLayer(layerId);
+        }
+      }
+
+      if (m.getSource(sourceId)) {
+        m.removeSource(sourceId);
+      }
+    }
+
+    function removeListeners() {
+      if (clickPoint) {
+        m.off("click", pointLayerId, clickPoint);
+        clickPoint = undefined;
+      }
+
+      if (clickCluster) {
+        m.off("click", clusterLayerId, clickCluster);
+        clickCluster = undefined;
+      }
+
+      if (enterPoint) {
+        m.off("mouseenter", pointLayerId, enterPoint);
+        enterPoint = undefined;
+      }
+
+      if (leavePoint) {
+        m.off("mouseleave", pointLayerId, leavePoint);
+        leavePoint = undefined;
+      }
+
+      if (enterCluster) {
+        m.off("mouseenter", clusterLayerId, enterCluster);
+        enterCluster = undefined;
+      }
+
+      if (leaveCluster) {
+        m.off("mouseleave", clusterLayerId, leaveCluster);
+        leaveCluster = undefined;
+      }
+    }
+
+    async function setupLayers() {
+      if (cancelled || ready || initializing) return;
+      if (!m.isStyleLoaded()) return;
+
+      initializing = true;
+
       try {
-        const snapshot = await getDocs(collection(db, "pantries"));
+        // Clear any remnants from an earlier initialization.
+        removeListeners();
+        removeOwnedLayersAndSource();
 
-        if (cancelled || !m.isStyleLoaded()) return;
+        // Try loading the custom marker image.
+        // If it fails, use orange circle markers instead.
+        let hasPantryImage = m.hasImage(pantryIconId);
 
-        const features = snapshot.docs.flatMap((docSnap) => {
-          const pantry = docSnap.data() as PantryDoc;
-          const lat = pantry.coords.lat;
-          const lng = pantry.coords.lng;
-
-          if (
-            typeof lat !== "number" ||
-            typeof lng !== "number" ||
-            !Number.isFinite(lat) ||
-            !Number.isFinite(lng) ||
-            lat < -90 ||
-            lat > 90 ||
-            lng < -180 ||
-            lng > 180
-          ) {
-            return [];
-          }
-
-          return [{
-            type: "Feature" as const,
-            properties: {
-              id: docSnap.id,
-              name: pantry.name?.trim() || "Food Pantry",
-              state: pantry.state ?? "",
-            },
-            geometry: {
-              type: "Point" as const,
-              coordinates: [lng, lat] as [number, number],
-            },
-          }];
-        });
-
-        let hasPantryIcon = m.hasImage(PANTRY_ICON_ID);
-
-        if (!hasPantryIcon) {
+        if (!hasPantryImage) {
           try {
-            const image = await m.loadImage("/pantry-icon.png");
+            const image = await m.loadImage(PANTRY_ICON_PATH);
 
-            if (cancelled) return;
-
-            if (!m.hasImage(PANTRY_ICON_ID)) {
-              m.addImage(PANTRY_ICON_ID, image.data);
+            // The map or component may have changed while loading.
+            if (cancelled) {
+              initializing = false;
+              return;
             }
 
-            hasPantryIcon = true;
-          } catch {
+            if (!m.hasImage(pantryIconId)) {
+              m.addImage(pantryIconId, image.data);
+              addedPantryImage = true;
+            }
+
+            hasPantryImage = m.hasImage(pantryIconId);
+          } catch (imageError) {
             console.warn(
-              "Pantry icon unavailable; using circle markers."
+              "[Pantry clusters] Marker image unavailable. Using orange circles.",
+              imageError
             );
           }
         }
 
-        if (cancelled || !m.isStyleLoaded()) return;
+        if (cancelled || !m.isStyleLoaded()) {
+          initializing = false;
+          return;
+        }
 
-        removeLayerAndSource(CNT_ID);
-        removeLayerAndSource(CLUST_ID);
-        removeLayerAndSource(PT_ID);
-        removeLayerAndSource(SELECTED_ID);
-        removeSource(SRC_ID);
-
-        m.addSource(SRC_ID, {
+        // Create the clustered pantry source.
+        m.addSource(sourceId, {
           type: "geojson",
-          data: {
-            type: "FeatureCollection",
-            features,
-          },
+          data: makePantryGeoJSON(pantries),
           cluster: true,
-          clusterRadius: 45,
+          clusterRadius: 40,
           clusterMaxZoom: 14,
         });
 
+        // Cluster circles.
         m.addLayer({
-          id: CLUST_ID,
+          id: clusterLayerId,
           type: "circle",
-          source: SRC_ID,
+          source: sourceId,
           filter: ["has", "point_count"],
           paint: {
             "circle-radius": [
               "step",
               ["get", "point_count"],
               16,
-              10, 20,
-              50, 24,
+              25,
+              19,
+              100,
+              23,
             ],
             "circle-color": [
               "step",
               ["get", "point_count"],
-              "#2e7d32",
-              10, "#1b5e20",
-              50, "#0a3612",
+              "#b00b58",
+              25,
+              "#b5286c",
+              100,
+              "#850442",
             ],
             "circle-stroke-color": "#ffffff",
             "circle-stroke-width": 2,
           },
         });
 
+        // Cluster count labels.
         m.addLayer({
-          id: CNT_ID,
+          id: clusterCountLayerId,
           type: "symbol",
-          source: SRC_ID,
+          source: sourceId,
           filter: ["has", "point_count"],
           layout: {
             "text-field": ["get", "point_count_abbreviated"],
             "text-size": 14,
+            "text-allow-overlap": true,
           },
           paint: {
             "text-color": "#ffffff",
           },
         });
 
-        if (hasPantryIcon) {
+        // Individual pantry markers.
+        if (hasPantryImage) {
           m.addLayer({
-            id: PT_ID,
+            id: pointLayerId,
             type: "symbol",
-            source: SRC_ID,
+            source: sourceId,
             filter: ["!", ["has", "point_count"]],
             layout: {
-              "icon-image": PANTRY_ICON_ID,
-              "icon-size": 0.05,
+              "icon-image": pantryIconId,
+              "icon-size": 0.7,
+              "icon-anchor": "bottom",
               "icon-allow-overlap": true,
               "icon-ignore-placement": true,
             },
           });
         } else {
           m.addLayer({
-            id: PT_ID,
+            id: pointLayerId,
             type: "circle",
-            source: SRC_ID,
+            source: sourceId,
             filter: ["!", ["has", "point_count"]],
             paint: {
               "circle-radius": 8,
@@ -234,144 +371,211 @@ export default function PantryClusterOverlay({
           });
         }
 
-        // Clicking an individual pantry selects its Firestore document ID.
-        const onPointClick = (event: MapLayerMouseEvent) => {
-          const feature = event.features?.[0] as
-            | MapGeoJSONFeature
-            | undefined;
+        // Outline the selected pantry.
+        m.addLayer({
+          id: selectedLayerId,
+          type: "circle",
+          source: sourceId,
+          filter: [
+            "all",
+            ["!", ["has", "point_count"]],
+            [
+              "==",
+              ["get", "id"],
+              selectedPantryIdRef.current ?? "",
+            ],
+          ],
+          paint: {
+            "circle-radius": 13,
+            "circle-color": "rgba(0, 0, 0, 0)",
+            "circle-stroke-color": "#1d3b32",
+            "circle-stroke-width": 3,
+          },
+        });
 
-          const properties = feature?.properties as
-            | { id?: string }
-            | null
-            | undefined;
-
-          if (typeof properties?.id !== "string") return;
-
-          onPantryClick(properties.id);
-        };
-
-        // Clicking a cluster zooms in until its members separate.
-        const onClusterClick = async (event: MapLayerMouseEvent) => {
+        // Click an individual pantry marker.
+        clickPoint = (event: MapLayerMouseEvent) => {
           const feature = event.features?.[0];
+          const pantryId = feature?.properties?.id;
 
-          if (!feature || feature.geometry.type !== "Point") return;
-
-          const clusterId = feature.properties?.cluster_id;
-          const source = m.getSource(SRC_ID) as
-            | GeoJSONSource
-            | undefined;
-
-          if (clusterId == null || !source) return;
-
-          try {
-            const zoom = await source.getClusterExpansionZoom(
-              Number(clusterId)
-            );
-
-            if (cancelled) return;
-
-            const point = feature.geometry as {
-              type: "Point";
-              coordinates: [number, number];
-            };
-
-            m.easeTo({
-              center: point.coordinates,
-              zoom,
-            });
-          } catch (error) {
-            console.error("Failed to expand pantry cluster:", error);
+          if (pantryId !== undefined && pantryId !== null) {
+            onPantryClickRef.current(String(pantryId));
           }
         };
 
-        const onEnter = () => {
-          m.getCanvas().style.cursor = "pointer";
-        };
+        // Click a cluster to zoom in.
+        clickCluster = async (event: MapLayerMouseEvent) => {
+          const feature = event.features?.[0];
+          if (!feature) return;
 
-        const onLeave = () => {
-          m.getCanvas().style.cursor = "";
-        };
-
-        m.on("click", PT_ID, onPointClick);
-        m.on("click", CLUST_ID, onClusterClick);
-        m.on("mouseenter", PT_ID, onEnter);
-        m.on("mouseleave", PT_ID, onLeave);
-        m.on("mouseenter", CLUST_ID, onEnter);
-        m.on("mouseleave", CLUST_ID, onLeave);
-
-        cleanupEvents = () => {
-          m.off("click", PT_ID, onPointClick);
-          m.off("click", CLUST_ID, onClusterClick);
-          m.off("mouseenter", PT_ID, onEnter);
-          m.off("mouseleave", PT_ID, onLeave);
-          m.off("mouseenter", CLUST_ID, onEnter);
-          m.off("mouseleave", CLUST_ID, onLeave);
-        };
-      } catch (error) {
-        if (!cancelled) {
-          console.error(
-            "Failed to load food pantries from Firestore:",
-            error
+          const clusterId = Number(
+            feature.properties?.cluster_id
           );
+
+          if (!Number.isFinite(clusterId)) return;
+
+          const source = m.getSource(sourceId) as
+            | GeoJSONSource
+            | undefined;
+
+          if (!source) return;
+
+          try {
+            const expansionZoom =
+              await source.getClusterExpansionZoom(clusterId);
+
+            if (cancelled || !m.isStyleLoaded()) return;
+
+            const geometry = feature.geometry;
+            if (geometry.type !== "Point") return;
+
+            m.easeTo({
+              center: geometry.coordinates as [number, number],
+              zoom: expansionZoom,
+              duration: 500,
+            });
+          } catch (error) {
+            console.error(
+              "[Pantry clusters] Could not expand cluster:",
+              error
+            );
+          }
+        };
+
+        enterPoint = () => setCursor("pointer");
+        leavePoint = () => setCursor("");
+        enterCluster = () => setCursor("pointer");
+        leaveCluster = () => setCursor("");
+
+        m.on("click", pointLayerId, clickPoint);
+        m.on("click", clusterLayerId, clickCluster);
+        m.on("mouseenter", pointLayerId, enterPoint);
+        m.on("mouseleave", pointLayerId, leavePoint);
+        m.on("mouseenter", clusterLayerId, enterCluster);
+        m.on("mouseleave", clusterLayerId, leaveCluster);
+
+        ready = true;
+        initializing = false;
+        setLayersReady(true);
+
+        console.info(
+          `[Pantry clusters] Initialized with ${makePantryGeoJSON(pantries).features.length} valid pantry locations.`
+        );
+      } catch (error) {
+        initializing = false;
+        ready = false;
+
+        console.error(
+          "[Pantry clusters] Failed to initialize layers:",
+          error
+        );
+
+        try {
+          removeListeners();
+          removeOwnedLayersAndSource();
+        } catch (cleanupError) {
+          console.warn(
+            "[Pantry clusters] Initialization cleanup failed:",
+            cleanupError
+          );
+        }
+
+        if (!cancelled) {
+          setLayersReady(false);
         }
       }
     }
 
+    // A style reload removes custom sources and layers.
+    // Reset the state and recreate them when the new style is ready.
     const handleStyleLoad = () => {
-      void draw();
+      if (cancelled) return;
+
+      ready = false;
+      initializing = false;
+      setLayersReady(false);
+
+      void setupLayers();
     };
 
+    m.on("style.load", handleStyleLoad);
+
+    // The style might already be loaded when this component mounts.
     if (m.isStyleLoaded()) {
-      void draw();
-    } else {
-      m.once("load", handleStyleLoad);
+      void setupLayers();
     }
 
     return () => {
       cancelled = true;
-      m.off("load", handleStyleLoad);
-      removeOverlay();
-    };
-  }, [map, idSuffix, onPantryClick]);
+      ready = false;
+      initializing = false;
 
-  // Draw a separate outline for the currently selected pantry.
-  useEffect(() => {
-    const sourceId = `pantries${idSuffix}`;
-    const selectedId = `selected-point${idSuffix}`;
+      m.off("style.load", handleStyleLoad);
+      removeListeners();
 
-    if (!map.isStyleLoaded() || !map.getSource(sourceId)) return;
-
-    const source = map.getSource(sourceId) as GeoJSONSource;
-
-    const updateSelection = async () => {
       try {
-        const existingSource = map.getSource(selectedId);
-
-        if (existingSource) {
-          if ("setData" in existingSource) {
-            // The selected source is replaced below for reliable cleanup.
-          }
-          if (map.getLayer(selectedId)) map.removeLayer(selectedId);
-          map.removeSource(selectedId);
-        }
-
-        if (!selectedPantryId) return;
-
-        const features = await source.getClusterLeaves(0, 0, 0).catch(
-          () => []
-        );
-
-        // The clustered source is not a direct lookup by pantry ID.
-        // Selection styling is handled by the dedicated feature source
-        // populated in the next implementation step if needed.
-        void features;
-      } catch (error) {
-        console.error("Failed to update pantry selection:", error);
+        setCursor("");
+      } catch {
+        // The map may already be unmounted.
       }
+
+      try {
+        removeOwnedLayersAndSource();
+
+        // Remove only the image this effect added.
+        if (addedPantryImage && m.hasImage(pantryIconId)) {
+          m.removeImage(pantryIconId);
+        }
+      } catch (error) {
+        console.warn(
+          "[Pantry clusters] Cleanup warning:",
+          error
+        );
+      }
+
+      setLayersReady(false);
     };
 
-    void updateSelection();
-  }, [map, idSuffix, selectedPantryId]);
+    // Pantry changes are handled by the separate source-update effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, idSuffix]);
+
+  // Update pantry data without rebuilding the layers.
+  useEffect(() => {
+    if (!map || !layersReady || !map.isStyleLoaded()) return;
+
+    const source = map.getSource(sourceId) as
+      | GeoJSONSource
+      | undefined;
+
+    if (!source) {
+      console.warn(
+        "[Pantry clusters] Source is missing; waiting for style initialization.",
+        sourceId
+      );
+      return;
+    }
+
+    const geojson = makePantryGeoJSON(pantries);
+
+    source.setData(geojson);
+
+    console.info(
+      `[Pantry clusters] Updated source with ${geojson.features.length} valid pantry locations.`
+    );
+  }, [map, layersReady, pantries, sourceId]);
+
+  // Update the selected pantry outline.
+  useEffect(() => {
+    if (!map || !layersReady || !map.isStyleLoaded()) return;
+    if (!map.getLayer(selectedLayerId)) return;
+
+    map.setFilter(selectedLayerId, [
+      "all",
+      ["!", ["has", "point_count"]],
+      ["==", ["get", "id"], selectedPantryId ?? ""],
+    ]);
+  }, [map, layersReady, selectedLayerId, selectedPantryId]);
 
   return null;
 }

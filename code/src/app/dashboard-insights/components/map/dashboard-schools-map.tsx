@@ -17,6 +17,7 @@ import { clearFixedRadius } from "./overlays/click-radius";
 import CountyOverlay from "./overlays/county-overlay";
 import KeyOverlay from "./overlays/key-overlay";
 
+
 /**
  * Utility type for map padding. Mirrors MapLibre's padding shape while also
  * supporting a single numeric value for uniform padding.

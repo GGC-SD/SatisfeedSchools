@@ -211,7 +211,8 @@ h6 {
 .satisfeed-sidebar-logo {
   width: var(--satisfeed-sidebar-logo-width);
   height: auto;
-  border: 2px ridge #edc07e;
+  center: center;
+  border: 0.5px ridge #ffffff;
   
 }
 
@@ -250,6 +251,26 @@ h6 {
     justify-content: center;
     align-items: center;
 }
+
+
+/* Pantry map navigation buttons */
+.pantry-map .maplibregl-ctrl-group button {
+  background-color: #FF9700;
+  border-color: #ffffff;
+}
+
+/* Darker orange on hover */
+.pantry-map .maplibregl-ctrl-group button:hover {
+  background-color: #e68600;
+}
+
+/* Keyboard focus */
+.pantry-map .maplibregl-ctrl-group button:focus-visible {
+  outline: 2px solid #1d3b32;
+  outline-offset: 2px;
+}
+
+
 
 
 

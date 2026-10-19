@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -10,19 +9,23 @@ import {
   useRef,
   useState,
 } from "react";
-
 import maplibregl, {
   type LngLatLike,
   type Map as MLMap,
 } from "maplibre-gl";
 
-import PantryClusterOverlay from "./overlays/PantryClusterOverlay";
-
-
 import {
   clearFixedRadius,
   replaceFixedRadiusFromCenter,
 } from "./overlays/click-radius";
+
+import DistributionHeatmapOverlay from "./overlays/distribution-heatmap-overlay";
+import GeorgiaOutlineOverlay from "./overlays/GeorgiaOutlineOverlay";
+import DistributionOverlay from "./overlays/distribution-overlay";
+import CountyOverlay from "./overlays/county-overlay";
+import KeyOverlay from "./overlays/key-overlay";
+import PantryClusterOverlay from "./overlays/PantryClusterOverlay";
+
 
 const GA_BOUNDS: [[number, number], [number, number]] = [
   [-86.33327, 29.658835],
@@ -30,8 +33,8 @@ const GA_BOUNDS: [[number, number], [number, number]] = [
 ];
 
 const PANTRY_ID_SUFFIX = "-pantries";
-const PANTRY_SYMBOL = "🥫";
 const DEFAULT_CENTER: [number, number] = [-84.07, 33.95];
+const EMPTY_PANTRIES: readonly PantryLocation[] = [];
 
 export type PantryAffectedSchool = {
   id?: string;
@@ -39,15 +42,21 @@ export type PantryAffectedSchool = {
 };
 
 export type PantryFoodStatValue = string | number | boolean | null;
-
-export type PantryFoodStats = Readonly<
-  Record<string, PantryFoodStatValue>
->;
+export type PantryFoodStats = Readonly<Record<string, PantryFoodStatValue>>;
 
 export type PantryLocation = {
+  /** Firestore document ID, used to select the pantry. */
   id: string;
+
+  /** FeedAM source identifier, when available. */
+  feedAmId?: number;
+
   name?: string;
+  organization?: string;
   address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
   email?: string;
   phone?: string;
   website?: string;
@@ -56,45 +65,68 @@ export type PantryLocation = {
   dataSource?: string;
   lastVerifiedDate?: string;
   sourceUrl?: string;
+
+  /** Preferred Firestore coordinate format. */
+  coords?: {
+    lat: number;
+    lng: number;
+  };
+
+  /** Optional backwards compatibility with older map data. */
   coordinates?: {
     lat: number;
     lng: number;
   };
+
   serviceRadiusMiles?: number;
   affectedSchools?: readonly (PantryAffectedSchool | string)[];
   foodStats?: PantryFoodStats;
 };
+
+type PolygonFeature = GeoJSON.Feature<
+  GeoJSON.Polygon | GeoJSON.MultiPolygon
+>;
 
 type Props = {
   className?: string;
   center?: LngLatLike;
   zoom?: number;
   pantries?: readonly PantryLocation[];
+  showPantries?: boolean;
+  boundarySelection?: PolygonFeature | null;
+  onClearSelection?: () => void;
   onSelectionChange?: (pantry: PantryLocation | null) => void;
+
+  geojsonUrl?: string;
+  privacyRadiusMeters?: number;
+  jitterMeters?: number;
 };
 
 export type DashboardPantryMapHandle = {
   clearSelection: () => void;
 };
 
+function getPantryCoordinates(pantry: PantryLocation) {
+  return pantry.coords ?? pantry.coordinates ?? null;
+}
+
 function hasValidCoordinates(pantry: PantryLocation) {
-  const { lat, lng } = pantry.coordinates ?? {};
+  const coords = getPantryCoordinates(pantry);
+  if (!coords) return false;
 
   return (
-    typeof lat === "number" &&
-    Number.isFinite(lat) &&
-    lat >= -90 &&
-    lat <= 90 &&
-    typeof lng === "number" &&
-    Number.isFinite(lng) &&
-    lng >= -180 &&
-    lng <= 180
+    typeof coords.lat === "number" &&
+    Number.isFinite(coords.lat) &&
+    coords.lat >= -90 &&
+    coords.lat <= 90 &&
+    typeof coords.lng === "number" &&
+    Number.isFinite(coords.lng) &&
+    coords.lng >= -180 &&
+    coords.lng <= 180
   );
 }
 
-function hasValidRadius(
-  radius: number | undefined
-): radius is number {
+function hasValidRadius(radius: number | undefined): radius is number {
   return (
     typeof radius === "number" &&
     Number.isFinite(radius) &&
@@ -104,7 +136,7 @@ function hasValidRadius(
 
 function displayValue(value: string | undefined) {
   const normalized = value?.trim();
-  return normalized ? normalized : "Not provided";
+  return normalized || "Not provided";
 }
 
 function readableStatName(key: string) {
@@ -118,457 +150,446 @@ function readableStatName(key: string) {
     : "Statistic";
 }
 
-const DashboardPantryMap = forwardRef<
-  DashboardPantryMapHandle,
-  Props
->(function DashboardPantryMap(
-  {
-    className = "w-full h-full",
-    center = DEFAULT_CENTER,
-    zoom = 11,
-    pantries = [],
-    onSelectionChange,
-  },
-  ref
-) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<MLMap | null>(null);
+const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
+  function DashboardPantryMap(
+    {
+      className = "w-full h-full",
+      center = DEFAULT_CENTER,
+      zoom = 11,
+      pantries = EMPTY_PANTRIES,
+      showPantries = true,
+      boundarySelection = null,
+      onClearSelection,
+      onSelectionChange,
+      
+      geojsonUrl,
+      privacyRadiusMeters = 500,
+      jitterMeters = 0,
+    },
+    ref
+  ) {
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const mapRef = useRef<MLMap | null>(null);
 
-  const [map, setMap] = useState<MLMap | null>(null);
-  const [selectedPantryId, setSelectedPantryId] =
-    useState<string | null>(null);
+    const [map, setMap] = useState<MLMap | null>(null);
+    const [selectedPantryId, setSelectedPantryId] =
+      useState<string | null>(null);
+    const [householdCount, setHouseholdCount] = useState(0);
 
-  const selectedPantry = useMemo(
-    () =>
-      pantries.find(
-        (pantry) => pantry.id === selectedPantryId
-      ) ?? null,
-    [pantries, selectedPantryId]
-  );
-
-  const clearSelection = useCallback(() => {
-    const currentMap = mapRef.current;
-
-    if (currentMap) {
-      clearFixedRadius(currentMap, {
-        idSuffix: PANTRY_ID_SUFFIX,
-      });
-    }
-
-    setSelectedPantryId(null);
-  }, []);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      clearSelection,
-    }),
-    [clearSelection]
-  );
-
-  // Initialize MapLibre.
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (!container || mapRef.current) return;
-
-    const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
-
-    if (!apiKey) {
-      console.error(
-        "Missing NEXT_PUBLIC_MAPTILER_KEY; map will not initialize."
-      );
-      return;
-    }
-
-    const nextMap = new maplibregl.Map({
-      container,
-      style: `https://api.maptiler.com/maps/topo-v2/style.json?key=${apiKey}`,
-      center,
-      zoom,
-      maxBounds: GA_BOUNDS,
-      renderWorldCopies: false,
-    });
-
-    nextMap.addControl(
-      new maplibregl.NavigationControl({
-        visualizePitch: true,
-      }),
-      "top-left"
+    const selectedPantry = useMemo(
+      () =>
+        pantries.find((pantry) => pantry.id === selectedPantryId) ?? null,
+      [pantries, selectedPantryId]
     );
 
-    nextMap.addControl(
-      new maplibregl.ScaleControl({
-        unit: "imperial",
-      }),
-      "bottom-left"
+    const clearSelection = useCallback(() => {
+      if (mapRef.current) {
+        clearFixedRadius(mapRef.current, {
+          idSuffix: PANTRY_ID_SUFFIX,
+        });
+      }
+
+      setSelectedPantryId(null);
+      onClearSelection?.();
+    }, [onClearSelection]);
+
+    useImperativeHandle(
+      ref,
+      () => ({ clearSelection }),
+      [clearSelection]
     );
 
-    const resizeObserver = new ResizeObserver(() => {
-      nextMap.resize();
-    });
+    const handlePantryClick = useCallback(
+      (pantryId: string) => {
+        const pantry = pantries.find((item) => item.id === pantryId);
+        if (!pantry || !hasValidCoordinates(pantry)) return;
 
-    resizeObserver.observe(container);
+        setSelectedPantryId(pantry.id);
 
-    const handleLoad = () => {
-      mapRef.current = nextMap;
-      setMap(nextMap);
-    };
+        const coords = getPantryCoordinates(pantry);
+        if (coords && mapRef.current) {
+          mapRef.current.easeTo({
+            center: [coords.lng, coords.lat],
+            duration: 500,
+          });
+        }
+      },
+      [pantries]
+    );
 
-    const handleError = (event: ErrorEvent) => {
-      console.error(
-        "[Pantry map error]",
-        event.error ?? event.message
-      );
-    };
+    // Create and destroy the MapLibre map.
+    useEffect(() => {
+      const container = containerRef.current;
+      if (!container || mapRef.current) return;
 
-    nextMap.on("load", handleLoad);
-    nextMap.on("error", handleError);
+      const apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
 
-    return () => {
-      resizeObserver.disconnect();
+      if (!apiKey) {
+        console.error(
+          "Missing NEXT_PUBLIC_MAPTILER_KEY; pantry map will not initialize."
+        );
+        return;
+      }
 
-      nextMap.off("load", handleLoad);
-      nextMap.off("error", handleError);
-
-      clearFixedRadius(nextMap, {
-        idSuffix: PANTRY_ID_SUFFIX,
+      const nextMap = new maplibregl.Map({
+        container,
+        style: `https://api.maptiler.com/maps/topo-v2/style.json?key=${apiKey}`,
+        center,
+        zoom,
+        maxBounds: GA_BOUNDS,
+        renderWorldCopies: false,
       });
 
-      nextMap.remove();
+      nextMap.addControl(
+        new maplibregl.NavigationControl({
+          visualizePitch: true,
+        }),
+        "top-left"
+      );
 
-      if (mapRef.current === nextMap) {
+      nextMap.addControl(
+        new maplibregl.ScaleControl({
+          unit: "imperial",
+        }),
+        "bottom-left"
+      );
+
+      const resizeObserver = new ResizeObserver(() => {
+        nextMap.resize();
+      });
+      resizeObserver.observe(container);
+
+      const handleLoad = () => {
+        mapRef.current = nextMap;
+        setMap(nextMap);
+      };
+
+      const handleError = (event: ErrorEvent) => {
+        console.error(
+          "[Pantry map error]",
+          event.error ?? event.message
+        );
+      };
+
+      nextMap.on("load", handleLoad);
+      nextMap.on("error", handleError);
+
+      return () => {
+        resizeObserver.disconnect();
+        nextMap.off("load", handleLoad);
+        nextMap.off("error", handleError);
+
+        clearFixedRadius(nextMap, {
+          idSuffix: PANTRY_ID_SUFFIX,
+        });
+
+        nextMap.remove();
         mapRef.current = null;
+        setMap(null);
+      };
+    }, [center, zoom]);
+
+    // Remove selection if its pantry disappears from the incoming data.
+    useEffect(() => {
+      if (selectedPantryId && !selectedPantry) {
+        clearSelection();
       }
+    }, [selectedPantryId, selectedPantry, clearSelection]);
 
-      setMap((current) =>
-        current === nextMap ? null : current
-      );
-    };
-  }, [center, zoom]);
+    // Draw the selected pantry's service radius.
+    useEffect(() => {
+      if (!map) return;
 
-  // Clear a selection if the selected pantry is no longer available
-  // in the supplied pantry records.
-  useEffect(() => {
-    if (selectedPantryId && !selectedPantry) {
-      clearSelection();
-    }
-  }, [
-    selectedPantryId,
-    selectedPantry,
-    clearSelection,
-  ]);
-
-  // Draw the selected pantry's service-radius circle.
-  useEffect(() => {
-    if (!map) return;
-
-    clearFixedRadius(map, {
-      idSuffix: PANTRY_ID_SUFFIX,
-    });
-
-    if (
-      !selectedPantry ||
-      !hasValidCoordinates(selectedPantry) ||
-      !hasValidRadius(selectedPantry.serviceRadiusMiles)
-    ) {
-      return;
-    }
-
-    const { lat, lng } = selectedPantry.coordinates!;
-
-    replaceFixedRadiusFromCenter(
-      map,
-      [lng, lat],
-      selectedPantry.serviceRadiusMiles,
-      {
+      clearFixedRadius(map, {
         idSuffix: PANTRY_ID_SUFFIX,
-        fillColor: "#FF9700",
-        fillOpacity: 0.16,
-        strokeColor: "#cf7c00",
+      });
+
+      if (
+        !selectedPantry ||
+        !hasValidCoordinates(selectedPantry) ||
+        !hasValidRadius(selectedPantry.serviceRadiusMiles)
+      ) {
+        return;
       }
-    );
-  }, [map, selectedPantry]);
 
-  // Notify the parent whenever the selected pantry changes.
-  useEffect(() => {
-    onSelectionChange?.(selectedPantry);
-  }, [onSelectionChange, selectedPantry]);
+      const coords = getPantryCoordinates(selectedPantry);
+      if (!coords) return;
 
-  const affectedSchools =
-    selectedPantry?.affectedSchools ?? [];
+      replaceFixedRadiusFromCenter(
+        map,
+        [coords.lng, coords.lat],
+        selectedPantry.serviceRadiusMiles,
+        {
+          idSuffix: PANTRY_ID_SUFFIX,
+          fillColor: "#FF9700",
+          fillOpacity: 0.16,
+          strokeColor: "#cf7c00",
+        }
+      );
+    }, [map, selectedPantry]);
 
-  const foodStats = Object.entries(
-    selectedPantry?.foodStats ?? {}
-  );
+    useEffect(() => {
+      onSelectionChange?.(selectedPantry);
+    }, [selectedPantry, onSelectionChange]);
 
-  return (
-    <div className={`relative ${className}`}>
-      {/* Map canvas */}
-      <div
-        ref={containerRef}
-        className={`${className} pantry-map`}
-        data-testid="pantry-map-container"
-      />
+    const affectedSchools = selectedPantry?.affectedSchools ?? [];
+    const foodStats = Object.entries(selectedPantry?.foodStats ?? {});
 
-      {/* Pantry clustering overlay */}
-      {map && (
-        <PantryClusterOverlay
-          map={map}
-          idSuffix={PANTRY_ID_SUFFIX}
-          onPantryClick={(pantryId: string) => {
-            setSelectedPantryId(pantryId);
-          }}
+    return (
+      <div className={`relative ${className}`}>
+        <div
+          ref={containerRef}
+          className={`${className} pantry-map`}
+          data-testid="pantry-map-container"
         />
-      )}
+         
 
-      {/* Map legend */}
-      <section
-        aria-label="Food pantry map legend"
-        className="pointer-events-none absolute bottom-0 left-0 z-10 w-full border-t-2 border-[#FF9700] bg-neutral-200 px-2 py-1 text-sm opacity-95"
-        data-testid="pantry-map-legend"
-      >
-        <h2 className="text-lg font-bold">Legend</h2>
+        {map && (
+          <>
+            {/* Map key/legend. */}
+          {map && <KeyOverlay currentMap="pantry" />}
 
-        <div className="flex flex-wrap gap-x-3 gap-y-1">
-          <div className="flex items-center gap-1">
-            <span
-              aria-hidden="true"
-              className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#FF9700] text-sm"
-            >
-              {PANTRY_SYMBOL}
-            </span>
-            <span>Pantry</span>
-          </div>
+            {/* Distribution heatmap remains its own independent overlay. */}
+           
 
-          <div className="flex items-center gap-1">
-            <span
-              aria-hidden="true"
-              className="flex h-7 w-7 items-center justify-center rounded-full border-4 border-[#1d3b32] bg-[#FF9700] text-sm ring-2 ring-[#FF9700]"
-            >
-              {PANTRY_SYMBOL}
-            </span>
-            <span>Selected pantry</span>
-          </div>
+            {/* Georgia state outline. */}
+            <GeorgiaOutlineOverlay map={map} />
 
-          <div className="flex items-center gap-1">
-            <span
-              aria-hidden="true"
-              className="h-6 w-6 rounded-full border-2 border-[#cf7c00] bg-[#FF970029]"
+            {/* County outlines and boundary selection. */}
+            {/* Distribution coverage and heatmap */}
+        {map && geojsonUrl && (
+          <>
+            <DistributionOverlay
+              map={map}
+              geojsonUrl={geojsonUrl}
+              privacyRadiusMeters={privacyRadiusMeters}
+              jitterMeters={jitterMeters}
+              selectedArea={null}
+              onHouseholdCount={(count) => {
+                console.log("Households:", count);
+              }}
             />
-            <span>Pantry service radius</span>
-          </div>
 
-          <div className="flex items-center gap-1">
-            <span
-              aria-hidden="true"
-              className="flex h-6 min-w-6 items-center justify-center rounded-full border-2 border-white bg-[#2e7d32] px-1 text-xs font-bold text-white"
-            >
-              12
-            </span>
-            <span>Pantry cluster</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Selected pantry details */}
-      {selectedPantry && (
-        <aside
-          aria-labelledby="selected-pantry-heading"
-          className="absolute right-3 top-3 z-20 max-h-[calc(100%-7rem)] w-[min(22rem,calc(100%-1.5rem))] overflow-y-auto rounded-lg border-4 border-[#FF9700] bg-white p-4 shadow-lg"
-          data-testid="pantry-information-box"
-        >
-          <h2
-            id="selected-pantry-heading"
-            className="text-xl font-bold"
-          >
-            Pantry information
-          </h2>
-
-          <dl className="mt-3 space-y-2">
-            <div>
-              <dt className="font-semibold">Name</dt>
-              <dd>{displayValue(selectedPantry.name)}</dd>
-            </div>
-
-            <div>
-              <dt className="font-semibold">Address</dt>
-              <dd>{displayValue(selectedPantry.address)}</dd>
-            </div>
-
-            <div>
-              <dt className="font-semibold">Email</dt>
-              <dd>{displayValue(selectedPantry.email)}</dd>
-            </div>
-
-            {selectedPantry.phone && (
-              <div>
-                <dt className="font-semibold">Phone</dt>
-                <dd>{selectedPantry.phone}</dd>
-              </div>
+            <DistributionHeatmapOverlay
+              map={map}
+              geojsonUrl={geojsonUrl}
+              privacyRadiusMeters={privacyRadiusMeters}
+              jitterMeters={jitterMeters}
+            />
+          </>
+)}
+            {/* Pantry markers and clusters are managed separately. */}
+            {showPantries && (
+              <PantryClusterOverlay
+                map={map}
+                pantries={pantries.filter(hasValidCoordinates)}
+                idSuffix={PANTRY_ID_SUFFIX}
+                selectedPantryId={selectedPantryId}
+                onPantryClick={handlePantryClick}
+              />
             )}
+          </>
+        )}
 
-            {selectedPantry.website && (
+        
+        {selectedPantry && (
+          <aside
+            aria-labelledby="selected-pantry-heading"
+            className="absolute right-3 top-3 z-20 max-h-[calc(100%-7rem)] w-[min(22rem,calc(100%-1.5rem))] overflow-y-auto rounded-lg border-4 border-[#FF9700] bg-white p-4 shadow-lg"
+            data-testid="pantry-information-box"
+          >
+            <h2
+              id="selected-pantry-heading"
+              className="text-xl font-bold"
+            >
+              Pantry information
+            </h2>
+
+            <dl className="mt-3 space-y-2">
               <div>
-                <dt className="font-semibold">Website</dt>
+                <dt className="font-semibold">Name</dt>
+                <dd>{displayValue(selectedPantry.name)}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Organization</dt>
+                <dd>{displayValue(selectedPantry.organization)}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Address</dt>
                 <dd>
-                  <a
-                    className="break-all underline"
-                    href={selectedPantry.website}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {selectedPantry.website}
-                  </a>
+                  {[
+                    selectedPantry.address,
+                    selectedPantry.city,
+                    selectedPantry.state,
+                    selectedPantry.zip,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") || "Not provided"}
                 </dd>
               </div>
-            )}
-
-            {selectedPantry.hours && (
               <div>
-                <dt className="font-semibold">Hours</dt>
-                <dd>{selectedPantry.hours}</dd>
+                <dt className="font-semibold">Email</dt>
+                <dd>{displayValue(selectedPantry.email)}</dd>
               </div>
-            )}
 
-            {selectedPantry.resourceType && (
-              <div>
-                <dt className="font-semibold">Resource type</dt>
-                <dd>{selectedPantry.resourceType}</dd>
-              </div>
-            )}
+              {selectedPantry.phone && (
+                <div>
+                  <dt className="font-semibold">Phone</dt>
+                  <dd>{selectedPantry.phone}</dd>
+                </div>
+              )}
 
-            {selectedPantry.dataSource && (
-              <div>
-                <dt className="font-semibold">Data source</dt>
-                <dd>{selectedPantry.dataSource}</dd>
-              </div>
-            )}
+              {selectedPantry.website && (
+                <div>
+                  <dt className="font-semibold">Website</dt>
+                  <dd>
+                    <a
+                      href={selectedPantry.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="break-all underline"
+                    >
+                      {selectedPantry.website}
+                    </a>
+                  </dd>
+                </div>
+              )}
 
-            {selectedPantry.lastVerifiedDate && (
-              <div>
-                <dt className="font-semibold">Last verified</dt>
-                <dd>{selectedPantry.lastVerifiedDate}</dd>
-              </div>
-            )}
+              {selectedPantry.hours && (
+                <div>
+                  <dt className="font-semibold">Hours</dt>
+                  <dd>{selectedPantry.hours}</dd>
+                </div>
+              )}
 
-            {selectedPantry.sourceUrl && (
+              {selectedPantry.resourceType && (
+                <div>
+                  <dt className="font-semibold">Resource type</dt>
+                  <dd>{selectedPantry.resourceType}</dd>
+                </div>
+              )}
+
+              {selectedPantry.dataSource && (
+                <div>
+                  <dt className="font-semibold">Data source</dt>
+                  <dd>{selectedPantry.dataSource}</dd>
+                </div>
+              )}
+
+              {selectedPantry.lastVerifiedDate && (
+                <div>
+                  <dt className="font-semibold">Last verified</dt>
+                  <dd>{selectedPantry.lastVerifiedDate}</dd>
+                </div>
+              )}
+
+              {selectedPantry.sourceUrl && (
+                <div>
+                  <dt className="font-semibold">FeedAM listing</dt>
+                  <dd>
+                    <a
+                      href={selectedPantry.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline"
+                    >
+                      View source
+                    </a>
+                  </dd>
+                </div>
+              )}
+
               <div>
-                <dt className="font-semibold">FeedAM listing</dt>
+                <dt className="font-semibold">Service radius</dt>
                 <dd>
-                  <a
-                    className="underline"
-                    href={selectedPantry.sourceUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    View source
-                  </a>
+                  {hasValidRadius(selectedPantry.serviceRadiusMiles)
+                    ? `${selectedPantry.serviceRadiusMiles} miles`
+                    : "Not provided"}
                 </dd>
               </div>
-            )}
+            </dl>
 
-            <div>
-              <dt className="font-semibold">
-                Service radius
-              </dt>
-              <dd>
-                {hasValidRadius(
-                  selectedPantry.serviceRadiusMiles
-                )
-                  ? `${selectedPantry.serviceRadiusMiles} miles`
-                  : "Not provided"}
-              </dd>
-            </div>
-          </dl>
-
-          <section
-            aria-labelledby="affected-schools-heading"
-            className="mt-4"
-          >
-            <h3
-              id="affected-schools-heading"
-              className="font-semibold"
+            <section
+              aria-labelledby="affected-schools-heading"
+              className="mt-4"
             >
-              Affected schools
-            </h3>
+              <h3
+                id="affected-schools-heading"
+                className="font-semibold"
+              >
+                Affected schools
+              </h3>
 
-            {affectedSchools.length > 0 ? (
-              <ul className="list-disc pl-5">
-                {affectedSchools.map((school, index) => {
-                  const schoolName =
-                    typeof school === "string"
-                      ? displayValue(school)
-                      : displayValue(
-                          school.name ?? school.id
-                        );
+              {affectedSchools.length ? (
+                <ul className="list-disc pl-5">
+                  {affectedSchools.map((school, index) => {
+                    const name =
+                      typeof school === "string"
+                        ? school
+                        : school.name ?? school.id ?? "Unnamed school";
 
-                  const key =
-                    typeof school === "string"
-                      ? school
-                      : school.id;
+                    const key =
+                      typeof school === "string"
+                        ? school
+                        : school.id ?? `${name}-${index}`;
 
-                  return (
-                    <li key={key || `school-${index}`}>
-                      {schoolName}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <p className="text-neutral-600">
-                No affected-school data
-              </p>
-            )}
-          </section>
+                    return <li key={key}>{name}</li>;
+                  })}
+                </ul>
+              ) : (
+                <p className="text-neutral-600">
+                  No affected-school data
+                </p>
+              )}
+            </section>
 
-          <section
-            aria-labelledby="food-statistics-heading"
-            className="mt-4"
-          >
-            <h3
-              id="food-statistics-heading"
-              className="font-semibold"
+            <section
+              aria-labelledby="food-statistics-heading"
+              className="mt-4"
             >
-              Food statistics
-            </h3>
+              <h3
+                id="food-statistics-heading"
+                className="font-semibold"
+              >
+                Food statistics
+              </h3>
 
-            {foodStats.length > 0 ? (
-              <dl className="space-y-1">
-                {foodStats.map(([key, value]) => (
-                  <div
-                    className="flex justify-between gap-4"
-                    key={key}
-                  >
-                    <dt>{readableStatName(key)}</dt>
-                    <dd className="break-words text-right">
-                      {value === null
-                        ? "Not provided"
-                        : String(value)}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            ) : (
-              <p className="text-neutral-600">
-                No food-stat data
-              </p>
-            )}
-          </section>
+              {foodStats.length ? (
+                <dl className="space-y-1">
+                  {foodStats.map(([key, value]) => (
+                    <div
+                      className="flex justify-between gap-4"
+                      key={key}
+                    >
+                      <dt>{readableStatName(key)}</dt>
+                      <dd>
+                        {value === null ? "Not provided" : String(value)}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <p className="text-neutral-600">
+                  No food-stat data
+                </p>
+              )}
+            </section>
 
-          <button
-            type="button"
-            onClick={clearSelection}
-            className="button-insights mt-4 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1d3b32] focus-visible:ring-offset-2"
-          >
-            Clear selected pantry
-          </button>
-        </aside>
-      )}
-    </div>
-  );
-});
+            <button
+              type="button"
+              onClick={clearSelection}
+              className="button-insights mt-4 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1d3b32] focus-visible:ring-offset-2"
+            >
+              Clear selected pantry
+            </button>
+          </aside>
+        )}
+      </div>
+    );
+  }
+);
 
 DashboardPantryMap.displayName = "DashboardPantryMap";
 
 export default DashboardPantryMap;
+export type { Props as DashboardPantryMapProps };

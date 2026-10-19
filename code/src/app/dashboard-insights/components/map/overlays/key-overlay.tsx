@@ -1,3 +1,4 @@
+
 "use client";
 
 type KeyProps = {
@@ -12,23 +13,23 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
     >
       <h1 className="text-lg">Legend</h1>
 
-      <div className="flex flex-wrap gap-y-0 gap-x-2">
-        {/** BOTH MAPS WILL HAVE THESE */}
-        <div className="flex gap-1">
-          <div className="w-6 h-6 bg-neutral-300 rounded-full border-dashed border-spacing-0.5 border-2 border-black"></div>
+      <div className="flex flex-wrap gap-y-1 gap-x-3">
+        {/* Shared map features */}
+        <div className="flex gap-1 items-center">
+          <div className="w-6 h-6 bg-neutral-300 rounded-full border-dashed border-2 border-black" />
           <p>Selected Area</p>
         </div>
 
-        <div className="flex gap-1">
+        <div className="flex gap-1 items-center">
           <div
             className="w-6 h-6 bg-[#72e3ad99] rounded-full"
             data-testid="legend-unique-households-swatch"
-          ></div>
+          />
           <p>Unique Households Served</p>
         </div>
 
-        {/** School's Map Key */}
-        {currentMap == "school" && (
+        {/* School map */}
+        {currentMap === "school" && (
           <>
             <div className="flex gap-1 items-center">
               <img
@@ -58,34 +59,61 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
             </div>
 
             <div className="flex gap-1 items-center">
-              <div className="w-6 h-6 bg-[#4277e841] rounded-full border-2 border-[#2563eb]"></div>
+              <div className="w-6 h-6 bg-[#4277e841] rounded-full border-2 border-[#2563eb]" />
               <p>School Impact Zone</p>
             </div>
           </>
         )}
 
-        {/** Library's Map Key */}
-        {currentMap == "library" && (
+        {/* Pantry map */}
+        {currentMap === "pantry" && (
           <>
-            <div className="flex gap-1">
-              <div className="flex gap-1 item-center">
-                <img
-                  src="/libary-icon.png"
-                  alt="Single Library"
-                  className="w-6 h-6 object-contain"
-                />
+            <div className="flex gap-1 items-center">
+              <div className="w-6 h-6 bg-[#FF9700] rounded-full border-2 border-white" />
+              <p>Food Pantry</p>
+            </div>
+
+              <div className="flex gap-1 items-center">
+                <div className="w-6 h-6 bg-[#b00b58] rounded-full border-2 border-white flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">#</span>
+                </div>
+                <p>Pantry Cluster</p>
               </div>
+
+            <div className="flex gap-1 items-center">
+              <div className="w-7 h-7 rounded-full border-[3px] border-[#000] flex items-center justify-center">
+                <div className="w-3 h-3 bg-[#f97316] rounded-full" />
+              </div>
+              <p>Selected Pantry</p>
+            </div>
+
+            <div className="flex gap-1 items-center">
+              <div className="w-6 h-6 bg-[#4277e841] rounded-full border-2 border-[#2563eb]" />
+              <p>Pantry Service Area</p>
+            </div>
+          </>
+        )}
+
+        {/* Library map */}
+        {currentMap === "library" && (
+          <>
+            <div className="flex gap-1 items-center">
+              <img
+                src="/libary-icon.png"
+                alt="Single Library"
+                className="w-6 h-6 object-contain"
+              />
               <p>Single Library</p>
             </div>
 
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center">
               <div className="w-6 h-6 bg-[#15613e] rounded-full border-2 border-white">
                 <p className="text-center text-white">#</p>
               </div>
               <p>Library Cluster</p>
             </div>
 
-            <div className="flex gap-1" items-center="true">
+            <div className="flex gap-1 items-center">
               <div className="w-7 h-7 rounded-full border-[3px] border-[#1d3b32] flex items-center justify-center">
                 <img
                   src="/libary-icon.png"
@@ -96,8 +124,8 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
               <p>Selected Library</p>
             </div>
 
-            <div className="flex gap-1">
-              <div className="w-6 h-6 bg-[#4277e841] rounded-full border-2 border-[#2563eb]"></div>
+            <div className="flex gap-1 items-center">
+              <div className="w-6 h-6 bg-[#4277e841] rounded-full border-2 border-[#2563eb]" />
               <p>Library Impact Zone</p>
             </div>
           </>
