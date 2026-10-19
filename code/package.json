@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "fetch:pantries": "tsx scripts/fetchpantries.ts"
+    "fetch:pantries": "tsx scripts/fetchpantries.ts",
+    "fetch:schools": "tsx scripts/fetch.ts",
+    "fetch:libraries": "tsx scripts/fetchlibraries.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
@@ -18,8 +20,9 @@
     "csv-parse": "^5.6.0",
     "d3": "^7.9.0",
     "d3-geo": "^3.1.1",
+    "dotenv": "^18.0.8",
     "firebase": "^11.10.0",
-    "firebase-admin": "^14.3.0",
+    "firebase-admin": "^14.5.0",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
