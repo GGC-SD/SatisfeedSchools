@@ -8,7 +8,8 @@ import DashboardPantryMap, {
     PantryAffectedSchool,
     PantryFoodStats,
     PantryLocation,
-} from "../map/dashboard-pantry-map";
+} from "../map/dashboard-pantry-map"
+";
 
 type PantryFirestoreDocument = {
     name?: string;
