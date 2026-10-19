@@ -164,19 +164,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
               );
             })}
 
-            {isPantry && recordFields.sourceUrl ? (
-              <div className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2">
-                <div className="font-medium uppercase">Source:</div>
-                <a
-                  href={String(recordFields.sourceUrl)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline break-words"
-                >
-                  View Source
-                </a>
-              </div>
-            ) : null}
+            
           </div>
         ) : (
           <p className="text-neutral-500 mt-4">
