@@ -73,6 +73,14 @@ export default function SchoolsClusterOverlay({
     const SCHOOL_ICON_ID = `satisfeed-school-icon${idSuffix}`;
 
     let unmounted = false;
+    let removeListeners = () => {};
+
+    const tooltip = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "bottom",
+      offset: 15,
+    });
 
     /**
      * Fetch school docs from Firestore, build a FeatureCollection<Point>, then
@@ -272,12 +280,64 @@ export default function SchoolsClusterOverlay({
         );
       };
 
-      // Cursor affordances (hand over clickable things)
-      const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      const onEnterPoint = () => setCursor("pointer");
-      const onLeavePoint = () => setCursor("");
-      const onEnterCluster = () => setCursor("pointer");
-      const onLeaveCluster = () => setCursor("");
+      // Single School Hover
+      const onEnterPoint = (e: MapLayerMouseEvent) => {
+      const school = e.features?.[0];
+      if (!school) return;
+
+      m.getCanvas().style.cursor = "pointer";
+
+      const content = document.createElement("div");
+      content.style.whiteSpace = "pre-line";
+      content.style.lineHeight = "1.6";
+      content.textContent = "Click to see more info for:\n" + (school.properties?.name ?? "School");
+
+      tooltip
+        .setLngLat((school.geometry as GeoJSON.Point).coordinates as [number, number])
+        .setDOMContent(content)
+        .addTo(m);
+      };
+
+      // Cluster School Hover
+      const onEnterCluster = async (e: MapLayerMouseEvent) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+
+        m.getCanvas().style.cursor = "pointer";
+        tooltip.remove();
+        tooltip.setLngLat((e.features![0].geometry as GeoJSON.Point).coordinates as [number, number]);
+
+        try {
+          const source = m.getSource(SRC_ID) as maplibregl.GeoJSONSource;
+          const schools = await source.getClusterLeaves(Number(feature.properties.cluster_id), 3, 0);
+
+          if (unmounted || m.getCanvas().style.cursor !== "pointer") return;
+
+          const list = document.createElement("div");
+          list.style.whiteSpace = "pre-line";
+          list.style.lineHeight = "1.4";
+          list.textContent = "Zoom in to see schools in this cluster:";
+          for (const school of schools) {
+            list.textContent += "\n• " + (school.properties?.name ?? "School");
+          }
+
+          const remaining = Number(feature.properties.point_count) - schools.length;
+          if (remaining > 0) {
+            list.textContent += "\nAnd " + remaining + " more.";
+          }
+          tooltip.setDOMContent(list).addTo(m);
+        } 
+        catch {
+          console.error("Could not load school names.");
+        }
+      };
+
+      const onLeavePoint = () => {
+        m.getCanvas().style.cursor = "";
+        tooltip.remove();
+      };
+
+      const onLeaveCluster = onLeavePoint;
 
       // Wire events
       m.on("click", PT_ID, onPointClick);
@@ -288,7 +348,7 @@ export default function SchoolsClusterOverlay({
       m.on("mouseleave", CLUST_ID, onLeaveCluster);
 
       // Per-effect cleanup for listeners
-      return () => {
+      removeListeners = () => {
         try {
           m.off("click", PT_ID, onPointClick);
         } catch {}
@@ -324,6 +384,8 @@ export default function SchoolsClusterOverlay({
     // Full overlay cleanup on unmount or dependency change
     return () => {
       unmounted = true;
+      removeListeners();
+      tooltip.remove();
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
       } catch {}

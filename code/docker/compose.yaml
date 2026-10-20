@@ -1,0 +1,24 @@
+services:
+  frontend:
+    image: satisfeed-nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    depends_on:
+      - backend
+
+
+  backend:
+    image: satisfeed-schools:latest
+    env_file:
+      - ../.env
+    expose:
+      - "3000"
+    volumes:
+      - schools-data:/app/public/data
+
+volumes:
+  schools-data:

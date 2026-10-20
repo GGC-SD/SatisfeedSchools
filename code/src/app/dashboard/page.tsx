@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SidebarNav from "@/components/ui/sidebar";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import VersionSelector from "@/components/VersionSelector";
 import ZipMap from "@/components/ZipMap";
-import {useAuth} from "@/firebase/authContext";
-import {useRouter} from "next/navigation";
 import DemographicCharts from "@/components/ui/DemographicCharts";
 import CountyMap from "@/components/CountyMap";
 import {Button, ButtonGroup} from "react-bootstrap";
+import { useAuth } from "@/firebase/authContext";
+import { useRouter } from "next/navigation";
 
 interface Metrics {
     totalPeopleHelped: number;
@@ -16,16 +16,8 @@ interface Metrics {
 }
 
 export default function Dashboard() {
-    //Add logic to navigate the user back to the login page if user does not sign in
     const { user, loading } = useAuth();
     const router = useRouter();
-
-    useEffect(() => {
-        if (!loading && !user) {
-            router.push("/");
-        }
-    }, [user, loading]);
-
     const [totalMetrics, setTotalMetrics] = useState<Metrics | null>(null);
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
     const [selectedTimeCreated, setSelectedTimeCreated] = useState<Date | null>(null);
@@ -34,7 +26,7 @@ export default function Dashboard() {
     const [language, setLanguage] = useState<"en" | "es">("en");
     const translations = {
         en: {
-            title: " Dashboard",
+            title: "Satisfeed: Summary of Food Distribution and Families Served",
             dataCollected: "Data collected from",
             to: "to",
             records: "records",
@@ -45,7 +37,7 @@ export default function Dashboard() {
         },
 
         es: {
-            title: "Panel de Satisfeed",
+            title: "Satisfeed: Resumen de la distribución de alimentos y las familias atendidas",
             dataCollected: "Datos recopilados desde",
             to: "hasta",
             records: "registros",
@@ -110,6 +102,20 @@ export default function Dashboard() {
         }
     }, [selectedVersionId])
 
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+    }, [user, loading, router]);
+
+    if (loading || !user) {
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <Spinner animation="border" />
+            </div>
+        );
+    }
+
     return (
         <Container fluid className="p-0">
             <Row className="m-0">
@@ -123,8 +129,8 @@ export default function Dashboard() {
                 <Col md={10} lg={10} className="pt-5 pb-2 d-flex flex-column min-vh-100">
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
-                        <div className="dashboard-main-header d-flex align-items-center justify-content-center gap-2">
-                            <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" /><img/>
+                            <div className="dashboard-main-header d-flex align-items-center justify-content-center gap-2">
+                            <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" />
                             <h1 className="dashboard-page-title font-bold text-gray-800">
                                 {t.title}
                             </h1>
@@ -173,11 +179,7 @@ export default function Dashboard() {
                                         <ButtonGroup className="mb-3">
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${
-                                                    mapView === "zip"
-                                                        ? "bg-warning text-dark border border-dark"
-                                                        : "btn-secondary"
-                                                }`}
+                                                className={`border border-dark px-4 py-2 ${mapView === "zip" ? "satisfeed-orange-button" : "btn-secondary"}`}
                                                 onClick={() => {
                                                     setMapView("zip");
                                                     setSelectedCounty(null);
@@ -190,11 +192,7 @@ export default function Dashboard() {
                                             </Button>
                                             <Button
                                                 variant="custom"
-                                                className={`border border-dark px-4 py-2 ${
-                                                    mapView === "county"
-                                                        ? "bg-warning text-dark border border-dark"
-                                                        : "btn-secondary"
-                                                }`}
+                                                className={`border border-dark px-4 py-2 ${mapView === "county" ? "satisfeed-orange-button" : "btn-secondary"}`}
                                                 onClick={() => {
                                                     setMapView("county");
                                                     setSelectedZip(null);

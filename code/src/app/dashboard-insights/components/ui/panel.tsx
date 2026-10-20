@@ -1,4 +1,5 @@
 "use client";
+
 import LibraryDisplay from "../displays/library-display";
 import SchoolDisplay from "../displays/school-display";
 import PantryDisplay from "../displays/pantry-display";
@@ -9,16 +10,6 @@ type PanelProps = {
 };
 
 export default function Panel({ currentTab }: PanelProps) {
-  let content;
-
-  if (currentTab === 1) {
-    content = <SchoolDisplay />;
-  } else if (currentTab === 2) {
-    content = <LibraryDisplay />;
-  } else {
-    content = <PantryDisplay />;
-  }
-
   return (
     <div
       id="dashboard-insights-panel"
@@ -26,7 +17,17 @@ export default function Panel({ currentTab }: PanelProps) {
       aria-labelledby={`dashboard-tab-${currentTab}`}
       className="w-full h-fit rounded-b-md rounded-r-md bg-neutral-200 drop-shadow-lg"
     >
-      {content}
+      <div hidden={currentTab !== 1}>
+        <SchoolDisplay />
+      </div>
+
+      <div hidden={currentTab !== 2}>
+        <LibraryDisplay />
+      </div>
+
+      <div hidden={currentTab !== 3}>
+        <PantryDisplay />
+      </div>
     </div>
   );
 }

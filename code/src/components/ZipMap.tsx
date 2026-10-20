@@ -45,6 +45,11 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     const [fullData, setFullData] = useState<any>(null);
     const [showUnmatched, setShowUnmatched] = useState(false);
     const [viewBox, setViewBox] = useState("0 0 960 600");
+    const [sliderTime, setSliderTime] = useState(specificTime);
+    
+    useEffect(() => {
+        setSliderTime(specificTime);
+    }, [specificTime, timeframe, versionId]);
 
     const getZipData = (zip: string) => {
         const normalizedZip = zip.padStart(5, "0");
@@ -59,6 +64,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     }
 
     useEffect(() => {
+        let cancelled = false;
         const loadData = async () => {
             if (!versionId) return
             setLoading(true);
@@ -66,7 +72,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 const response = await fetch(`/api/getResults?id=${versionId}`)
                 const { data } = await response.json()
 
-                if (!data) return
+                if (!data || cancelled) return;
                 setFullData(data);
 
                 if (timeframe === "latest") {
@@ -87,15 +93,22 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 setUnmatchedZipData(data.unmatched_zip_summary || [])
                 console.log("API data:", data);
             } catch (err) {
-                console.error("Error loading zip data:", err)
-                setError(err instanceof Error ? err.message : String(err))
+                if (!cancelled) {
+                    console.error("Error loading zip data:", err);
+                    setError(err instanceof Error ? err.message : String(err));
+                }
             } finally {
-                setLoading(false)
+                if (!cancelled) {
+                    setLoading(false);
+                }
             }
         }
 
-        loadData()
-    }, [versionId, timeframe, specificTime])
+        loadData();
+        return () => {
+            cancelled = true;
+        };
+        }, [versionId, timeframe, specificTime]);
 
     useEffect(() => {
         const loadMap = async () => {
@@ -167,7 +180,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     const renderSlider = () => {
         const options = timeframe === "monthly" ? availableMonths : availableYears
         if (!options.length) return null
-        const currentIndex = options.indexOf(specificTime)
+        const currentIndex = options.indexOf(sliderTime)
 
         return (
             <div className="mb-3">
@@ -176,9 +189,13 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                     max={options.length - 1}
                     step={1}
                     value={currentIndex >= 0 ? currentIndex : 0}
-                    onChange={(e) => setSpecificTime(options[parseInt(e.target.value)])}
+                    onChange={(e) => { setSliderTime(options[Number(e.target.value)]); }}
+                    onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); }}
+                    onPointerUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onKeyUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onPointerCancel={() => { setSliderTime(specificTime); }}
                 />
-                <div className="fw-semibold">Selected: {specificTime}</div>
+                <div className="fw-semibold">Selected: {sliderTime}</div>
             </div>
         )
     }
@@ -209,7 +226,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 {summaryData && (
                     <>
                         <Col lg={6}>
-                            <Card className="text-center mb-1" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+                            <Card className="text-center mb-1" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
                                 <Card.Body>
                                     <Card.Subtitle className="mb-1 text-bold">Total Family Reached</Card.Subtitle>
                                     <Card.Title className="fw-bold fs-3">{summaryData.peopleHelped}</Card.Title>
@@ -217,7 +234,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                             </Card>
                         </Col>
                         <Col lg={6}>
-                            <Card className="text-center mb-1" style={{ border: "3px solid #F7CA18", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
+                            <Card className="text-center mb-1" style={{ border: "3px solid #FF9700", boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)" }}>
                                 <Card.Body>
                                     <Card.Subtitle className="mb-1 text-bold">Total People Helped</Card.Subtitle>
                                     <Card.Title className="fw-bold fs-3">{summaryData.peopleReached}</Card.Title>
@@ -246,7 +263,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                         }}
                         disabled={!selectedZip}
                         style={{
-                            backgroundColor: selectedZip ? "#E67E22" : "#F5CBA7",
+                            backgroundColor: "#FF9700",
                             color: selectedZip ? "#fff" : "#555",
                             border: "2px solid black",
                             cursor: selectedZip ? "pointer" : "not-allowed",
@@ -262,19 +279,19 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 <Col lg={12} className="text-center">
                     <ButtonGroup className="mb-3">
                         <Button variant="custom"
-                                className={timeframe === "latest" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "latest" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("latest"); setSpecificTime("") }}>All Time</Button>
                         <Button variant="custom"
-                                className={timeframe === "monthly" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "monthly" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("monthly"); setSpecificTime("") }}>Monthly</Button>
                         <Button variant="custom"
-                                className={timeframe === "yearly" ? "bg-warning text-dark border border-dark" : "btn-secondary"}
+                                className={timeframe === "yearly" ? "satisfeed-orange-button" : "btn-secondary"}
                                 onClick={() => { setTimeframe("yearly"); setSpecificTime("") }}>Yearly</Button>
                     </ButtonGroup>
                     {(timeframe === "monthly" || timeframe === "yearly") && renderSlider()}
 
                     <div className="position-relative d-flex justify-content-center align-items-center bg-light p-3 rounded shadow-lg"
-                         style={{ minHeight: "400px", border: "3px solid #F7CA18",
+                         style={{ minHeight: "400px", border: "3px solid #FF9700",
                              boxShadow: "0 8px 12px rgba(0, 0, 0, 0.4)",
                              borderRadius: "12px" }}>
                         <svg ref={svgRef} width="100%" height="auto" viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
@@ -305,7 +322,8 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                     {unmatchedZipData.length > 0 && (
                         <div className="mt-4">
                             <Button
-                                variant="warning text-dark border border-dark"
+                                variant="custom"
+                                className="satisfeed-orange-button"
                                 size="sm"
                                 onClick={() => setShowUnmatched(!showUnmatched)}
                             >
@@ -313,7 +331,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                             </Button>
 
                             {showUnmatched && (
-                                <div className="mt-3 text-start bg-warning bg-opacity-25 p-3 rounded">
+                                <div className="mt-3 text-start satisfeed-orange-light p-3 rounded">
                                     <h5>Unmatched ZIP Codes</h5>
                                     <p>These ZIP codes could not be mapped to a city and are not displayed on the map:</p>
                                     <ul>

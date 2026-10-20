@@ -24,6 +24,16 @@
 .DS_Store
 *.pem
 
+# DuckDNS and Certbot credentials
+/docker/certbot/duckdns.ini
+
+# Local certificate files
+/docker/certbot/conf/
+code/docker/nginx/certs/*
+!code/docker/nginx/certs/.gitkeep
+*.p12
+*.pfx
+
 # debug
 npm-debug.log*
 yarn-debug.log*

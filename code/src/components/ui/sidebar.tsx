@@ -3,11 +3,18 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
+import type { ReactNode, Dispatch, SetStateAction } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
+import { useAuth } from "@/firebase/authContext"
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
-const NavLink = ({ href, active, children, onClick = () => {} }) => {
+const NavLink = ({ href, active, children, onClick = () => {} }: {
+    href: string;
+    active?: boolean;
+    children: ReactNode;
+    onClick?: () => void;
+}) => {
     return (
         <Nav.Link
             as={Link}
@@ -23,52 +30,65 @@ const NavLink = ({ href, active, children, onClick = () => {} }) => {
 }
 
 interface SidebarNavProps {
-    language: "en" | "es";
-    setLanguage: React.Dispatch<React.SetStateAction<"en" | "es">>;
+    language?: "en" | "es";
+    setLanguage?: Dispatch<SetStateAction<"en" | "es">>;
 }
 
  /* Side Bar Navigation*/
-export default function SidebarNav({language,setLanguage}: SidebarNavProps) {
+export default function SidebarNav({language: providedLanguage,setLanguage: providedSetLanguage}: SidebarNavProps = {}) {
+    const [localLanguage, setLocalLanguage] = useState<"en" | "es">("en")
+    const useProvidedLanguage = providedLanguage !== undefined && providedSetLanguage !== undefined
+    const language = useProvidedLanguage ? providedLanguage : localLanguage
+    const setLanguage = useProvidedLanguage ? providedSetLanguage : setLocalLanguage
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showDesktopMenu, setShowDesktopMenu] = useState(false)
     const pathname = usePathname()
-
+    const { user, loading } = useAuth()
 
     const translations = {
     en: {
         navigation: "Navigation",
-        dashboard: "Dashboard Summary",
-        insights: "Dashboard Insights",
-        summary: "Summary Detail",
+        dashboard: "Demographics",
+        insights: "Schools and Libraries",
+        summary: "Summary Overview",
         upload: "Upload Raw Data",
         versions: "Manage Versions",
         logout: "Log Out",
+        login: "Log In",
         spanish: "Español",
     },
 
     es: {
         navigation: "Navegación",
-        dashboard: "Resumen del Dashboard",
-        insights: "Perspectivas del Dashboard",
-        summary: "Detalle del Resumen",
+        dashboard: "Datos demográficos",
+        insights: "Escuelas y bibliotecas",
+        summary: "Resumen general",
         upload: "Subir Datos sin Procesar",
         versions: "Administrar Versiones",
         logout: "Cerrar Sesión",
+        login: "Iniciar Sesión",
         english: "English",
     },
-    
-    
-    
+
+
+
 }
    const t = translations[language]
-    
-    const navItems = [
-    { path: "/dashboard", label: "Dashboard" },
-    { path: "/dashboard-insights", label: "Insights" },
-    { path: "/summary", label: "Summary" },
-    { path: "/upload", label: "Upload" },
-    { path: "/manage-versions", label: "Versions" },
-]
+
+    const publicNavItems = [
+        { path: "/dashboard-insights", label: t.insights },
+    ]
+
+    const protectedNavItems = [
+        { path: "/dashboard", label: t.dashboard },
+        { path: "/summary", label: t.summary },
+        { path: "/upload", label: t.upload },
+        { path: "/manage-versions", label: t.versions },
+    ]
+
+    const navItems = !loading && user
+        ? [...publicNavItems, ...protectedNavItems]
+        : publicNavItems
 
     const handleLogout = async () => {
         const auth = getAuth()
@@ -92,36 +112,44 @@ export default function SidebarNav({language,setLanguage}: SidebarNavProps) {
             }}
             onClick={() => setShowDesktopMenu(!showDesktopMenu)}
             aria-label="Toggle navigation menu"
+            aria-expanded={showDesktopMenu}
+            aria-controls="desktop-sidebar"
         >
             ☰
         </Button>
 
             {/* Desktop Sidebar */}
-            <div className={`position-fixed top-0 start-0 sidebar-container ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
+            <div id="desktop-sidebar" hidden={!showDesktopMenu} className={`d-none d-md-block position-fixed top-0 start-0 sidebar-container ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
                 <Navbar bg="dark" variant="dark" className="flex-column align-items-start" style={{ width: "100%", height: "100%" }}>
                     <div className="w-100 text-center">
                         {/*https://www.satisfeed.org/ */}
-                        <NavLink href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 d-block"> 
+                        <a href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 d-block">
                             <img
                                 src="/Satisfeed logo white.png"
                                 alt="Satisfeed logo"
                                 className="satisfeed-sidebar-logo img-fluid mb-3"
                             />
-                        </NavLink>
+                        </a>
                     </div>
-                    <Navbar.Brand className="sidebar-navigation-title mb-4 w-100">Navigation</Navbar.Brand>
+                    <Navbar.Brand className="sidebar-navigation-title mb-4 w-100">{t.navigation}</Navbar.Brand>
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>
-                                {[item.label]}
+                                {item.label}
                             </NavLink>
                         ))}
                         <Button variant="outline-light" className="mt-2" onClick={() => setLanguage(language === "en" ? "es" : "en")} >
                             {language === "en" ? "Español" : "English"}
                         </Button>
-                        <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
-                            Log Out
-                        </Button>
+                        {!loading && (user ? (
+                            <Button variant="outline-light" className="mt-4" onClick={handleLogout}>
+                                {t.logout}
+                            </Button>
+                        ) : (
+                            <Button variant="outline-light" className="mt-4" onClick={() => { window.location.href = "/login" }}>
+                                {t.login}
+                            </Button>
+                        ))}
                     </Nav>
                 </Navbar>
             </div>
@@ -132,12 +160,15 @@ export default function SidebarNav({language,setLanguage}: SidebarNavProps) {
                 className="d-md-none position-fixed top-0 start-0 m-2 z-3"
                 onClick={() => setShowMobileMenu(true)}
                 aria-label="Open navigation menu"
+                aria-expanded={showMobileMenu}
+                aria-controls="mobile-sidebar"
             >
                 ☰
             </Button>
 
             {/* Mobile Offcanvas Sidebar */}
             <Offcanvas
+                id="mobile-sidebar"
                 show={showMobileMenu}
                 onHide={() => setShowMobileMenu(false)}
                 className="bg-dark text-white"
@@ -151,7 +182,7 @@ export default function SidebarNav({language,setLanguage}: SidebarNavProps) {
                         className = "satisfeed-sidebar-logo img-fluid mb-2"
                         />
                     </div>
-                    <Offcanvas.Title>Navigation</Offcanvas.Title>
+                    <Offcanvas.Title>{t.navigation}</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav className="flex-column">
@@ -165,16 +196,29 @@ export default function SidebarNav({language,setLanguage}: SidebarNavProps) {
                                 {item.label}
                             </NavLink>
                         ))}
-                        <Button
-                            variant="outline-light"
-                            className="mt-4"
-                            onClick={() => {
-                                setShowMobileMenu(false)
-                                handleLogout()
-                            }}
-                        >
-                            Log Out
+                        <Button variant="outline-light" className="mt-2" onClick={() => setLanguage(language === "en" ? "es" : "en")} >
+                            {language === "en" ? "Español" : "English"}
                         </Button>
+                        {!loading && (user ? (
+                            <Button
+                                variant="outline-light"
+                                className="mt-4"
+                                onClick={() => {
+                                    setShowMobileMenu(false)
+                                    handleLogout()
+                                }}
+                            >
+                                {t.logout}
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="outline-light"
+                                className="mt-4"
+                                onClick={() => { window.location.href = "/login" }}
+                            >
+                                {t.login}
+                            </Button>
+                        ))}
                     </Nav>
                 </Offcanvas.Body>
             </Offcanvas>
