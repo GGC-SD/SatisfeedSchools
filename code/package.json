@@ -10,7 +10,8 @@
     "test": "vitest run",
     "fetch:pantries": "tsx scripts/fetchpantries.ts",
     "fetch:schools": "tsx scripts/fetch.ts",
-    "fetch:libraries": "tsx scripts/fetchlibraries.ts"
+    "fetch:libraries": "tsx scripts/fetchlibraries.ts",
+    "build:docs": "typedoc"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
@@ -28,6 +29,8 @@
     "html2canvas": "^1.4.1",
     "maplibre-gl": "^5.24.0",
     "next": "^16.3.3",
+    "nextra": "^4.6.1",
+    "nextra-theme-docs": "^4.6.1",
     "node-fetch": "^3.3.2",
     "numpy": "^0.0.1",
     "pandas": "^0.0.3",
@@ -64,6 +67,8 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.6",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-missing-exports": "^4.1.4",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
