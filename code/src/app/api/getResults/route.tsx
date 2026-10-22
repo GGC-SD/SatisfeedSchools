@@ -5,6 +5,10 @@ import { collection, query, orderBy, limit, getDocs, doc, getDoc } from "firebas
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get("id")
+    // Reject empty IDs or paths before looking up a results document
+    if (id !== null && (!id.trim() || id.includes("/"))) {
+        return NextResponse.json({ message: "Invalid version ID" }, { status: 400 })
+    }
 
     try {
         //console.log(`Fetching results from Firestore. ID: ${id || "latest"}`)
@@ -39,6 +43,7 @@ export async function GET(request: Request) {
         return NextResponse.json(latestDoc.data())
     } catch (error) {
         console.error("Error fetching results:", error)
-        return NextResponse.json({ message: "Server error", error: error.message }, { status: 500 })
+        // Kept technical error details in the server logs, not the response.
+        return NextResponse.json({ message: "Server error" }, { status: 500 })
     }
 }
