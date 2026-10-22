@@ -101,7 +101,12 @@ export async function POST(req: NextRequest) {
       kAnonymity: kNum ?? null,
       geojsonUrl
     });
-  } catch (e: any) {
-    return NextResponse.json({ ok: false, error: e?.message ?? "Pipeline failed" }, { status: 500 });
+  } catch (e) {
+    // Keep technical details in the server logs.
+    console.error("Geocoding failed:", e);
+    return NextResponse.json(
+      { ok: false, error: "Unable to process geocoding" },
+      { status: 500 }
+    );
   }
 }

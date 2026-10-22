@@ -76,9 +76,11 @@ export async function POST(req: NextRequest) {
       uniqueToSend, // number of requests to LocationIQ
       sample,       // address strings + how many times they appeared
     });
-  } catch (e: any) {
+  } catch (e) {
+    // Keep technical details in the server logs.
+    console.error("CSV processing failed:", e);
     return NextResponse.json(
-      { ok: false, error: e?.message ?? "Dry-run failed" },
+      { ok: false, error: "Unable to process the CSV file" },
       { status: 500 }
     );
   }
