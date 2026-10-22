@@ -3,11 +3,14 @@ import { db } from "@/firebase/firebaseConfig"
 import { collection, query, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore"
 
 export async function GET(request: Request) {
+    // Keep results out of browser and shared caches.
+    const headers = { "Cache-Control": "private, no-store" }
+
     const { searchParams } = new URL(request.url)
     const id = searchParams.get("id")
     // Reject empty IDs or paths before looking up a results document
     if (id !== null && (!id.trim() || id.includes("/"))) {
-        return NextResponse.json({ message: "Invalid version ID" }, { status: 400 })
+        return NextResponse.json({ message: "Invalid version ID" }, { status: 400, headers })
     }
 
     try {
@@ -21,11 +24,11 @@ export async function GET(request: Request) {
 
             if (!snapshot.exists()) {
                 console.log(`Document with ID ${id} not found`)
-                return NextResponse.json({ message: "Document not found" }, { status: 404 })
+                return NextResponse.json({ message: "Document not found" }, { status: 404, headers })
             }
 
             //console.log(`Document found. Data:`, snapshot.data())
-            return NextResponse.json(snapshot.data())
+            return NextResponse.json(snapshot.data(), { headers })
         }
 
         // Query Firestore for the latest entry if no id is provided
@@ -35,15 +38,15 @@ export async function GET(request: Request) {
 
         if (querySnapshot.empty) {
             console.log("No documents found in collection")
-            return NextResponse.json({ message: "No results found" }, { status: 404 })
+            return NextResponse.json({ message: "No results found" }, { status: 404, headers })
         }
 
         const latestDoc = querySnapshot.docs[0]
         //console.log(`Latest document ID: ${latestDoc.id}, Data:`, latestDoc.data())
-        return NextResponse.json(latestDoc.data())
+        return NextResponse.json(latestDoc.data(), { headers })
     } catch (error) {
         console.error("Error fetching results:", error)
         // Kept technical error details in the server logs, not the response.
-        return NextResponse.json({ message: "Server error" }, { status: 500 })
+        return NextResponse.json({ message: "Server error" }, { status: 500, headers })
     }
 }
