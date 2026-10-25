@@ -47,7 +47,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
 
     const translations = {
     en: {
-        navigation: "Navigation",
+        navigation: "Dashboard",
         dashboard: "Demographics",
         insights: "Schools and Libraries",
         summary: "Summary Overview",
