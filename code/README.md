@@ -16,6 +16,26 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Import Georgia food pantries
+
+The pantry importer follows the same workflow as the school and library
+importers: it downloads every Georgia `food_pantry` page from FeedAM's bulk
+API, transforms each row into the shape used by the pantry dashboard, and
+upserts it into the Firestore `pantries` collection.
+
+1. Put the Firebase Admin service-account JSON at
+   `code/serviceaccountkey.json` (the file is gitignored).
+2. From the `code` directory, run:
+
+```bash
+npm run fetch:pantries
+```
+
+Firestore document IDs use the stable form `feedam_<resource id>`, so reruns
+update records instead of duplicating them. The import preserves FeedAM's
+upstream source and last-verification date. Data attribution: Data from Feed
+America, [feedam.org](https://feedam.org), EIN 92-1761881 (CC BY 4.0).
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

@@ -1,32 +1,27 @@
 import type { NextConfig } from "next";
+import nextra from "nextra";
 
+// 1. Correct Nextra 4 initialization
+const withNextra = nextra({
+  // Configuration options like markdown plugins can go here if needed
+});
+
+// 2. Define your clean Next.js options (Nextra properties removed from here)
 const nextConfig: NextConfig = {
-  /* config options here */
     eslint: {
         ignoreDuringBuilds: true,
     },
     typescript: {
-        // Ignore TypeScript errors during build
         ignoreBuildErrors: true,
     },
-    // Disable source maps in production to reduce bundle size
     productionBrowserSourceMaps: false,
-    // Increase build output trace to debug deployment issues
     outputFileTracingRoot: process.cwd(),
 
-    // Optimize images
     images: {
-        // Configure domains if you're using external image sources
         domains: [],
-        // Configure remote patterns for more granular control
-        remotePatterns: [
-            // Example: Allow images from specific domains
-            // {
-            //   protocol: 'https',
-            //   hostname: 'example.com',
-            // },
-        ],
+        remotePatterns: [],
     },
 };
 
-export default nextConfig;
+// 3. Apply the wrapper around your clean nextConfig
+export default withNextra(nextConfig)

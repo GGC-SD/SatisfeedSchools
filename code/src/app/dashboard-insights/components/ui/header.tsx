@@ -2,10 +2,10 @@
 
 export default function Header() {
 
-    return(
-        <div className="dashboard-header">
-            {/* <img src="Satisfeed logo white.png" alt="Satisfeed Logo" className="flex justify-self-center sm:justify-self-start h-24 w-auto" /> */}
-            <h1 className="text-5xl font-black">Satisfeed: Served Homes near Schools and Libraries</h1>
-        </div>
-    );
+  return (
+    <div className="dashboard-header flex flex-row items-center justify-center gap-4 p-4">
+      <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="h-12 w-auto" />
+      <h1 className="text-3xl font-black m-0"> Satisfeed: Served Homes near Schools and Libraries</h1>
+    </div>
+  );
 }

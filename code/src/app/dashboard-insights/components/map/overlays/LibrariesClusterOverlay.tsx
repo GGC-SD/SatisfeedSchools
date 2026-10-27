@@ -64,8 +64,17 @@ export default function LibrariesClusterOverlay({
     const CNT_ID = `libraries-cluster-count${idSuffix}`;
     const PT_ID = `libraries-unclustered${idSuffix}`;
     const SELECTED_ID = `selected-point${idSuffix}`;
+    const LIBARY_ICON_ID = `library-icon${idSuffix}`;
 
     let unmounted = false;
+    let removeListeners = () => {};
+
+    const tooltip = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "bottom",
+      offset: 15,
+    });
 
     async function draw() {
       const qSnap = await getDocs(query(collection(db, "libraries")));
@@ -100,6 +109,15 @@ export default function LibrariesClusterOverlay({
       });
 
       const geojson = { type: "FeatureCollection" as const, features };
+
+      
+      //Add logo for libary points
+      if(!m.hasImage(LIBARY_ICON_ID)) {
+        const libIcon= await m.loadImage("/libary-icon.png");
+        if (unmounted) return;
+        m.addImage(LIBARY_ICON_ID, libIcon.data);
+      }
+
 
       const canvas = m.getCanvas() as HTMLCanvasElement;
       canvas.setAttribute("data-has-libraries", "true");
@@ -169,16 +187,18 @@ export default function LibrariesClusterOverlay({
       // Unclustered library points
       m.addLayer({
         id: PT_ID,
-        type: "circle",
+        type: "symbol",
         source: SRC_ID,
         filter: ["!", ["has", "point_count"]],
-        paint: {
-          "circle-radius": 10,
-          "circle-color": "#1fb874",
-          "circle-stroke-color": "#fff",
-          "circle-stroke-width": 1.5,
+        layout: {
+          "icon-image": LIBARY_ICON_ID,
+          "icon-size": 0.045,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
         },
       } as any);
+
+  
 
       const onPointClick = (e: MapLayerMouseEvent) => {
         const f = e.features?.[0] as MapGeoJSONFeature | undefined;
@@ -223,15 +243,16 @@ export default function LibrariesClusterOverlay({
           },
         } as any);
 
+        // Switch from cover highlighted circle to an outline circle for the selected point
         m.addLayer({
           id: SELECTED_ID,
           type: "circle",
           source: SELECTED_ID,
           paint: {
             "circle-radius": 14,
-            "circle-color": "#2563eb",
-            "circle-stroke-color": "#fff",
-            "circle-stroke-width": 2,
+            "circle-color": "rgba(248, 248, 249, 0.5)",
+            "circle-stroke-color": "#1d3b32",
+            "circle-stroke-width": 3,
           },
         } as any);
       };
@@ -253,41 +274,96 @@ export default function LibrariesClusterOverlay({
         );
       };
 
-      const setCursor = (v: string) => (m.getCanvas().style.cursor = v);
-      const onEnter = () => setCursor("pointer");
-      const onLeave = () => setCursor("");
+      // Single Library Hover
+      const onEnter = (e: MapLayerMouseEvent) => {
+      const library = e.features?.[0];
+      if (!library) return;
+      canvas.style.cursor = "pointer";
+
+      const content = document.createElement("div");
+      content.style.whiteSpace = "pre-line";
+      content.style.lineHeight = "1.4";
+      content.textContent = "Click to see more info for:\n" + (library.properties?.name ?? "Library");
+
+      tooltip
+        .setLngLat((library.geometry as GeoJSON.Point).coordinates as [number, number])
+        .setDOMContent(content)
+        .addTo(m);
+    };
+
+      // Cluster Library Hover
+      const onClusterEnter = async (e: MapLayerMouseEvent) => {
+        const feature = e.features?.[0];
+        if (!feature) return;
+
+        canvas.style.cursor = "pointer";
+        tooltip.remove();
+        tooltip.setLngLat((feature.geometry as GeoJSON.Point).coordinates as [number, number]);
+
+        try {
+          const source = m.getSource(SRC_ID) as maplibregl.GeoJSONSource;
+          const libraries = await source.getClusterLeaves(Number(feature.properties.cluster_id), 3, 0);
+
+          if (unmounted || canvas.style.cursor !== "pointer") return;
+
+          const list = document.createElement("div");
+          list.style.whiteSpace = "pre-line";
+          list.style.lineHeight = "1.4";
+          list.textContent = "Zoom in to see libraries in this cluster:";
+          for (const library of libraries) {
+            list.textContent += "\n• " + (library.properties?.name ?? "Library");
+          }
+
+          const remaining = Number(feature.properties.point_count) - libraries.length;
+          if (remaining > 0) {
+            list.textContent += "\nAnd " + remaining + " more.";
+          }
+
+          tooltip.setDOMContent(list).addTo(m);
+        } 
+        catch {
+          console.error("Could not load library names.");
+        }
+      };
+
+      const onLeave = () => {
+        canvas.style.cursor = "";
+        tooltip.remove();
+      };
 
       m.on("click", PT_ID, onPointClick);
       m.on("click", CLUST_ID, onClusterClick);
       m.on("mouseenter", PT_ID, onEnter);
       m.on("mouseleave", PT_ID, onLeave);
-      m.on("mouseenter", CLUST_ID, onEnter);
+      m.on("mouseenter", CLUST_ID, onClusterEnter);
       m.on("mouseleave", CLUST_ID, onLeave);
 
-      return () => {
-        try {
-          m.off("click", PT_ID, onPointClick);
-          m.off("click", CLUST_ID, onClusterClick);
-          m.off("mouseenter", PT_ID, onEnter);
-          m.off("mouseleave", PT_ID, onLeave);
-          m.off("mouseenter", CLUST_ID, onEnter);
-          m.off("mouseleave", CLUST_ID, onLeave);
-        } catch {}
+      removeListeners = () => {
+        m.off("click", PT_ID, onPointClick);
+        m.off("click", CLUST_ID, onClusterClick);
+        m.off("mouseenter", PT_ID, onEnter);
+        m.off("mouseleave", PT_ID, onLeave);
+        m.off("mouseenter", CLUST_ID, onClusterEnter);
+        m.off("mouseleave", CLUST_ID, onLeave);
       };
     }
 
     if (!m.isStyleLoaded()) {
       const onLoad = () => {
         void draw();
-        m.off("load", onLoad);
+        m.off("idle", onLoad);
       };
-      m.on("load", onLoad);
-    } else {
+      m.on("idle", onLoad);
+    } 
+    else {
       void draw();
     }
 
     return () => {
       unmounted = true;
+      removeListeners();
+      tooltip.remove();
+
       try {
         if (m.getLayer(CNT_ID)) m.removeLayer(CNT_ID);
         if (m.getLayer(CLUST_ID)) m.removeLayer(CLUST_ID);

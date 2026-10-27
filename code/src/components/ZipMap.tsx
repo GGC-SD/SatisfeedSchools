@@ -45,6 +45,11 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     const [fullData, setFullData] = useState<any>(null);
     const [showUnmatched, setShowUnmatched] = useState(false);
     const [viewBox, setViewBox] = useState("0 0 960 600");
+    const [sliderTime, setSliderTime] = useState(specificTime);
+    
+    useEffect(() => {
+        setSliderTime(specificTime);
+    }, [specificTime, timeframe, versionId]);
 
     const getZipData = (zip: string) => {
         const normalizedZip = zip.padStart(5, "0");
@@ -59,6 +64,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     }
 
     useEffect(() => {
+        let cancelled = false;
         const loadData = async () => {
             if (!versionId) return
             setLoading(true);
@@ -66,7 +72,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 const response = await fetch(`/api/getResults?id=${versionId}`)
                 const { data } = await response.json()
 
-                if (!data) return
+                if (!data || cancelled) return;
                 setFullData(data);
 
                 if (timeframe === "latest") {
@@ -87,15 +93,22 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                 setUnmatchedZipData(data.unmatched_zip_summary || [])
                 console.log("API data:", data);
             } catch (err) {
-                console.error("Error loading zip data:", err)
-                setError(err instanceof Error ? err.message : String(err))
+                if (!cancelled) {
+                    console.error("Error loading zip data:", err);
+                    setError(err instanceof Error ? err.message : String(err));
+                }
             } finally {
-                setLoading(false)
+                if (!cancelled) {
+                    setLoading(false);
+                }
             }
         }
 
-        loadData()
-    }, [versionId, timeframe, specificTime])
+        loadData();
+        return () => {
+            cancelled = true;
+        };
+        }, [versionId, timeframe, specificTime]);
 
     useEffect(() => {
         const loadMap = async () => {
@@ -167,7 +180,7 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
     const renderSlider = () => {
         const options = timeframe === "monthly" ? availableMonths : availableYears
         if (!options.length) return null
-        const currentIndex = options.indexOf(specificTime)
+        const currentIndex = options.indexOf(sliderTime)
 
         return (
             <div className="mb-3">
@@ -176,9 +189,13 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
                     max={options.length - 1}
                     step={1}
                     value={currentIndex >= 0 ? currentIndex : 0}
-                    onChange={(e) => setSpecificTime(options[parseInt(e.target.value)])}
+                    onChange={(e) => { setSliderTime(options[Number(e.target.value)]); }}
+                    onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); }}
+                    onPointerUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onKeyUp={(e) => { setSpecificTime(options[Number(e.currentTarget.value)]); }}
+                    onPointerCancel={() => { setSliderTime(specificTime); }}
                 />
-                <div className="fw-semibold">Selected: {specificTime}</div>
+                <div className="fw-semibold">Selected: {sliderTime}</div>
             </div>
         )
     }

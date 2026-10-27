@@ -1,12 +1,13 @@
 "use client";
 import Tabs from "./ui/tabs";
+import type { DashboardTab } from "./ui/tabs";
 import Panel from "./ui/panel";
 import { useState } from "react";
 
 export default function DashboardContentDisplay() {
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState<DashboardTab>(1);
 
-  const handleTabSelect = (tab: number) => {
+  const handleTabSelect = (tab: DashboardTab) => {
     setSelectedTab(tab);
   };
 
