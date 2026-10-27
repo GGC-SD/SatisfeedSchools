@@ -82,7 +82,7 @@ export default function KeyOverlay({ currentMap }: KeyProps) {
 
             <div className="flex gap-1 items-center">
               <div className="w-7 h-7 rounded-full border-[3px] border-[#000] flex items-center justify-center">
-                <div className="w-3 h-3 bg-[#f97316] rounded-full" />
+                <div className="w-5 h-5 bg-[#f97316] rounded-full" />
               </div>
               <p>Selected Pantry</p>
             </div>

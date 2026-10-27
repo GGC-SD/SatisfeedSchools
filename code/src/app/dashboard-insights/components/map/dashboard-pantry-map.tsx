@@ -238,8 +238,12 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
         zoom,
         maxBounds: GA_BOUNDS,
         renderWorldCopies: false,
+        
+        /*MapLibre Contributers Icon */
+        attributionControl:false,
       });
 
+      //MapLibre Zoom +/- Button 
       nextMap.addControl(
         new maplibregl.NavigationControl({
           visualizePitch: true,
@@ -247,12 +251,14 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
         "top-left"
       );
 
+      /* MapLibre ScaleControl, enable to check scale
       nextMap.addControl(
         new maplibregl.ScaleControl({
           unit: "imperial",
         }),
         "bottom-left"
       );
+      */
 
       const resizeObserver = new ResizeObserver(() => {
         nextMap.resize();
@@ -332,14 +338,14 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
       onSelectionChange?.(selectedPantry);
     }, [selectedPantry, onSelectionChange]);
 
-    const affectedSchools = selectedPantry?.affectedSchools ?? [];
-    const foodStats = Object.entries(selectedPantry?.foodStats ?? {});
+    //const affectedSchools = selectedPantry?.affectedSchools ?? [];
+    //const foodStats = Object.entries(selectedPantry?.foodStats ?? {});
 
     return (
-      <div className={`relative ${className}`}>
+      <div className={`flex flex-col ${className}`}>
         <div
           ref={containerRef}
-          className={`${className} pantry-map`}
+          className="w-full flex-1 min-h-0 pantry-map"
           data-testid="pantry-map-container"
         />
          
@@ -348,9 +354,6 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
           <>
             {/* Map key/legend. */}
           {map && <KeyOverlay currentMap="pantry" />}
-
-            {/* Distribution heatmap remains its own independent overlay. */}
-           
 
             {/* Georgia state outline. */}
             <GeorgiaOutlineOverlay map={map} />

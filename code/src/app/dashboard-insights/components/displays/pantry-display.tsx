@@ -432,9 +432,10 @@ export default function PantryDisplay() {
       <div className="flex flex-col lg:flex-row gap-4">
         {/* Left: map */}
         <div className="w-full lg:w-3/5 min-w-0">
+          <div className="min-h-[40rem] lg:min-h-fit h-full child-component-borders">
           <DashboardPantryMap
             ref={mapHandleRef}
-            className="h-[40rem] w-full"
+            className="w-full min-h-[40rem] lg:min-h-fit h-full"
             pantries={pantries}
             showPantries={true}
             geojsonUrl={HOUSEHOLD_POINTS_URL}
@@ -442,6 +443,7 @@ export default function PantryDisplay() {
             boundarySelection={boundaryFeature}
             onSelectionChange={handlePantrySelection}
           />
+          </div>
         </div>
 
         {/* Right: filters and information cards */}
@@ -478,12 +480,12 @@ export default function PantryDisplay() {
           />
 
           <DataCard
-            title={selectedPantry?.name ?? "Selected Food Pantry"}
-            value={selectedPantry ? selectedPantry.name ?? "Food pantry" : "Select a pantry on the map"}
-            record={selectedPantry}
-            type="Pantry"
-            onClear={handleClearPantry}
-          />
+          title={selectedPantry?.name ?? ""}
+          value={householdsInBoundary ?? 0}
+          record={selectedPantry}
+          type="Pantry"
+          onClear={handleClearPantry}
+        />
         </div>
       </div>
     </div>

@@ -65,6 +65,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
         "zip",
         "enrollment",
         "phone",
+        //"website",
       ]
     : isLibrary
       ? [
@@ -85,9 +86,9 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           "phone",
           "hours",
           "website",
-          "resourceType",
-          "dataSource",
-          "lastVerifiedDate",
+          //"resourceType",
+          //"dataSource",
+         // "lastVerifiedDate",
         ];
 
   const fieldLabels: Record<string, string> = {
