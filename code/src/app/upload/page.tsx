@@ -5,9 +5,12 @@ import { Container, Form, Button, Alert, Spinner, Row, Col } from "react-bootstr
 import SidebarNav from "@/components/ui/sidebar";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminTools } from "@/firebase/roles";
 
 export default function UploadPage() {
-    const { user, loading } = useAuth();
+    const { user, loading, role, roleLoading, roleError } = useAuth();
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role);
+
     const router = useRouter();
     const [files, setFiles] = useState<FileList | null>(null);
     const [message, setMessage] = useState<string | null>(null);
@@ -19,11 +22,19 @@ export default function UploadPage() {
         }
     }, [user, loading, router]);
 
-    if (loading || !user) {
+    if (loading || roleLoading || !user) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <Alert variant="danger" className="m-4">
+                You do not have permission to upload data.
+            </Alert>
         );
     }
 
@@ -32,6 +43,7 @@ export default function UploadPage() {
     };
 
     const handleUpload = async () => {
+        if (!isAdmin) return;
         if (!files) {
             setMessage("Please select at least one CSV file.");
             return;

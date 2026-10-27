@@ -16,7 +16,7 @@ interface Metrics {
 }
 
 export default function Dashboard() {
-    const { user, loading, role, roleLoading, roleError } = useAuth();
+    const { user, loading } = useAuth();
     const router = useRouter();
     const [totalMetrics, setTotalMetrics] = useState<Metrics | null>(null);
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
@@ -93,7 +93,6 @@ export default function Dashboard() {
 
     return (
         <Container fluid className="p-0">
-            <p>{roleLoading ? "Checking permissions..." : roleError || `Role: ${role}`}</p>
             <Row className="m-0">
                 <Col md={2} className="d-none d-md-block p-0" style={{ position: "sticky", top: 0, height: "100vh", overflowY: "auto" }}>
                     <SidebarNav />

@@ -7,9 +7,12 @@ import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/fi
 import { db } from "@/firebase/firebaseConfig";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminTools } from "@/firebase/roles";
 
 export default function ManageVersionsPage() {
-    const { user, loading: authLoading } = useAuth();
+    const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
+    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role);
+
     const router = useRouter();
     const [versions, setVersions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -42,16 +45,26 @@ export default function ManageVersionsPage() {
             }
         };
 
-        if (user) {
+        if (isAdmin) {
             fetchVersions();
+        } else {
+            setVersions([]);
         }
-    }, [user]);
+    }, [user, isAdmin]);
 
-    if (authLoading || !user) {
+    if (authLoading || roleLoading || !user) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <Alert variant="danger" className="m-4">
+                You do not have permission to manage versions.
+            </Alert>
         );
     }
 
@@ -61,7 +74,7 @@ export default function ManageVersionsPage() {
     };
 
     const confirmDelete = async () => {
-        if (!versionToDelete) return;
+        if (!isAdmin || !versionToDelete) return;
         setDeletingId(versionToDelete.id);
         try {
             await deleteDoc(doc(db, "csv_results", versionToDelete.id));
