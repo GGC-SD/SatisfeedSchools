@@ -395,7 +395,7 @@ const DashboardPantryMap = forwardRef<DashboardPantryMapHandle, Props>(
         )}
 
         
-        {}
+        
       </div>
     );
   }

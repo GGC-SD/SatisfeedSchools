@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -8,7 +7,7 @@ import {
   type GeoJSONSource,
 } from "maplibre-gl";
 
-//const PANTRY_ICON_PATH = "/pantry-icon.png";
+//const PANTRY_ICON_PATH = "/pantry-marker-icon.png";
 
 export type PantryLocation = {
   /** Firestore document ID; used to identify a pantry. */
@@ -43,10 +42,12 @@ export type PantryLocation = {
   lastVerifiedDate?: string;
   sourceUrl?: string;
   serviceRadiusMiles?: number;
+
   affectedSchools?: readonly (
     | string
     | { id?: string; name?: string }
   )[];
+
   foodStats?: Readonly<
     Record<string, string | number | boolean | null>
   >;
@@ -186,10 +187,44 @@ export default function PantryClusterOverlay({
     let enterCluster: (() => void) | undefined;
     let leaveCluster: (() => void) | undefined;
 
+    /*
+     Used to keep the pantry layers above overlays that
+     may finish loading after the pantry layers.
+     */
+    let handleIdle: (() => void) | undefined;
+
     const setCursor = (value: string) => {
       if (!m.getCanvasContainer()) return;
       m.getCanvas().style.cursor = value;
     };
+
+    /*
+     * Keep pantry layers above the heatmap.
+     * moveLayer() without a beforeId moves the layer
+     * to the top of the MapLibre layer stack.
+     * The last layer moved will be the highest.
+     */
+    function movePantryLayersToTop() {
+      if (!m.isStyleLoaded()) {
+        return;
+      }
+
+      if (m.getLayer(clusterLayerId)) {
+        m.moveLayer(clusterLayerId);
+      }
+
+      if (m.getLayer(clusterCountLayerId)) {
+        m.moveLayer(clusterCountLayerId);
+      }
+
+      if (m.getLayer(pointLayerId)) {
+        m.moveLayer(pointLayerId);
+      }
+
+      if (m.getLayer(selectedLayerId)) {
+        m.moveLayer(selectedLayerId);
+      }
+    }
 
     function removeOwnedLayersAndSource() {
       const layerIds = [
@@ -311,6 +346,7 @@ export default function PantryClusterOverlay({
               100,
               23,
             ],
+
             "circle-color": [
               "step",
               ["get", "point_count"],
@@ -320,6 +356,7 @@ export default function PantryClusterOverlay({
               100,
               "#850442",
             ],
+
             "circle-stroke-color": "#ffffff",
             "circle-stroke-width": 2,
           },
@@ -393,6 +430,26 @@ export default function PantryClusterOverlay({
           },
         });
 
+        /*
+         * Put pantry layers above anything that already
+         * exists on the map.
+         */
+        movePantryLayersToTop();
+
+        /*
+         * DistributionHeatmapOverlay fetches its GeoJSON
+         * asynchronously. That means its heatmap layer may
+         * be added AFTER the pantry layers.
+         *
+         * When MapLibre becomes idle, reassert the pantry
+         * layer order so pantry markers stay visible.
+         */
+        handleIdle = () => {
+          movePantryLayersToTop();
+        };
+
+        m.on("idle", handleIdle);
+
         // Click an individual pantry marker.
         clickPoint = (event: MapLayerMouseEvent) => {
           const feature = event.features?.[0];
@@ -427,6 +484,7 @@ export default function PantryClusterOverlay({
             if (cancelled || !m.isStyleLoaded()) return;
 
             const geometry = feature.geometry;
+
             if (geometry.type !== "Point") return;
 
             m.easeTo({
@@ -449,8 +507,10 @@ export default function PantryClusterOverlay({
 
         m.on("click", pointLayerId, clickPoint);
         m.on("click", clusterLayerId, clickCluster);
+
         m.on("mouseenter", pointLayerId, enterPoint);
         m.on("mouseleave", pointLayerId, leavePoint);
+
         m.on("mouseenter", clusterLayerId, enterCluster);
         m.on("mouseleave", clusterLayerId, leaveCluster);
 
@@ -459,7 +519,9 @@ export default function PantryClusterOverlay({
         setLayersReady(true);
 
         console.info(
-          `[Pantry clusters] Initialized with ${makePantryGeoJSON(pantries).features.length} valid pantry locations.`
+          `[Pantry clusters] Initialized with ${
+            makePantryGeoJSON(pantries).features.length
+          } valid pantry locations.`
         );
       } catch (error) {
         initializing = false;
@@ -471,6 +533,15 @@ export default function PantryClusterOverlay({
         );
 
         try {
+          /*
+           * Make sure the idle listener is also removed
+           * if initialization fails after registering it.
+           */
+          if (handleIdle) {
+            m.off("idle", handleIdle);
+            handleIdle = undefined;
+          }
+
           removeListeners();
           removeOwnedLayersAndSource();
         } catch (cleanupError) {
@@ -495,6 +566,14 @@ export default function PantryClusterOverlay({
       initializing = false;
       setLayersReady(false);
 
+      /*
+       * Remove the old idle listener before rebuilding.
+       */
+      if (handleIdle) {
+        m.off("idle", handleIdle);
+        handleIdle = undefined;
+      }
+
       void setupLayers();
     };
 
@@ -511,6 +590,16 @@ export default function PantryClusterOverlay({
       initializing = false;
 
       m.off("style.load", handleStyleLoad);
+
+      /*
+       * Remove the layer-order listener when the
+       * component unmounts.
+       */
+      if (handleIdle) {
+        m.off("idle", handleIdle);
+        handleIdle = undefined;
+      }
+
       removeListeners();
 
       try {
@@ -553,6 +642,7 @@ export default function PantryClusterOverlay({
         "[Pantry clusters] Source is missing; waiting for style initialization.",
         sourceId
       );
+
       return;
     }
 
@@ -575,7 +665,18 @@ export default function PantryClusterOverlay({
       ["!", ["has", "point_count"]],
       ["==", ["get", "id"], selectedPantryId ?? ""],
     ]);
-  }, [map, layersReady, selectedLayerId, selectedPantryId]);
+
+    /*
+     * Keep the selected pantry outline above
+     * the normal pantry marker.
+     */
+    map.moveLayer(selectedLayerId);
+  }, [
+    map,
+    layersReady,
+    selectedLayerId,
+    selectedPantryId,
+  ]);
 
   return null;
 }
