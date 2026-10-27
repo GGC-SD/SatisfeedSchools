@@ -1,7 +1,8 @@
 "use client";
+import { useAuth } from "@/firebase/authContext";
 
 export default function Header() {
-    const { user, loading, role, roleLoading, roleError } = useAuth();
+    const { role, roleLoading, roleError } = useAuth();
 
     return(
         <div className="dashboard-header">
