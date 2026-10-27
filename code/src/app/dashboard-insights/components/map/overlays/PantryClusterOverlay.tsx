@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
+import maplibregl, {
   type Map as MLMap,
   type MapLayerMouseEvent,
   type GeoJSONSource,
@@ -182,10 +182,30 @@ export default function PantryClusterOverlay({
       | ((event: MapLayerMouseEvent) => void)
       | undefined;
 
-    let enterPoint: (() => void) | undefined;
-    let leavePoint: (() => void) | undefined;
-    let enterCluster: (() => void) | undefined;
-    let leaveCluster: (() => void) | undefined;
+    let enterPoint:
+      | ((event: MapLayerMouseEvent) => void)
+      | undefined;
+
+    let leavePoint:
+      | (() => void)
+      | undefined;
+
+    let enterCluster:
+      | ((event: MapLayerMouseEvent) => void)
+      | undefined;
+
+    let leaveCluster:
+      | (() => void)
+      | undefined;
+
+
+    const tooltip=new maplibregl.Popup({
+      closeButton:false,
+      closeOnClick: false,
+      anchor: "bottom",
+      offset: 15,
+    });
+
 
     /*
      Used to keep the pantry layers above overlays that
@@ -500,10 +520,124 @@ export default function PantryClusterOverlay({
           }
         };
 
-        enterPoint = () => setCursor("pointer");
-        leavePoint = () => setCursor("");
-        enterCluster = () => setCursor("pointer");
-        leaveCluster = () => setCursor("");
+        // Individual pantry hover
+        enterPoint = (event: MapLayerMouseEvent) => {
+          const pantry = event.features?.[0];
+          if (!pantry) return;
+
+          if (pantry.geometry.type !== "Point") return;
+
+          setCursor("pointer");
+
+          const content = document.createElement("div");
+          content.style.whiteSpace = "pre-line";
+          content.style.lineHeight = "1.6";
+
+          content.textContent =
+            "Click to see more info for:\n" +
+            (pantry.properties?.name ?? "Food pantry");
+
+          tooltip
+            .setLngLat(
+              pantry.geometry.coordinates as [number, number]
+            )
+            .setDOMContent(content)
+            .addTo(m);
+        };
+
+        // Individual pantry mouse leave
+        leavePoint = () => {
+          setCursor("");
+          tooltip.remove();
+        };
+
+        // Cluster pantry hover
+        enterCluster = async (event: MapLayerMouseEvent) => {
+          const feature = event.features?.[0];
+          if (!feature) return;
+
+          if (feature.geometry.type !== "Point") return;
+
+          setCursor("pointer");
+
+          tooltip.remove();
+
+          tooltip.setLngLat(
+            feature.geometry.coordinates as [number, number]
+          );
+
+          try {
+            const source = m.getSource(sourceId) as
+              | GeoJSONSource
+              | undefined;
+
+            if (!source) return;
+
+            const clusterId = Number(
+              feature.properties?.cluster_id
+            );
+
+            if (!Number.isFinite(clusterId)) return;
+
+            // Get the first 3 pantries inside the cluster.
+            const pantriesInCluster =
+              await source.getClusterLeaves(
+                clusterId,
+                3,
+                0
+              );
+
+            if (
+              cancelled ||
+              m.getCanvas().style.cursor !== "pointer"
+            ) {
+              return;
+            }
+
+            const list = document.createElement("div");
+
+            list.style.whiteSpace = "pre-line";
+            list.style.lineHeight = "1.4";
+
+            list.textContent =
+              "Zoom in to see pantries in this cluster:";
+
+            for (const pantry of pantriesInCluster) {
+              list.textContent +=
+                "\n• " +
+                (pantry.properties?.name ?? "Food pantry");
+            }
+
+            const totalPantries = Number(
+              feature.properties?.point_count ?? 0
+            );
+
+            const remaining =
+              totalPantries - pantriesInCluster.length;
+
+            if (remaining > 0) {
+              list.textContent +=
+                "\nAnd " +
+                remaining +
+                " more. Zoom in to see them.";
+            }
+
+            tooltip
+              .setDOMContent(list)
+              .addTo(m);
+          } catch (error) {
+            console.error(
+              "[Pantry clusters] Could not load pantry names:",
+              error
+            );
+          }
+        };
+
+        // Cluster mouse leave
+        leaveCluster = () => {
+          setCursor("");
+          tooltip.remove();
+        };
 
         m.on("click", pointLayerId, clickPoint);
         m.on("click", clusterLayerId, clickCluster);

@@ -59,7 +59,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
     },
 
     es: {
-        navigation: "Navegación",
+        navigation: "Panel de control",
         dashboard: "Datos demográficos",
         insights: "Escuelas y bibliotecas",
         summary: "Resumen general",
