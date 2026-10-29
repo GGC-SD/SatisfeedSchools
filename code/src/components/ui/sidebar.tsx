@@ -6,7 +6,7 @@ import { useState } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
 import { useAuth } from "@/firebase/authContext"
-import { canUseAdminTools } from "@/firebase/roles"
+import { canUseAdminTools, canManageAdmins } from "@/firebase/roles"
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }) => {
@@ -40,13 +40,12 @@ export default function SidebarNav() {
         { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
         { path: "/manage-versions", label: "Manage Versions" },
+        ...(canManageAdmins(role) ? [{ path: "/manage-admins", label: "Manage Admins" }] : []),
     ]
 
     const navItems = [
         ...publicNavItems,
-        ...(!loading && user?.emailVerified && showAdminTools
-            ? protectedNavItems
-            : []),
+        ...(!loading && user?.emailVerified && showAdminTools ? protectedNavItems : []),
     ]
 
     const handleLogout = async () => {
