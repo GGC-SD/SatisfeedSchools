@@ -22,10 +22,10 @@ export default function ManageVersionsPage() {
     const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!authLoading && !user) {
+        if (!authLoading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, authLoading, router]);
+    }, [authLoading, roleLoading, isAdmin, router]);
 
     // Fetch all versions from csv_results
     useEffect(() => {
@@ -52,7 +52,7 @@ export default function ManageVersionsPage() {
         }
     }, [user, isAdmin]);
 
-    if (authLoading || roleLoading || !user) {
+    if (authLoading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />

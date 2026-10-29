@@ -17,12 +17,12 @@ export default function UploadPage() {
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if (!loading && !user) {
+        if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, loading, router]);
+    }, [user, loading, roleLoading, isAdmin, router]);
 
-    if (loading || roleLoading || !user) {
+    if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />

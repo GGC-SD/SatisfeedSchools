@@ -31,12 +31,13 @@ export default function ManageAdminsPage() {
     const [message, setMessage] = useState("");
     const [removeError, setRemoveError] = useState("");
 
-    const isSuperAdmin = !authLoading && !roleLoading && !roleError
-        && !!user?.emailVerified && canManageAdmins(role);
+    const isSuperAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canManageAdmins(role);
 
     useEffect(() => {
-        if (!authLoading && !user) router.replace("/login");
-    }, [user, authLoading, router]);
+        if (!authLoading && !roleLoading && !isSuperAdmin) {
+            router.replace("/login");
+        }
+    }, [authLoading, roleLoading, isSuperAdmin, router]);
 
     // Keep the table updated when roles change.
     useEffect(() => {
@@ -106,7 +107,7 @@ export default function ManageAdminsPage() {
         }
     }
 
-    if (authLoading || roleLoading || !user) {
+    if (authLoading || roleLoading || !isSuperAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
