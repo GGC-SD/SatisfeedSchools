@@ -74,17 +74,16 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           "county",
           "zip",
           "phone",
-          "hours",
+          //"hours",
           "website",
         ]
       : [
-          "organization",
           "address",
-          "city",
-          "state",
-          "zip",
+          //"city",
+          //"state",
+          //"zip",
           "phone",
-          "hours",
+          //"hours",
           "website",
           //"resourceType",
           //"dataSource",
@@ -116,6 +115,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           {title || `Selected ${typeLabel}`}
         </h3>
 
+        {(isSchool || isLibrary) && (
         <div className="flex mt-2 text-md flex-col xl:flex-row xl:justify-between">
           <div className="font-medium uppercase">Households:</div>
 
@@ -126,6 +126,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
             </div>
           </div>
         </div>
+        )}
 
         {record ? (
           <div className="text-md">
