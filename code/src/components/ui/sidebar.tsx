@@ -39,8 +39,10 @@ export default function SidebarNav() {
         { path: "/dashboard", label: "Demographics" },
         { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
+        ...(canManageAdmins(role) ? [
         { path: "/manage-versions", label: "Manage Versions" },
-        ...(canManageAdmins(role) ? [{ path: "/manage-admins", label: "Manage Admins" }] : []),
+        { path: "/manage-admins", label: "Manage Admins" },
+    ] : []),
     ]
 
     const navItems = [

@@ -11,7 +11,7 @@ import { canUseAdminTools } from "@/firebase/roles";
 
 export default function ManageVersionsPage() {
     const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
-    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role);
+    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && role === "super_admin";
 
     const router = useRouter();
     const [versions, setVersions] = useState<any[]>([]);
