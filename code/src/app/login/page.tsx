@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { auth } from "@/firebase/firebaseConfig";
 import { signInWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { Container, Row, Col, Form, Button, Alert, Card } from "react-bootstrap";
+import { useAuth } from "@/firebase/authContext";
 import Link from "next/link";
 import SidebarNav from "@/components/ui/sidebar";
 
@@ -14,11 +15,19 @@ interface LoginForm {
 }
 
 export default function Login() {
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [showResend, setShowResend] = useState(false);
   const [resendMessage, setResendMessage] = useState<string | null>(null);
+
+  // if the user is already logged in, skip the login page.
+  useEffect(() => {
+      if (!loading && user) {
+          router.replace("/dashboard-insights");
+      }
+  }, [user, loading, router]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -36,7 +45,7 @@ export default function Login() {
         return;
       }
 
-      router.push("/dashboard");
+      router.push("/dashboard-insights");
     } catch (loginError) {
       setError((loginError as Error).message);
     }
@@ -56,6 +65,9 @@ export default function Login() {
       setResendMessage("Failed to send verification email.");
     }
   };
+
+  // Hide the form while checking login or redirecting.
+  if (loading || user) return null;
 
   return (
     <Container fluid className="p-0">
