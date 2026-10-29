@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             unsubscribeRole?.();
             unsubscribeRole = undefined;
 
-            setUser(firebaseUser);
+            // Only treat verified accounts as logged in within the app.
+            setUser(firebaseUser?.emailVerified ? firebaseUser : null);
             setLoading(false);
             setRole("member");
             setRoleError(null);
