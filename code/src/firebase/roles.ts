@@ -1,21 +1,17 @@
 export type UserRole = "member" | "admin" | "super_admin";
 
-// Only recognize a role when the record belongs to this account.
+// Read this record using the signed-in user's verified email.
 export function getRoleFromRecord(record: unknown, uid: string): UserRole {
-    if (!uid || !record || typeof record !== "object") {
+    if (!uid || !record || typeof record !== "object" || !("role" in record)) {
         return "member";
     }
 
-    if (!("uid" in record) || record.uid !== uid) {
-        return "member";
-    }
+    // Regular admins use their email-based role record.
+    if (record.role === "admin") return "admin";
 
-    if (!("role" in record)) {
-        return "member";
-    }
-
-    if (record.role === "admin" || record.role === "super_admin") {
-        return record.role;
+    // Superadmins must also have a matching UID.
+    if (record.role === "super_admin" && "uid" in record && record.uid === uid) {
+        return "super_admin";
     }
 
     return "member";
