@@ -6,7 +6,7 @@ import { useState } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
 import { useAuth } from "@/firebase/authContext"
-import { canUseAdminTools, canManageAdmins } from "@/firebase/roles"
+import { canUseAdminPages, canManageAdmins } from "@/firebase/roles"
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }) => {
@@ -29,7 +29,8 @@ export default function SidebarNav() {
     const pathname = usePathname()
     
     const { user, loading, role, roleLoading, roleError } = useAuth()
-    const showAdminTools = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role)
+    // wait for the account and role checks before showing private admin pages
+    const showAdminPages = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role)
 
     const publicNavItems = [
         { path: "/dashboard-insights", label: "Schools and Libraries" },
@@ -39,15 +40,16 @@ export default function SidebarNav() {
         { path: "/dashboard", label: "Demographics" },
         { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
-        ...(canManageAdmins(role) ? [
+        ...(canManageAdmins(role) ? [ // adds these two pages only for superadmins
         { path: "/manage-versions", label: "Manage Versions" },
         { path: "/manage-admins", label: "Manage Admins" },
     ] : []),
     ]
 
+    // keeps public pages visible and include admin pages where allowed
     const navItems = [
         ...publicNavItems,
-        ...(!loading && user?.emailVerified && showAdminTools ? protectedNavItems : []),
+        ...(!loading && user?.emailVerified && showAdminPages ? protectedNavItems : []),
     ]
 
     const handleLogout = async () => {

@@ -9,7 +9,7 @@ import CountyMap from "@/components/CountyMap";
 import {Button, ButtonGroup} from "react-bootstrap";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
-import { canUseAdminTools } from "@/firebase/roles";
+import { canUseAdminPages } from "@/firebase/roles";
 
 interface Metrics {
     totalPeopleHelped: number;
@@ -19,7 +19,7 @@ interface Metrics {
 export default function Dashboard() {
     const { user, loading, role, roleLoading, roleError } = useAuth();
     // Only verified admins and superadmins can use this page.
-    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role);
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
     const router = useRouter();
     const [totalMetrics, setTotalMetrics] = useState<Metrics | null>(null);
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
@@ -80,12 +80,15 @@ export default function Dashboard() {
         }
     }, [selectedVersionId, isAdmin])
 
+    // wait for permissions before redirecting
     useEffect(() => {
         if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
     }, [user, loading, roleLoading, isAdmin, router]);
 
+
+    // hides this page while checking access
     if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">

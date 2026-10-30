@@ -9,9 +9,9 @@ import type { UserRole } from "./roles";
 interface AuthContextValue {
     user: User | null;
     loading: boolean;
-    role: UserRole;
-    roleLoading: boolean;
-    roleError: string | null;
+    role: UserRole;           // role from Firestore
+    roleLoading: boolean;     // checking the Firestore role
+    roleError: string | null; // errors while loading the role
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -31,16 +31,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         let unsubscribeRole: (() => void) | undefined;
+        // ignores old responses if someone switches accounts
         let accountVersion = 0;
 
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             const currentVersion = ++accountVersion;
 
-            // Clear the previous account's role and listener.
+            // stops watching the previous account's role
             unsubscribeRole?.();
             unsubscribeRole = undefined;
 
-            // Only treat verified accounts as logged in within the app.
+            // only show verified accounts as signed in within the app
             setUser(firebaseUser?.emailVerified ? firebaseUser : null);
             setLoading(false);
             setRole("member");

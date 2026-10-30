@@ -33,13 +33,14 @@ export default function ManageAdminsPage() {
 
     const isSuperAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canManageAdmins(role);
 
+    // keeps admins and members out of this page
     useEffect(() => {
         if (!authLoading && !roleLoading && !isSuperAdmin) {
             router.replace("/login");
         }
     }, [authLoading, roleLoading, isSuperAdmin, router]);
 
-    // Keep the table updated when roles change.
+    // watches the role collection in firestore so the list stays up to date
     useEffect(() => {
         setAdmins([]);
         setListError("");

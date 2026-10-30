@@ -7,11 +7,11 @@ import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/fi
 import { db } from "@/firebase/firebaseConfig";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
-import { canUseAdminTools } from "@/firebase/roles";
+import { canUseAdminPages } from "@/firebase/roles";
 
 export default function ManageVersionsPage() {
     const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
-    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && role === "super_admin";
+    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
 
     const router = useRouter();
     const [versions, setVersions] = useState<any[]>([]);
@@ -52,6 +52,7 @@ export default function ManageVersionsPage() {
         }
     }, [user, isAdmin]);
 
+    // keeps the version list hidden while checking access
     if (authLoading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
@@ -74,6 +75,7 @@ export default function ManageVersionsPage() {
     };
 
     const confirmDelete = async () => {
+        // only continue when a superadmin has selected a version
         if (!isAdmin || !versionToDelete) return;
         setDeletingId(versionToDelete.id);
         try {

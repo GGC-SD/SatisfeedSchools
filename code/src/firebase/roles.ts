@@ -17,8 +17,8 @@ export function getRoleFromRecord(record: unknown, uid: string): UserRole {
     return "member";
 }
 
-// Admins and super admins can use the admin tools.
-export function canUseAdminTools(role: UserRole): boolean {
+// Admins and super admins can use the admin pages.
+export function canUseAdminPages(role: UserRole): boolean {
     return role === "admin" || role === "super_admin";
 }
 

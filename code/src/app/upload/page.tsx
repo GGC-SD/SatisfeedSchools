@@ -5,23 +5,26 @@ import { Container, Form, Button, Alert, Spinner, Row, Col } from "react-bootstr
 import SidebarNav from "@/components/ui/sidebar";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
-import { canUseAdminTools } from "@/firebase/roles";
+import { canUseAdminPages } from "@/firebase/roles";
 
 export default function UploadPage() {
     const { user, loading, role, roleLoading, roleError } = useAuth();
-    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminTools(role);
+    // allow verified admins and superadmins once permissions finish loading
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
 
     const router = useRouter();
     const [files, setFiles] = useState<FileList | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
 
+    // wait for permissions before redirecting
     useEffect(() => {
         if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
     }, [user, loading, roleLoading, isAdmin, router]);
 
+    // hides this page while checking access
     if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
