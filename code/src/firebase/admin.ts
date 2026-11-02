@@ -1,16 +1,16 @@
 // code/scripts/firebaseAdmin.ts
-import admin from 'firebase-admin';
-import type { ServiceAccount } from 'firebase-admin';
+import * as admin from "firebase-admin/app";
+import type { ServiceAccount } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import serviceAccount from "../../serviceaccountkey.json";
 
-const serviceAccount = require('../../serviceaccountkey.json') as ServiceAccount;
-
-//only initialize once (important when multiple scripts import this)
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
+// connect once
+if (!admin.getApps().length) {
+    admin.initializeApp({
+        credential: admin.cert(serviceAccount as ServiceAccount)
+    });
 }
 
-const db = admin.firestore();
+const db = getFirestore();
 
 export { admin, db };

@@ -10,6 +10,7 @@ import {Button, ButtonGroup} from "react-bootstrap";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
 import { canUseAdminPages } from "@/firebase/roles";
+import { auth } from "@/firebase/firebaseConfig";
 
 interface Metrics {
     totalPeopleHelped: number;
@@ -42,7 +43,17 @@ export default function Dashboard() {
 
         try {
             console.log(`Fetching data for version: ${versionId}`)
-            const response = await fetch(`/api/getResults?id=${versionId}`)
+            const token = await auth.currentUser?.getIdToken();
+
+            if (!token) throw new Error("Please sign in.");
+
+            const response = await fetch(
+                `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    cache: "no-store"
+                }
+            );
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch data: ${response.statusText}`)

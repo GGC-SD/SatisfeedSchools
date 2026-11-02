@@ -7,6 +7,7 @@ import {MonthlyChart, WeeklyChart, YearlyChart} from "@/components/ui/chart";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
 import { canUseAdminPages } from "@/firebase/roles";
+import { auth } from "@/firebase/firebaseConfig";
 
 const summarySections = [
     { name: "Yearly Summary", key: "yearly_summary" },
@@ -49,7 +50,20 @@ export default function Page() {
 
     const fetchSummaryData = async (versionId: string) => {
         try {
-            const response = await fetch(`/api/getResults?id=${versionId}`);
+            const token = await auth.currentUser?.getIdToken();
+
+            if (!token) throw new Error("Please sign in.");
+
+            const response = await fetch(
+                `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    cache: "no-store"
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Unable to load results.");
+            }
             const json = await response.json();
             const summaries: { [key: string]: any[] } = {
                 county_summary: json.data?.county_summary || [],
