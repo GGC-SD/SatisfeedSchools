@@ -57,9 +57,13 @@ export default function UploadPage() {
         formData.append("file", files[0]);
 
         try {
+            const token = await user?.getIdToken();
+            if (!token) throw new Error("Please sign in.");
+
             const response = await fetch("/api/upload/", {
                 method: "POST",
-                body: formData,
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData
             });
 
             const result = await response.json();
