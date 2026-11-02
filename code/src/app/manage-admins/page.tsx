@@ -31,7 +31,7 @@ export default function ManageAdminsPage() {
     const [message, setMessage] = useState("");
     const [removeError, setRemoveError] = useState("");
 
-    const isSuperAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canManageAdmins(role);
+    const isSuperAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && role === "super_admin";
 
     // keeps admins and members out of this page
     useEffect(() => {

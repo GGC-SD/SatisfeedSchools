@@ -40,9 +40,9 @@ export default function SidebarNav() {
         { path: "/dashboard", label: "Demographics" },
         { path: "/summary", label: "Summary Overview" },
         { path: "/upload", label: "Upload Raw Data" },
-        ...(canManageAdmins(role) ? [ // adds these two pages only for superadmins
         { path: "/manage-versions", label: "Manage Versions" },
-        { path: "/manage-admins", label: "Manage Admins" },
+        ...(canManageAdmins(role) ? [ 
+        { path: "/manage-admins", label: "Manage Admins" }
     ] : []),
     ]
 
