@@ -136,7 +136,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
               return (
                 <div
                   key={key}
-                  className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2"
+                  //className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2"
+                  className="flex flex-row justify-between mb-1 gap-x-2"
                 >
                   <div className="font-medium uppercase">
                     {fieldLabels[key] || key}:

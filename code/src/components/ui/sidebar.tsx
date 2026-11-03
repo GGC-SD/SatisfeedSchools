@@ -121,17 +121,18 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
             {/* Desktop Sidebar */}
             <div id="desktop-sidebar" hidden={!showDesktopMenu} className={`d-none d-md-block position-fixed top-0 start-0 sidebar-container ${showDesktopMenu ? "sidebar-open" : "sidebar-closed"}`}>
                 <Navbar bg="dark" variant="dark" className="flex-column align-items-start" style={{ width: "100%", height: "100%" }}>
+
+                    <Navbar.Brand className="sidebar-navigation-title mb-2 w-100">{t.navigation}</Navbar.Brand>
                     <div className="w-100 text-center">
                         {/*https://www.satisfeed.org/ */}
-                        <a href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 d-block">
+                        <a href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 flex justify-center item-center">
                             <img
-                                src="/Satisfeed logo white.png"
+                                src="/Satisfeed logo.png"
                                 alt="Satisfeed logo"
-                                className="satisfeed-sidebar-logo img-fluid mb-3"
+                                className="h-20 w-auto border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-xl shadow-black/20"
                             />
                         </a>
                     </div>
-                    <Navbar.Brand className="sidebar-navigation-title mb-4 w-100">{t.navigation}</Navbar.Brand>
                     <Nav className="flex-column w-100">
                         {navItems.map((item) => (
                             <NavLink key={item.path} href={item.path} active={pathname === item.path}>
