@@ -18,6 +18,29 @@ interface AdminRecord {
     role: "admin" | "super_admin";
 }
 
+async function adminRequest(
+    token: string,
+    email: string,
+    action: "check" | "add",
+    signal?: AbortSignal
+) {
+    const response = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, action }),
+        signal
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok || !data) {
+        throw new Error(data?.message || "Unable to manage admins.");
+    }
+}
+
 export default function ManageAdminsPage() {
     const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
     const router = useRouter();
@@ -30,6 +53,10 @@ export default function ManageAdminsPage() {
     const [removing, setRemoving] = useState(false);
     const [message, setMessage] = useState("");
     const [removeError, setRemoveError] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [eligible, setEligible] = useState<{ email: string; uid: string } | null>(null);
+    const [adding, setAdding] = useState(false);
+    const [addError, setAddError] = useState("");
 
     const isSuperAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && role === "super_admin";
 
@@ -73,6 +100,57 @@ export default function ManageAdminsPage() {
     const filteredAdmins = admins.filter(admin =>
         admin.email.toLowerCase().includes(search.trim().toLowerCase())
     );
+
+    const email = newEmail.trim().toLowerCase();
+    const canAdd = eligible?.email === email && eligible.uid === user?.uid;
+
+    useEffect(() => {
+        if (!isSuperAdmin || !user || !/^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/.test(email)) return;
+
+        const account = user;
+        const controller = new AbortController();
+
+        const timer = setTimeout(async () => {
+            try {
+                const token = await account.getIdToken();
+                await adminRequest(token, email, "check", controller.signal);
+
+                if (!controller.signal.aborted) {
+                    setEligible({ email, uid: account.uid });
+                }
+            } catch (error) {
+                if (!controller.signal.aborted) {
+                    setAddError(error instanceof Error ? error.message : "Unable to check email.");
+                }
+            }
+        }, 400);
+
+        return () => {
+            clearTimeout(timer);
+            controller.abort();
+        };
+    }, [email, user, isSuperAdmin]);
+
+    async function addAdmin() {
+        if (!user || !isSuperAdmin || !canAdd || adding) return;
+
+        setAdding(true);
+        setAddError("");
+        setMessage("");
+
+        try {
+            const token = await user.getIdToken();
+            await adminRequest(token, email, "add");
+            setMessage(`Admin access added for ${email}.`);
+            setNewEmail("");
+            setEligible(null);
+        } catch (error) {
+            setEligible(null);
+            setAddError(error instanceof Error ? error.message : "Unable to add admin.");
+        } finally {
+            setAdding(false);
+        }
+    }
 
     async function removeAdmin() {
         if (!isSuperAdmin || !selectedAdmin || removing) return;
@@ -135,6 +213,37 @@ export default function ManageAdminsPage() {
                     <h2 className="mb-4">👥 Manage Admins</h2>
 
                     {message && <Alert variant="success">{message}</Alert>}
+
+                    <Form className="mb-4" onSubmit={event => {
+                        event.preventDefault();
+                        void addAdmin();
+                    }}>
+                        <Form.Label htmlFor="new-admin-email">Add an admin</Form.Label>
+                        <Form.Control
+                            id="new-admin-email"
+                            type="email"
+                            placeholder="Enter their account email"
+                            value={newEmail}
+                            disabled={adding}
+                            onChange={event => {
+                                const value = event.target.value;
+                                setNewEmail(value);
+
+                                if (value.trim().toLowerCase() !== email) {
+                                    setEligible(null);
+                                    setAddError("");
+                                }
+                            }}
+                        />
+
+                        {addError && <div className="text-danger mt-2">{addError}</div>}
+
+                        {canAdd && (
+                            <Button type="submit" className="mt-2" disabled={adding}>
+                                {adding ? "Adding..." : "Add Admin"}
+                            </Button>
+                        )}
+                    </Form>
 
                     <Form.Group controlId="admin-search" className="mb-4">
                         <Form.Label>Search by email</Form.Label>
