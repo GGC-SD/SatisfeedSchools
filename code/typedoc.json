@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org",
+  "entryPoints": ["./src"],
+  "entryPointStrategy": "expand",
+  "out": "docs/api",
+  "exclude": [
+    "**/*.next/**",
+    "**/node_modules/**",
+    "next.config.js",
+    "tailwind.config.js"
+  ],
+  
+  "plugin": ["typedoc-plugin-missing-exports"],
+  "skipErrorChecking": true
+}

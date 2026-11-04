@@ -2,6 +2,7 @@
 
 import { SchoolRecord } from "@/data/schoolTypes";
 import { LibraryDoc } from "@/data/libraryTypes";
+import { PantryDoc } from "@/data/pantryTypes";
 
 /**
  * Props for the DataCard.
@@ -15,7 +16,7 @@ import { LibraryDoc } from "@/data/libraryTypes";
 type DataCardProps ={
   title: string;
   value: number;
-  record: SchoolRecord | LibraryDoc | null;
+  record: SchoolRecord | LibraryDoc | PantryDoc | null;
   type: string;
   onClear?: () => void;
 };
@@ -32,95 +33,144 @@ type DataCardProps ={
  */
 export default function DataCard({ title, value, record, type, onClear }: DataCardProps) {
 
-  const isSchool = type === "School";
-  const typeLabel = isSchool ? "School" : "Library";
+  const normalizedType = type.toLowerCase();
 
-     if (!record && !title) {
+  const isSchool = normalizedType === "school";
+  const isLibrary = normalizedType === "library";
+  const isPantry = normalizedType === "pantry";
+
+  const typeLabel = isSchool
+    ? "School"
+    : isLibrary
+      ? "Library"
+      : isPantry
+        ? "Pantry"
+        : type;
+
+  if (!record && !title) {
     return (
-      <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center">
-        <h1 className="text-lg text-neutral-700">Select a {typeLabel} To Begin</h1>
+      <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center p-4">
+        <h1 className="text-lg text-neutral-700 text-center">
+          Select a {typeLabel} To Begin
+        </h1>
       </div>
     );
   }
 
   const displayOrder: string[] = isSchool
-  ? [
-    "address",
-    "city",
-    "county",
-    "zip",
-    "enrollment",
-    "phone",
-  ]
-  :[
-    "address",
-    "city",
-    "county",
-    "zip",
-    "phone",
-    "hours",
-    "website",
-  ];
+    ? [
+        "address",
+        "city",
+        "county",
+        "zip",
+        "enrollment",
+        "phone",
+        //"website",
+      ]
+    : isLibrary
+      ? [
+          "address",
+          "city",
+          "county",
+          "zip",
+          "phone",
+          "hours",
+          "website",
+        ]
+      : [
+          "organization",
+          "address",
+          "city",
+          "state",
+          "zip",
+          "phone",
+          "hours",
+          "website",
+          //"resourceType",
+          //"dataSource",
+         // "lastVerifiedDate",
+        ];
 
-  // Human-readable labels for display
-  const fieldLabels: Record<string, string> = isSchool
-  ? {
+  const fieldLabels: Record<string, string> = {
     address: "Address",
     city: "City",
     county: "County",
+    state: "State",
     zip: "ZIP Code",
     enrollment: "Enrollment",
     phone: "Phone Number",
-  }
-  : {
-    address: "Address",
-    city: "City",
-    county: "County",
-    zip: "ZIP Code",
-    phone: "Phone Number",
     hours: "Hours",
     website: "Website",
+    organization: "Organization",
+    resourceType: "Resource Type",
+    dataSource: "Data Source",
+    lastVerifiedDate: "Last Verified",
   };
 
-    return (
+  const recordFields = record as unknown as Record<string, unknown>;
+
+  return (
     <div className="min-w-[150px] min-h-36 lg:min-h-[20rem] bg-white child-component-borders">
       <div className="p-3 w-full h-full flex flex-col">
-        <h3 className="text-2xl font-bold text-center">{title}</h3>
+        <h3 className="text-2xl font-bold text-center">
+          {title || `Selected ${typeLabel}`}
+        </h3>
 
         <div className="flex mt-2 text-md flex-col xl:flex-row xl:justify-between">
-            <div className="font-medium uppercase">Households: </div>
-            <div className="flex mb-1">
-              <div className="">{value}</div>
-              <div className="text-sm text-neutral-500 flex place-self-end">&nbsp;(approximate)</div>
-            </div> 
+          <div className="font-medium uppercase">Households:</div>
+
+          <div className="flex mb-1">
+            <div>{value.toLocaleString()}</div>
+            <div className="text-sm text-neutral-500 flex place-self-end">
+              &nbsp;(approximate)
+            </div>
+          </div>
         </div>
 
-        {/* Rendering fields in the desired order with labels*/}
         {record ? (
           <div className="text-md">
             {displayOrder.map((key) => {
-              const val = (record as Record<string, unknown>)[key];
-              if (val === undefined || val === null) {
-                return (
-                  <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
-                    <div className="font-medium uppercase">
-                      {fieldLabels[key] || key}:
-                    </div>
-                    <div>Not Available</div>
-                  </div>
-                );
-              }
+              const val = recordFields[key];
 
               return (
-                <div key={key} className="flex flex-col xl:flex-row xl:justify-between mb-1">
-                    <div className="font-medium uppercase">{fieldLabels[key] || key}:</div>
-                    <div>{String(val)}</div>
+                <div
+                  key={key}
+                  className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2"
+                >
+                  <div className="font-medium uppercase">
+                    {fieldLabels[key] || key}:
+                  </div>
+
+                  <div className="break-words">
+                    {val === undefined || val === null || val === "" ? (
+                      "Not Available"
+                    ) : key === "website" && typeof val === "string" ? (
+                      <a
+                        href={
+                          val.startsWith("http") ? val : `https://${val}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline"
+                      >
+                        Visit Website
+                      </a>
+                    ) : key === "hours" && typeof val === "string" ? (
+                      val
+                    ) : (
+                      String(val)
+                    )}
+                  </div>
                 </div>
               );
             })}
+
+            
           </div>
         ) : (
-          <p className="text-neutral-500 mt-4">No additional data found.</p>
+          <p className="text-neutral-500 mt-4">
+            No additional data found.
+          </p>
         )}
 
         <div className="mt-2 self-end flex">
@@ -128,7 +178,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
             type="button"
             onClick={onClear}
             className="button-insights"
-            aria-label="Clear selected school"
+            aria-label={`Clear selected ${typeLabel.toLowerCase()}`}
           >
             Clear Selected {typeLabel}
           </button>

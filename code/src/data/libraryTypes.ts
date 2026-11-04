@@ -36,7 +36,6 @@ export interface OverpassRelation {
 
 
 //Firestore-safe types
-
 export interface LibraryDoc {
     OSMelementType: 'node' | 'way' | 'relation';
     OSMid: number;
