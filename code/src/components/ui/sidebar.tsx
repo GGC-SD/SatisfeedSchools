@@ -60,6 +60,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
         logout: "Log Out",
         login: "Log In",
         spanish: "Español",
+        admins: "Manage Admins",
     },
 
     es: {
@@ -72,6 +73,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
         logout: "Cerrar Sesión",
         login: "Iniciar Sesión",
         english: "English",
+        admins: "Administrar usuarios administradores",
     },
 
 
@@ -84,12 +86,12 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
     ]
 
     const protectedNavItems = [
-        { path: "/dashboard", label: "Demographics" },
-        { path: "/summary", label: "Summary Overview" },
-        { path: "/upload", label: "Upload Raw Data" },
-        { path: "/manage-versions", label: "Manage Versions" },
+        { path: "/dashboard", label: t.dashboard },
+        { path: "/summary", label: t.summary },
+        { path: "/upload", label: t.upload },
+        { path: "/manage-versions", label: t.versions },
         ...(canManageAdmins(role) ? [ 
-        { path: "/manage-admins", label: "Manage Admins" }
+        { path: "/manage-admins", label: t.admins }
     ] : []),
     ]
 
