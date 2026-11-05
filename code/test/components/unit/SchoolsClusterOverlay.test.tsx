@@ -5,13 +5,40 @@ import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 
+const popupState = vi.hoisted(() => ({ content: null as HTMLElement | null }));
+
+vi.mock("maplibre-gl", () => {
+  class Popup {
+    setLngLat() {
+      return this;
+    }
+    setDOMContent(content: HTMLElement) {
+      popupState.content = content;
+      return this;
+    }
+    addTo() {
+      return this;
+    }
+    remove() {
+      return this;
+    }
+  }
+
+  return { default: { Popup }, Popup };
+});
+
 // Mock Firebase so it returns 3 fake schools
 vi.mock("@/firebase/firebaseConfig", () => ({ db: {} as any }));
 vi.mock("firebase/firestore", () => {
   const docs = [
     {
       id: "s1",
-      data: () => ({ name: "A", coords: { lat: 33.9, lng: -84.0 } }),
+      data: () => ({
+        name: "Walnut Grove Elementary School",
+        county: "Walton",
+        enrollment: 1_581,
+        coords: { lat: 33.9, lng: -84.0 },
+      }),
     },
     {
       id: "s2",
@@ -35,6 +62,7 @@ import SchoolsClusterOverlay from "@/app/dashboard-insights/components/map/overl
 function makeFakeMap() {
   const addedSources: Record<string, any> = {};
   const addedLayers: Array<{ id: string; def: any }> = [];
+  const handlers: Record<string, (event: any) => void> = {};
 
   const map = {
     isStyleLoaded: vi.fn(() => true), // pretend map is ready
@@ -48,20 +76,26 @@ function makeFakeMap() {
     getSource: vi.fn((id: string) => addedSources[id]),
     removeLayer: vi.fn(),
     removeSource: vi.fn(),
-    on: vi.fn(),
+    hasImage: vi.fn(() => false),
+    loadImage: vi.fn().mockResolvedValue({ data: {} }),
+    addImage: vi.fn(),
+    on: vi.fn((event: string, layer: string, handler: (event: any) => void) => {
+      handlers[`${event}:${layer}`] = handler;
+    }),
     off: vi.fn(),
     getCanvas: vi.fn(() => ({ style: { cursor: "" } })),
     queryRenderedFeatures: vi.fn(),
     easeTo: vi.fn(),
   } as any;
 
-  return { map, addedSources, addedLayers };
+  return { map, addedSources, addedLayers, handlers };
 }
 
 describe("User Story: See all schools as markers", () => {
   let ctx: ReturnType<typeof makeFakeMap>;
 
   beforeEach(() => {
+    popupState.content = null;
     ctx = makeFakeMap(); // reset fake map before each test
   });
 
@@ -82,12 +116,12 @@ describe("User Story: See all schools as markers", () => {
         expect.objectContaining({ type: "geojson", cluster: true })
       );
 
-      // Check that the unclustered circle markers were added
+      // Check that the unclustered school-symbol markers were added
       const layer = ctx.addedLayers.find(
         (l) => l.id === "unclustered-point-test"
       );
       expect(layer).toBeTruthy();
-      expect(layer?.def.type).toBe("circle");
+      expect(layer?.def.type).toBe("symbol");
     });
 
     // Verify the source data includes 3 school features
@@ -97,5 +131,41 @@ describe("User Story: See all schools as markers", () => {
 
     expect(sourceArg.data?.type).toBe("FeatureCollection");
     expect(sourceArg.data?.features?.length).toBe(3);
+    expect(sourceArg.data.features[0].properties).toEqual(
+      expect.objectContaining({
+        name: "Walnut Grove Elementary School",
+        county: "Walton",
+        enrollment: 1581,
+      })
+    );
+  });
+
+  it("shows school, county, and formatted enrollment in the hover tooltip", async () => {
+    render(<SchoolsClusterOverlay map={ctx.map} idSuffix="-test" />);
+
+    await waitFor(() => {
+      expect(ctx.handlers["mouseenter:unclustered-point-test"]).toBeTypeOf(
+        "function"
+      );
+    });
+
+    ctx.handlers["mouseenter:unclustered-point-test"]({
+      features: [
+        {
+          properties: {
+            name: "Walnut Grove Elementary School",
+            county: "Walton",
+            enrollment: 1581,
+          },
+          geometry: { type: "Point", coordinates: [-83.7, 33.8] },
+        },
+      ],
+    });
+
+    expect(popupState.content?.textContent).toContain(
+      "School: Walnut Grove Elementary School"
+    );
+    expect(popupState.content?.textContent).toContain("County: Walton");
+    expect(popupState.content?.textContent).toContain("Enrollment: 1,581");
   });
 });

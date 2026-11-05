@@ -38,9 +38,34 @@ type Props = {
  */
 type SchoolDoc = {
   name?: string;
+  county?: string;
+  enrollment?: number | null;
   state?: string;
   coords?: { lat: number; lng: number };
 };
+
+const NOT_AVAILABLE = "Not available";
+
+function formatEnrollment(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value)
+    ? new Intl.NumberFormat("en-US").format(value)
+    : NOT_AVAILABLE;
+}
+
+function appendTooltipRow(
+  container: HTMLElement,
+  labelText: string,
+  valueText: string
+) {
+  const row = document.createElement("div");
+  const label = document.createElement("strong");
+  const value = document.createElement("span");
+
+  label.textContent = `${labelText}: `;
+  value.textContent = valueText;
+  row.append(label, value);
+  container.append(row);
+}
 
 /**
  * SchoolsClusterOverlay
@@ -102,6 +127,8 @@ export default function SchoolsClusterOverlay({
             properties: {
               id: docSnap.id,
               name: d.name ?? "School",
+              county: d.county ?? "",
+              enrollment: d.enrollment ?? null,
               state: d.state ?? "",
             },
             geometry: {
@@ -288,9 +315,19 @@ export default function SchoolsClusterOverlay({
       m.getCanvas().style.cursor = "pointer";
 
       const content = document.createElement("div");
-      content.style.whiteSpace = "pre-line";
       content.style.lineHeight = "1.6";
-      content.textContent = "Click to see more info for:\n" + (school.properties?.name ?? "School");
+      content.style.minWidth = "14rem";
+
+      const schoolName = String(school.properties?.name ?? "").trim();
+      const county = String(school.properties?.county ?? "").trim();
+
+      appendTooltipRow(content, "School", schoolName || "School");
+      appendTooltipRow(content, "County", county || NOT_AVAILABLE);
+      appendTooltipRow(
+        content,
+        "Enrollment",
+        formatEnrollment(school.properties?.enrollment)
+      );
 
       tooltip
         .setLngLat((school.geometry as GeoJSON.Point).coordinates as [number, number])
