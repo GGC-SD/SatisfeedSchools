@@ -180,6 +180,7 @@ export default function ManageAdminsPage() {
             setMessage(`Admin access removed for ${target.email}.`);
             setSelectedAdmin(null);
         } catch {
+            //console.error("remove admin failed:", error);
             setRemoveError("Unable to remove access. Refresh the list and check permissions.");
         } finally {
             setRemoving(false);
