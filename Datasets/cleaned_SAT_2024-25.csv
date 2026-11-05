@@ -1,0 +1,1390 @@
+SCHOOL_DSTRCT_CD,SCHOOL_DSTRCT_NM,INSTN_NUMBER,INSTN_NAME,TEST_CMPNT_TYP_CD,DSTRCT_NUM_TESTED_CNT,INSTN_NUM_TESTED_CNT,DSTRCT_AVG_SCORE_VAL,INSTN_AVG_SCORE_VAL
+601,Appling County,103,Appling County High School,Combined Test Score,42,42,982.6,982.6
+601,Appling County,103,Appling County High School,Evidence Based Reading and Writing,42,42,508.8,508.8
+601,Appling County,103,Appling County High School,Math Section Score,42,42,473.8,473.8
+602,Atkinson County,103,Atkinson County High School,Combined Test Score,10,10,1033,1033
+602,Atkinson County,103,Atkinson County High School,Evidence Based Reading and Writing,10,10,536,536
+602,Atkinson County,103,Atkinson County High School,Math Section Score,10,10,497,497
+603,Bacon County,302,Bacon County High School,Combined Test Score,17,17,1007.6,1007.6
+603,Bacon County,302,Bacon County High School,Evidence Based Reading and Writing,17,17,520.6,520.6
+603,Bacon County,302,Bacon County High School,Math Section Score,17,17,487.1,487.1
+604,Baker County,105,Baker County High School,Combined Test Score,15,15,822.7,822.7
+604,Baker County,105,Baker County High School,Evidence Based Reading and Writing,15,15,430,430
+604,Baker County,105,Baker County High School,Math Section Score,15,15,392.7,392.7
+605,Baldwin County,189,Baldwin High School,Combined Test Score,88,88,944.1,944.1
+605,Baldwin County,189,Baldwin High School,Evidence Based Reading and Writing,88,88,489.8,489.8
+605,Baldwin County,189,Baldwin High School,Math Section Score,88,88,454.3,454.3
+606,Banks County,199,Banks County High School,Combined Test Score,57,57,994.2,994.2
+606,Banks County,199,Banks County High School,Evidence Based Reading and Writing,57,57,516.1,516.1
+606,Banks County,199,Banks County High School,Math Section Score,57,57,478.1,478.1
+607,Barrow County,101,Apalachee High School,Combined Test Score,251,133,1026.7,1024
+607,Barrow County,101,Apalachee High School,Evidence Based Reading and Writing,251,133,524.7,524.1
+607,Barrow County,101,Apalachee High School,Math Section Score,251,133,502,499.8
+607,Barrow County,3052,Winder-Barrow High School,Combined Test Score,251,118,1026.7,1029.7
+607,Barrow County,3052,Winder-Barrow High School,Evidence Based Reading and Writing,251,118,524.7,525.3
+607,Barrow County,3052,Winder-Barrow High School,Math Section Score,251,118,502,504.3
+608,Bartow County,105,Adairsville High School,Combined Test Score,293,99,1030,1054.2
+608,Bartow County,105,Adairsville High School,Evidence Based Reading and Writing,293,99,534.1,543.9
+608,Bartow County,105,Adairsville High School,Math Section Score,293,99,495.9,510.3
+608,Bartow County,114,Cass High School,Combined Test Score,293,99,1030,988.6
+608,Bartow County,114,Cass High School,Evidence Based Reading and Writing,293,99,534.1,511.9
+608,Bartow County,114,Cass High School,Math Section Score,293,99,495.9,476.7
+608,Bartow County,198,Woodland High School,Combined Test Score,293,95,1030,1047.8
+608,Bartow County,198,Woodland High School,Evidence Based Reading and Writing,293,95,534.1,546.9
+608,Bartow County,198,Woodland High School,Math Section Score,293,95,495.9,500.8
+609,Ben Hill County,291,Fitzgerald High School School College and Career Academy,Combined Test Score,31,31,982.9,982.9
+609,Ben Hill County,291,Fitzgerald High School School College and Career Academy,Evidence Based Reading and Writing,31,31,520.6,520.6
+609,Ben Hill County,291,Fitzgerald High School School College and Career Academy,Math Section Score,31,31,462.3,462.3
+610,Berrien County,101,Berrien High School,Combined Test Score,61,55,1057.5,1048
+610,Berrien County,101,Berrien High School,Evidence Based Reading and Writing,61,55,561.3,552.7
+610,Berrien County,101,Berrien High School,Math Section Score,61,55,496.2,495.3
+610,Berrien County,106,Berrien Academy Performance Learning Center,Combined Test Score,61,TFS,1057.5,TFS
+610,Berrien County,106,Berrien Academy Performance Learning Center,Evidence Based Reading and Writing,61,TFS,561.3,TFS
+610,Berrien County,106,Berrien Academy Performance Learning Center,Math Section Score,61,TFS,496.2,TFS
+611,Bibb County,105,Howard High School,Combined Test Score,235,54,1004.5,1030.4
+611,Bibb County,105,Howard High School,Evidence Based Reading and Writing,235,54,522.8,540.6
+611,Bibb County,105,Howard High School,Math Section Score,235,54,481.7,489.8
+611,Bibb County,117,Academy For Classical Education,Combined Test Score,235,55,1004.5,1150.4
+611,Bibb County,117,Academy For Classical Education,Evidence Based Reading and Writing,235,55,522.8,580.5
+611,Bibb County,117,Academy For Classical Education,Math Section Score,235,55,481.7,569.8
+611,Bibb County,186,Central High School,Combined Test Score,235,30,1004.5,953.3
+611,Bibb County,186,Central High School,Evidence Based Reading and Writing,235,30,522.8,512.3
+611,Bibb County,186,Central High School,Math Section Score,235,30,481.7,441
+611,Bibb County,198,Westside High School,Combined Test Score,235,31,1004.5,912.3
+611,Bibb County,198,Westside High School,Evidence Based Reading and Writing,235,31,522.8,472.6
+611,Bibb County,198,Westside High School,Math Section Score,235,31,481.7,439.7
+611,Bibb County,204,Rutland High School,Combined Test Score,235,38,1004.5,968.4
+611,Bibb County,204,Rutland High School,Evidence Based Reading and Writing,235,38,522.8,511.1
+611,Bibb County,204,Rutland High School,Math Section Score,235,38,481.7,457.4
+611,Bibb County,286,Northeast High School,Combined Test Score,235,17,1004.5,841.2
+611,Bibb County,286,Northeast High School,Evidence Based Reading and Writing,235,17,522.8,442.9
+611,Bibb County,286,Northeast High School,Math Section Score,235,17,481.7,398.2
+611,Bibb County,386,Southwest High School,Combined Test Score,235,10,1004.5,916
+611,Bibb County,386,Southwest High School,Evidence Based Reading and Writing,235,10,522.8,476
+611,Bibb County,386,Southwest High School,Math Section Score,235,10,481.7,440
+612,Bleckley County,105,Bleckley County High School,Combined Test Score,49,49,1100.8,1100.8
+612,Bleckley County,105,Bleckley County High School,Evidence Based Reading and Writing,49,49,555.7,555.7
+612,Bleckley County,105,Bleckley County High School,Math Section Score,49,49,545.1,545.1
+613,Brantley County,1050,Brantley County High School,Combined Test Score,20,20,1036,1036
+613,Brantley County,1050,Brantley County High School,Evidence Based Reading and Writing,20,20,557,557
+613,Brantley County,1050,Brantley County High School,Math Section Score,20,20,479,479
+614,Brooks County,110,Brooks County High School,Combined Test Score,30,29,931.3,943.4
+614,Brooks County,110,Brooks County High School,Evidence Based Reading and Writing,30,29,483.3,486.9
+614,Brooks County,110,Brooks County High School,Math Section Score,30,29,448,456.6
+614,Brooks County,394,Delta Innovative School,Combined Test Score,30,TFS,931.3,TFS
+614,Brooks County,394,Delta Innovative School,Evidence Based Reading and Writing,30,TFS,483.3,TFS
+614,Brooks County,394,Delta Innovative School,Math Section Score,30,TFS,448,TFS
+615,Bryan County,182,Richmond Hill High School,Combined Test Score,302,262,1056.5,1064.9
+615,Bryan County,182,Richmond Hill High School,Evidence Based Reading and Writing,302,262,545.4,548.6
+615,Bryan County,182,Richmond Hill High School,Math Section Score,302,262,511.1,516.3
+615,Bryan County,402,Bryan County Middle School,Combined Test Score,302,TFS,1056.5,TFS
+615,Bryan County,402,Bryan County Middle School,Evidence Based Reading and Writing,302,TFS,545.4,TFS
+615,Bryan County,402,Bryan County Middle School,Math Section Score,302,TFS,511.1,TFS
+615,Bryan County,502,Bryan County High School,Combined Test Score,302,39,1056.5,999
+615,Bryan County,502,Bryan County High School,Evidence Based Reading and Writing,302,39,545.4,522.3
+615,Bryan County,502,Bryan County High School,Math Section Score,302,39,511.1,476.7
+616,Bulloch County,203,Southeast Bulloch High School,Combined Test Score,169,73,1066.6,1100.8
+616,Bulloch County,203,Southeast Bulloch High School,Evidence Based Reading and Writing,169,73,553,571.5
+616,Bulloch County,203,Southeast Bulloch High School,Math Section Score,169,73,513.7,529.3
+616,Bulloch County,2054,Statesboro High School,Combined Test Score,169,87,1066.6,1035.6
+616,Bulloch County,2054,Statesboro High School,Evidence Based Reading and Writing,169,87,553,536
+616,Bulloch County,2054,Statesboro High School,Math Section Score,169,87,513.7,499.7
+616,Bulloch County,4052,Portal Middle/High School,Combined Test Score,169,TFS,1066.6,TFS
+616,Bulloch County,4052,Portal Middle/High School,Evidence Based Reading and Writing,169,TFS,553,TFS
+616,Bulloch County,4052,Portal Middle/High School,Math Section Score,169,TFS,513.7,TFS
+617,Burke County,288,Burke County High School,Combined Test Score,74,74,939.7,939.7
+617,Burke County,288,Burke County High School,Evidence Based Reading and Writing,74,74,496.4,496.4
+617,Burke County,288,Burke County High School,Math Section Score,74,74,443.4,443.4
+618,Butts County,190,Jackson High School,Combined Test Score,61,61,956.7,956.7
+618,Butts County,190,Jackson High School,Evidence Based Reading and Writing,61,61,497.5,497.5
+618,Butts County,190,Jackson High School,Math Section Score,61,61,459.2,459.2
+619,Calhoun County,113,Calhoun County High School,Combined Test Score,TFS,TFS,TFS,TFS
+619,Calhoun County,113,Calhoun County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+619,Calhoun County,113,Calhoun County High School,Math Section Score,TFS,TFS,TFS,TFS
+620,Camden County,295,Camden County High School,Combined Test Score,222,222,1081.3,1081.3
+620,Camden County,295,Camden County High School,Evidence Based Reading and Writing,222,222,552.1,552.1
+620,Camden County,295,Camden County High School,Math Section Score,222,222,529.2,529.2
+621,Candler County,101,Metter High School,Combined Test Score,38,36,956.1,963.1
+621,Candler County,101,Metter High School,Evidence Based Reading and Writing,38,36,496.1,499.2
+621,Candler County,101,Metter High School,Math Section Score,38,36,460,463.9
+621,Candler County,303,Metter College and Career Academy,Combined Test Score,38,TFS,956.1,TFS
+621,Candler County,303,Metter College and Career Academy,Evidence Based Reading and Writing,38,TFS,496.1,TFS
+621,Candler County,303,Metter College and Career Academy,Math Section Score,38,TFS,460,TFS
+622,Carroll County,189,Temple High School,Combined Test Score,310,35,1041.8,1041.1
+622,Carroll County,189,Temple High School,Evidence Based Reading and Writing,310,35,538.7,543.4
+622,Carroll County,189,Temple High School,Math Section Score,310,35,503.1,497.7
+622,Carroll County,212,Mt. Zion High School,Combined Test Score,310,17,1041.8,1047.1
+622,Carroll County,212,Mt. Zion High School,Evidence Based Reading and Writing,310,17,538.7,549.4
+622,Carroll County,212,Mt. Zion High School,Math Section Score,310,17,503.1,497.6
+622,Carroll County,2052,Central High School,Combined Test Score,310,88,1041.8,1073.9
+622,Carroll County,2052,Central High School,Evidence Based Reading and Writing,310,88,538.7,550.1
+622,Carroll County,2052,Central High School,Math Section Score,310,88,503.1,523.8
+622,Carroll County,3050,Bowdon High School,Combined Test Score,310,14,1041.8,1067.1
+622,Carroll County,3050,Bowdon High School,Evidence Based Reading and Writing,310,14,538.7,543.6
+622,Carroll County,3050,Bowdon High School,Math Section Score,310,14,503.1,523.6
+622,Carroll County,5054,Villa Rica High School,Combined Test Score,310,156,1041.8,1021
+622,Carroll County,5054,Villa Rica High School,Evidence Based Reading and Writing,310,156,538.7,529.7
+622,Carroll County,5054,Villa Rica High School,Math Section Score,310,156,503.1,491.3
+623,Catoosa County,109,Heritage High School,Combined Test Score,97,32,1098.2,1154.1
+623,Catoosa County,109,Heritage High School,Evidence Based Reading and Writing,97,32,567.4,589.4
+623,Catoosa County,109,Heritage High School,Math Section Score,97,32,530.8,564.7
+623,Catoosa County,1052,Lakeview-Fort Oglethorpe High School,Combined Test Score,97,29,1098.2,1132.4
+623,Catoosa County,1052,Lakeview-Fort Oglethorpe High School,Evidence Based Reading and Writing,97,29,567.4,582.8
+623,Catoosa County,1052,Lakeview-Fort Oglethorpe High School,Math Section Score,97,29,530.8,549.7
+623,Catoosa County,4052,Ringgold High School,Combined Test Score,97,36,1098.2,1021.1
+623,Catoosa County,4052,Ringgold High School,Evidence Based Reading and Writing,97,36,567.4,535.6
+623,Catoosa County,4052,Ringgold High School,Math Section Score,97,36,530.8,485.6
+624,Charlton County,112,Bethune Middle School,Combined Test Score,19,TFS,1011.1,TFS
+624,Charlton County,112,Bethune Middle School,Evidence Based Reading and Writing,19,TFS,534.7,TFS
+624,Charlton County,112,Bethune Middle School,Math Section Score,19,TFS,476.3,TFS
+624,Charlton County,287,Charlton County High School,Combined Test Score,19,18,1011.1,1019.4
+624,Charlton County,287,Charlton County High School,Evidence Based Reading and Writing,19,18,534.7,540
+624,Charlton County,287,Charlton County High School,Math Section Score,19,18,476.3,479.4
+625,Savannah-Chatham County,101,Johnson High School,Combined Test Score,822,45,1000.3,934.7
+625,Savannah-Chatham County,101,Johnson High School,Evidence Based Reading and Writing,822,45,519.4,480
+625,Savannah-Chatham County,101,Johnson High School,Math Section Score,822,45,480.9,454.7
+625,Savannah-Chatham County,108,Early College Program,Combined Test Score,822,21,1000.3,963.8
+625,Savannah-Chatham County,108,Early College Program,Evidence Based Reading and Writing,822,21,519.4,490
+625,Savannah-Chatham County,108,Early College Program,Math Section Score,822,21,480.9,473.8
+625,Savannah-Chatham County,115,Woodville-Tompkins Technical and Career High School,Combined Test Score,822,106,1000.3,979.6
+625,Savannah-Chatham County,115,Woodville-Tompkins Technical and Career High School,Evidence Based Reading and Writing,822,106,519.4,503.4
+625,Savannah-Chatham County,115,Woodville-Tompkins Technical and Career High School,Math Section Score,822,106,480.9,476.2
+625,Savannah-Chatham County,117,New Hampstead High School,Combined Test Score,822,78,1000.3,946.4
+625,Savannah-Chatham County,117,New Hampstead High School,Evidence Based Reading and Writing,822,78,519.4,487.7
+625,Savannah-Chatham County,117,New Hampstead High School,Math Section Score,822,78,480.9,458.7
+625,Savannah-Chatham County,210,The School of Liberal Studies at Savannah High,Combined Test Score,822,29,1000.3,878.6
+625,Savannah-Chatham County,210,The School of Liberal Studies at Savannah High,Evidence Based Reading and Writing,822,29,519.4,461.4
+625,Savannah-Chatham County,210,The School of Liberal Studies at Savannah High,Math Section Score,822,29,480.9,417.2
+625,Savannah-Chatham County,411,Islands High School,Combined Test Score,822,97,1000.3,1034
+625,Savannah-Chatham County,411,Islands High School,Evidence Based Reading and Writing,822,97,519.4,548.1
+625,Savannah-Chatham County,411,Islands High School,Math Section Score,822,97,480.9,485.9
+625,Savannah-Chatham County,499,Savannah Arts Academy,Combined Test Score,822,166,1000.3,1156.9
+625,Savannah-Chatham County,499,Savannah Arts Academy,Evidence Based Reading and Writing,822,166,519.4,603.6
+625,Savannah-Chatham County,499,Savannah Arts Academy,Math Section Score,822,166,480.9,553.4
+625,Savannah-Chatham County,516,Savannah Classical Academy Charter High School,Combined Test Score,822,TFS,1000.3,TFS
+625,Savannah-Chatham County,516,Savannah Classical Academy Charter High School,Evidence Based Reading and Writing,822,TFS,519.4,TFS
+625,Savannah-Chatham County,516,Savannah Classical Academy Charter High School,Math Section Score,822,TFS,480.9,TFS
+625,Savannah-Chatham County,518,Savannah-Chatham E-Learning Academy,Combined Test Score,822,TFS,1000.3,TFS
+625,Savannah-Chatham County,518,Savannah-Chatham E-Learning Academy,Evidence Based Reading and Writing,822,TFS,519.4,TFS
+625,Savannah-Chatham County,518,Savannah-Chatham E-Learning Academy,Math Section Score,822,TFS,480.9,TFS
+625,Savannah-Chatham County,2052,Beach High School,Combined Test Score,822,47,1000.3,902.6
+625,Savannah-Chatham County,2052,Beach High School,Evidence Based Reading and Writing,822,47,519.4,467.9
+625,Savannah-Chatham County,2052,Beach High School,Math Section Score,822,47,480.9,434.7
+625,Savannah-Chatham County,3056,Groves High School,Combined Test Score,822,48,1000.3,904.6
+625,Savannah-Chatham County,3056,Groves High School,Evidence Based Reading and Writing,822,48,519.4,465.4
+625,Savannah-Chatham County,3056,Groves High School,Math Section Score,822,48,480.9,439.2
+625,Savannah-Chatham County,5060,Jenkins High School,Combined Test Score,822,98,1000.3,1031
+625,Savannah-Chatham County,5060,Jenkins High School,Evidence Based Reading and Writing,822,98,519.4,530.3
+625,Savannah-Chatham County,5060,Jenkins High School,Math Section Score,822,98,480.9,500.7
+625,Savannah-Chatham County,5070,Windsor Forest High School,Combined Test Score,822,74,1000.3,878.1
+625,Savannah-Chatham County,5070,Windsor Forest High School,Evidence Based Reading and Writing,822,74,519.4,455.5
+625,Savannah-Chatham County,5070,Windsor Forest High School,Math Section Score,822,74,480.9,422.6
+626,Chattahoochee County,206,Chattahoochee County High School,Combined Test Score,28,28,966.8,966.8
+626,Chattahoochee County,206,Chattahoochee County High School,Evidence Based Reading and Writing,28,28,498.2,498.2
+626,Chattahoochee County,206,Chattahoochee County High School,Math Section Score,28,28,468.6,468.6
+627,Chattooga County,1050,Chattooga High School,Combined Test Score,10,10,1072,1072
+627,Chattooga County,1050,Chattooga High School,Evidence Based Reading and Writing,10,10,554,554
+627,Chattooga County,1050,Chattooga High School,Math Section Score,10,10,518,518
+628,Cherokee County,106,Creekview High School,Combined Test Score,1428,235,1079.5,1110.4
+628,Cherokee County,106,Creekview High School,Evidence Based Reading and Writing,1428,235,554.5,568.5
+628,Cherokee County,106,Creekview High School,Math Section Score,1428,235,525,541.9
+628,Cherokee County,115,River Ridge High School,Combined Test Score,1428,240,1079.5,1074.2
+628,Cherokee County,115,River Ridge High School,Evidence Based Reading and Writing,1428,240,554.5,553.8
+628,Cherokee County,115,River Ridge High School,Math Section Score,1428,240,525,520.4
+628,Cherokee County,176,Etowah High School,Combined Test Score,1428,250,1079.5,1059.1
+628,Cherokee County,176,Etowah High School,Evidence Based Reading and Writing,1428,250,554.5,545
+628,Cherokee County,176,Etowah High School,Math Section Score,1428,250,525,514.1
+628,Cherokee County,191,Sequoyah High School,Combined Test Score,1428,235,1079.5,1095.4
+628,Cherokee County,191,Sequoyah High School,Evidence Based Reading and Writing,1428,235,554.5,564.4
+628,Cherokee County,191,Sequoyah High School,Math Section Score,1428,235,525,531
+628,Cherokee County,197,Woodstock High School,Combined Test Score,1428,247,1079.5,1078.3
+628,Cherokee County,197,Woodstock High School,Evidence Based Reading and Writing,1428,247,554.5,551.3
+628,Cherokee County,197,Woodstock High School,Math Section Score,1428,247,525,527
+628,Cherokee County,5050,Cherokee High School,Combined Test Score,1428,219,1079.5,1060.5
+628,Cherokee County,5050,Cherokee High School,Evidence Based Reading and Writing,1428,219,554.5,544.6
+628,Cherokee County,5050,Cherokee High School,Math Section Score,1428,219,525,516
+628,Cherokee County,6597,Tippens Educational Center,Combined Test Score,1428,TFS,1079.5,TFS
+628,Cherokee County,6597,Tippens Educational Center,Evidence Based Reading and Writing,1428,TFS,554.5,TFS
+628,Cherokee County,6597,Tippens Educational Center,Math Section Score,1428,TFS,525,TFS
+629,Clarke County,102,Cedar Shoals High School,Combined Test Score,211,87,1014.9,975.9
+629,Clarke County,102,Cedar Shoals High School,Evidence Based Reading and Writing,211,87,520.5,499.4
+629,Clarke County,102,Cedar Shoals High School,Math Section Score,211,87,494.4,476.4
+629,Clarke County,5556,Clarke Central High School,Combined Test Score,211,124,1014.9,1042.3
+629,Clarke County,5556,Clarke Central High School,Evidence Based Reading and Writing,211,124,520.5,535.2
+629,Clarke County,5556,Clarke Central High School,Math Section Score,211,124,494.4,507
+631,Clayton County,104,Mundy's Mill High School,Combined Test Score,780,91,955.9,924.4
+631,Clayton County,104,Mundy's Mill High School,Evidence Based Reading and Writing,780,91,503,491.9
+631,Clayton County,104,Mundy's Mill High School,Math Section Score,780,91,452.9,432.5
+631,Clayton County,114,Elite Scholars Academy School,Combined Test Score,780,52,955.9,1142.5
+631,Clayton County,114,Elite Scholars Academy School,Evidence Based Reading and Writing,780,52,503,601.9
+631,Clayton County,114,Elite Scholars Academy School,Math Section Score,780,52,452.9,540.6
+631,Clayton County,115,Charles R. Drew High School,Combined Test Score,780,51,955.9,931
+631,Clayton County,115,Charles R. Drew High School,Evidence Based Reading and Writing,780,51,503,491.2
+631,Clayton County,115,Charles R. Drew High School,Math Section Score,780,51,452.9,439.8
+631,Clayton County,190,Lovejoy High School,Combined Test Score,780,113,955.9,931.1
+631,Clayton County,190,Lovejoy High School,Evidence Based Reading and Writing,780,113,503,491.9
+631,Clayton County,190,Lovejoy High School,Math Section Score,780,113,452.9,439.1
+631,Clayton County,191,Lovejoy Middle School,Combined Test Score,780,TFS,955.9,TFS
+631,Clayton County,191,Lovejoy Middle School,Evidence Based Reading and Writing,780,TFS,503,TFS
+631,Clayton County,191,Lovejoy Middle School,Math Section Score,780,TFS,452.9,TFS
+631,Clayton County,215,Martha Ellen Stilwell School for the Performing Arts,Combined Test Score,780,50,955.9,1053.6
+631,Clayton County,215,Martha Ellen Stilwell School for the Performing Arts,Evidence Based Reading and Writing,780,50,503,545.6
+631,Clayton County,215,Martha Ellen Stilwell School for the Performing Arts,Math Section Score,780,50,452.9,508
+631,Clayton County,290,Mount Zion High School,Combined Test Score,780,47,955.9,964
+631,Clayton County,290,Mount Zion High School,Evidence Based Reading and Writing,780,47,503,507.7
+631,Clayton County,290,Mount Zion High School,Math Section Score,780,47,452.9,456.4
+631,Clayton County,377,Riverdale High School,Combined Test Score,780,70,955.9,902.1
+631,Clayton County,377,Riverdale High School,Evidence Based Reading and Writing,780,70,503,473.1
+631,Clayton County,377,Riverdale High School,Math Section Score,780,70,452.9,429
+631,Clayton County,1054,Forest Park High School,Combined Test Score,780,37,955.9,1000.8
+631,Clayton County,1054,Forest Park High School,Evidence Based Reading and Writing,780,37,503,510.3
+631,Clayton County,1054,Forest Park High School,Math Section Score,780,37,452.9,490.5
+631,Clayton County,1056,Jonesboro High School,Combined Test Score,780,68,955.9,923.2
+631,Clayton County,1056,Jonesboro High School,Evidence Based Reading and Writing,780,68,503,488.8
+631,Clayton County,1056,Jonesboro High School,Math Section Score,780,68,452.9,434.4
+631,Clayton County,2052,North Clayton High School,Combined Test Score,780,72,955.9,891.5
+631,Clayton County,2052,North Clayton High School,Evidence Based Reading and Writing,780,72,503,476
+631,Clayton County,2052,North Clayton High School,Math Section Score,780,72,452.9,415.6
+631,Clayton County,4058,Morrow High School,Combined Test Score,780,128,955.9,960.5
+631,Clayton County,4058,Morrow High School,Evidence Based Reading and Writing,780,128,503,502.7
+631,Clayton County,4058,Morrow High School,Math Section Score,780,128,452.9,457.7
+632,Clinch County,1050,Clinch County High School,Combined Test Score,TFS,TFS,TFS,TFS
+632,Clinch County,1050,Clinch County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+632,Clinch County,1050,Clinch County High School,Math Section Score,TFS,TFS,TFS,TFS
+633,Cobb County,101,Kennesaw Mountain High School,Combined Test Score,3758,237,1092.9,1131.5
+633,Cobb County,101,Kennesaw Mountain High School,Evidence Based Reading and Writing,3758,237,561.1,581
+633,Cobb County,101,Kennesaw Mountain High School,Math Section Score,3758,237,531.8,550.5
+633,Cobb County,103,Kell High School,Combined Test Score,3758,170,1092.9,1080.4
+633,Cobb County,103,Kell High School,Evidence Based Reading and Writing,3758,170,561.1,563.4
+633,Cobb County,103,Kell High School,Math Section Score,3758,170,531.8,517
+633,Cobb County,175,Walton High School,Combined Test Score,3758,364,1092.9,1231.6
+633,Cobb County,175,Walton High School,Evidence Based Reading and Writing,3758,364,561.1,617.6
+633,Cobb County,175,Walton High School,Math Section Score,3758,364,531.8,614
+633,Cobb County,186,Oakwood High School,Combined Test Score,3758,20,1092.9,963
+633,Cobb County,186,Oakwood High School,Evidence Based Reading and Writing,3758,20,561.1,507
+633,Cobb County,186,Oakwood High School,Math Section Score,3758,20,531.8,456
+633,Cobb County,188,Pope High School,Combined Test Score,3758,211,1092.9,1165.1
+633,Cobb County,188,Pope High School,Evidence Based Reading and Writing,3758,211,561.1,592
+633,Cobb County,188,Pope High School,Math Section Score,3758,211,531.8,573.1
+633,Cobb County,192,Harrison High School,Combined Test Score,3758,322,1092.9,1133.6
+633,Cobb County,192,Harrison High School,Evidence Based Reading and Writing,3758,322,561.1,581.8
+633,Cobb County,192,Harrison High School,Math Section Score,3758,322,531.8,551.8
+633,Cobb County,209,Allatoona High School,Combined Test Score,3758,179,1092.9,1073.7
+633,Cobb County,209,Allatoona High School,Evidence Based Reading and Writing,3758,179,561.1,549.1
+633,Cobb County,209,Allatoona High School,Math Section Score,3758,179,531.8,524.7
+633,Cobb County,290,Campbell Middle School,Combined Test Score,3758,TFS,1092.9,TFS
+633,Cobb County,290,Campbell Middle School,Evidence Based Reading and Writing,3758,TFS,561.1,TFS
+633,Cobb County,290,Campbell Middle School,Math Section Score,3758,TFS,531.8,TFS
+633,Cobb County,373,Sprayberry High School,Combined Test Score,3758,217,1092.9,1056
+633,Cobb County,373,Sprayberry High School,Evidence Based Reading and Writing,3758,217,561.1,548.8
+633,Cobb County,373,Sprayberry High School,Math Section Score,3758,217,531.8,507.2
+633,Cobb County,381,Lassiter High School,Combined Test Score,3758,278,1092.9,1194.5
+633,Cobb County,381,Lassiter High School,Evidence Based Reading and Writing,3758,278,561.1,606.9
+633,Cobb County,381,Lassiter High School,Math Section Score,3758,278,531.8,587.6
+633,Cobb County,507,McClure Middle School,Combined Test Score,3758,TFS,1092.9,TFS
+633,Cobb County,507,McClure Middle School,Evidence Based Reading and Writing,3758,TFS,561.1,TFS
+633,Cobb County,507,McClure Middle School,Math Section Score,3758,TFS,531.8,TFS
+633,Cobb County,707,Hillgrove High School,Combined Test Score,3758,293,1092.9,1081.6
+633,Cobb County,707,Hillgrove High School,Evidence Based Reading and Writing,3758,293,561.1,557.4
+633,Cobb County,707,Hillgrove High School,Math Section Score,3758,293,531.8,524.2
+633,Cobb County,1054,Campbell High School,Combined Test Score,3758,232,1092.9,1054.9
+633,Cobb County,1054,Campbell High School,Evidence Based Reading and Writing,3758,232,561.1,545.3
+633,Cobb County,1054,Campbell High School,Math Section Score,3758,232,531.8,509.6
+633,Cobb County,1056,East Cobb Middle School,Combined Test Score,3758,TFS,1092.9,TFS
+633,Cobb County,1056,East Cobb Middle School,Evidence Based Reading and Writing,3758,TFS,561.1,TFS
+633,Cobb County,1056,East Cobb Middle School,Math Section Score,3758,TFS,531.8,TFS
+633,Cobb County,1064,McEachern High School,Combined Test Score,3758,209,1092.9,992.8
+633,Cobb County,1064,McEachern High School,Evidence Based Reading and Writing,3758,209,561.1,514.5
+633,Cobb County,1064,McEachern High School,Math Section Score,3758,209,531.8,478.3
+633,Cobb County,1069,Wheeler High School,Combined Test Score,3758,230,1092.9,1124
+633,Cobb County,1069,Wheeler High School,Evidence Based Reading and Writing,3758,230,561.1,570.7
+633,Cobb County,1069,Wheeler High School,Math Section Score,3758,230,531.8,553.3
+633,Cobb County,2056,North Cobb High School,Combined Test Score,3758,245,1092.9,1048
+633,Cobb County,2056,North Cobb High School,Evidence Based Reading and Writing,3758,245,561.1,547.8
+633,Cobb County,2056,North Cobb High School,Math Section Score,3758,245,531.8,500.3
+633,Cobb County,2066,Osborne High School,Combined Test Score,3758,145,1092.9,981.7
+633,Cobb County,2066,Osborne High School,Evidence Based Reading and Writing,3758,145,561.1,506.1
+633,Cobb County,2066,Osborne High School,Math Section Score,3758,145,531.8,475.7
+633,Cobb County,3056,South Cobb High School,Combined Test Score,3758,176,1092.9,997
+633,Cobb County,3056,South Cobb High School,Evidence Based Reading and Writing,3758,176,561.1,517.1
+633,Cobb County,3056,South Cobb High School,Math Section Score,3758,176,531.8,479.9
+633,Cobb County,4066,Pebblebrook High School,Combined Test Score,3758,224,1092.9,957.9
+633,Cobb County,4066,Pebblebrook High School,Evidence Based Reading and Writing,3758,224,561.1,497.2
+633,Cobb County,4066,Pebblebrook High School,Math Section Score,3758,224,531.8,460.7
+634,Coffee County,114,Wiregrass Regional College and Career Academy,Combined Test Score,104,TFS,995.9,TFS
+634,Coffee County,114,Wiregrass Regional College and Career Academy,Evidence Based Reading and Writing,104,TFS,515.2,TFS
+634,Coffee County,114,Wiregrass Regional College and Career Academy,Math Section Score,104,TFS,480.7,TFS
+634,Coffee County,195,Coffee County High School,Combined Test Score,104,94,995.9,999.6
+634,Coffee County,195,Coffee County High School,Evidence Based Reading and Writing,104,94,515.2,517.6
+634,Coffee County,195,Coffee County High School,Math Section Score,104,94,480.7,482
+634,Coffee County,308,George Washington Carver Freshman Campus,Combined Test Score,104,TFS,995.9,TFS
+634,Coffee County,308,George Washington Carver Freshman Campus,Evidence Based Reading and Writing,104,TFS,515.2,TFS
+634,Coffee County,308,George Washington Carver Freshman Campus,Math Section Score,104,TFS,480.7,TFS
+635,Colquitt County,1554,Colquitt County High School,Combined Test Score,116,116,1023.2,1023.2
+635,Colquitt County,1554,Colquitt County High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+635,Colquitt County,1554,Colquitt County High School,Essay Reading Score,TFS,TFS,TFS,TFS
+635,Colquitt County,1554,Colquitt County High School,Essay Total,TFS,TFS,TFS,TFS
+635,Colquitt County,1554,Colquitt County High School,Essay Writing Score,TFS,TFS,TFS,TFS
+635,Colquitt County,1554,Colquitt County High School,Evidence Based Reading and Writing,116,116,524.6,524.6
+635,Colquitt County,1554,Colquitt County High School,Math Section Score,116,116,498.6,498.6
+636,Columbia County,112,Grovetown High School,Combined Test Score,837,153,1072.3,1040
+636,Columbia County,112,Grovetown High School,Evidence Based Reading and Writing,837,153,551.1,534.8
+636,Columbia County,112,Grovetown High School,Math Section Score,837,153,521.2,505.2
+636,Columbia County,183,Harlem High School,Combined Test Score,837,66,1072.3,1015.8
+636,Columbia County,183,Harlem High School,Evidence Based Reading and Writing,837,66,551.1,521.7
+636,Columbia County,183,Harlem High School,Math Section Score,837,66,521.2,494.1
+636,Columbia County,189,Lakeside High School,Combined Test Score,837,223,1072.3,1113.1
+636,Columbia County,189,Lakeside High School,Evidence Based Reading and Writing,837,223,551.1,570.7
+636,Columbia County,189,Lakeside High School,Math Section Score,837,223,521.2,542.4
+636,Columbia County,197,Greenbrier High School,Combined Test Score,837,210,1072.3,1106.1
+636,Columbia County,197,Greenbrier High School,Evidence Based Reading and Writing,837,210,551.1,566.5
+636,Columbia County,197,Greenbrier High School,Math Section Score,837,210,521.2,539.6
+636,Columbia County,4050,Evans High School,Combined Test Score,837,185,1072.3,1031.6
+636,Columbia County,4050,Evans High School,Evidence Based Reading and Writing,837,185,551.1,533.7
+636,Columbia County,4050,Evans High School,Math Section Score,837,185,521.2,497.8
+637,Cook County,111,Cook High School,Combined Test Score,66,66,976.1,976.1
+637,Cook County,111,Cook High School,Evidence Based Reading and Writing,66,66,502.9,502.9
+637,Cook County,111,Cook High School,Math Section Score,66,66,473.2,473.2
+638,Coweta County,196,Northgate High School,Combined Test Score,564,147,1063.9,1092.9
+638,Coweta County,196,Northgate High School,Evidence Based Reading and Writing,564,147,551.5,566.3
+638,Coweta County,196,Northgate High School,Math Section Score,564,147,512.4,526.7
+638,Coweta County,389,East Coweta High School,Combined Test Score,564,270,1063.9,1063.7
+638,Coweta County,389,East Coweta High School,Evidence Based Reading and Writing,564,270,551.5,551
+638,Coweta County,389,East Coweta High School,Math Section Score,564,270,512.4,512.7
+638,Coweta County,5054,Newnan High School,Combined Test Score,564,147,1063.9,1035.1
+638,Coweta County,5054,Newnan High School,Evidence Based Reading and Writing,564,147,551.5,537.6
+638,Coweta County,5054,Newnan High School,Math Section Score,564,147,512.4,497.5
+639,Crawford County,193,Crawford County High School,Combined Test Score,28,28,918.6,918.6
+639,Crawford County,193,Crawford County High School,Evidence Based Reading and Writing,28,28,487.1,487.1
+639,Crawford County,193,Crawford County High School,Math Section Score,28,28,431.4,431.4
+640,Crisp County,196,Crisp County High School,Combined Test Score,78,78,948.3,948.3
+640,Crisp County,196,Crisp County High School,Evidence Based Reading and Writing,78,78,493.1,493.1
+640,Crisp County,196,Crisp County High School,Math Section Score,78,78,455.3,455.3
+641,Dade County,195,Dade County High School,Combined Test Score,16,16,1026.3,1026.3
+641,Dade County,195,Dade County High School,Evidence Based Reading and Writing,16,16,546.3,546.3
+641,Dade County,195,Dade County High School,Math Section Score,16,16,480,480
+642,Dawson County,198,Dawson County High School,Combined Test Score,83,83,1039.5,1039.5
+642,Dawson County,198,Dawson County High School,Evidence Based Reading and Writing,83,83,538.6,538.6
+642,Dawson County,198,Dawson County High School,Math Section Score,83,83,501,501
+643,Decatur County,3050,Bainbridge High School,Combined Test Score,61,61,1041,1041
+643,Decatur County,3050,Bainbridge High School,Evidence Based Reading and Writing,61,61,536.6,536.6
+643,Decatur County,3050,Bainbridge High School,Math Section Score,61,61,504.4,504.4
+644,DeKalb County,103,"Martin Luther King, Jr. High School",Combined Test Score,4213,221,922.5,819.6
+644,DeKalb County,103,"Martin Luther King, Jr. High School",Evidence Based Reading and Writing,4213,221,474.6,423.2
+644,DeKalb County,103,"Martin Luther King, Jr. High School",Math Section Score,4213,221,447.9,396.4
+644,DeKalb County,105,Miller Grove High School,Combined Test Score,4213,149,922.5,871.1
+644,DeKalb County,105,Miller Grove High School,Evidence Based Reading and Writing,4213,149,474.6,450.6
+644,DeKalb County,105,Miller Grove High School,Math Section Score,4213,149,447.9,420.5
+644,DeKalb County,172,Cedar Grove High School,Combined Test Score,4213,165,922.5,851
+644,DeKalb County,172,Cedar Grove High School,Evidence Based Reading and Writing,4213,165,474.6,429
+644,DeKalb County,172,Cedar Grove High School,Math Section Score,4213,165,447.9,422
+644,DeKalb County,176,Redan High School,Combined Test Score,4213,194,922.5,838.4
+644,DeKalb County,176,Redan High School,Evidence Based Reading and Writing,4213,194,474.6,437.7
+644,DeKalb County,176,Redan High School,Math Section Score,4213,194,447.9,400.7
+644,DeKalb County,202,Lithonia High School,Combined Test Score,4213,250,922.5,847.3
+644,DeKalb County,202,Lithonia High School,Evidence Based Reading and Writing,4213,250,474.6,437.5
+644,DeKalb County,202,Lithonia High School,Math Section Score,4213,250,447.9,409.8
+644,DeKalb County,276,Stone Mountain High School,Combined Test Score,4213,180,922.5,854.4
+644,DeKalb County,276,Stone Mountain High School,Evidence Based Reading and Writing,4213,180,474.6,439.4
+644,DeKalb County,276,Stone Mountain High School,Math Section Score,4213,180,447.9,415
+644,DeKalb County,315,Tapestry Public Charter School,Combined Test Score,4213,25,922.5,938.4
+644,DeKalb County,315,Tapestry Public Charter School,Evidence Based Reading and Writing,4213,25,474.6,497.2
+644,DeKalb County,315,Tapestry Public Charter School,Math Section Score,4213,25,447.9,441.2
+644,DeKalb County,407,Dekalb Early College Academy,Combined Test Score,4213,65,922.5,1160.3
+644,DeKalb County,407,Dekalb Early College Academy,Evidence Based Reading and Writing,4213,65,474.6,588.6
+644,DeKalb County,407,Dekalb Early College Academy,Math Section Score,4213,65,447.9,571.7
+644,DeKalb County,410,DeKalb School of the Arts,Combined Test Score,4213,62,922.5,1097.6
+644,DeKalb County,410,DeKalb School of the Arts,Evidence Based Reading and Writing,4213,62,474.6,583.7
+644,DeKalb County,410,DeKalb School of the Arts,Math Section Score,4213,62,447.9,513.9
+644,DeKalb County,497,Stephenson High School,Combined Test Score,4213,224,922.5,893.5
+644,DeKalb County,497,Stephenson High School,Evidence Based Reading and Writing,4213,224,474.6,460.5
+644,DeKalb County,497,Stephenson High School,Math Section Score,4213,224,447.9,433
+644,DeKalb County,610,"Arabia Mountain High School - Academy of Engineering, Medicine and Environm",Combined Test Score,4213,251,922.5,987.5
+644,DeKalb County,610,"Arabia Mountain High School - Academy of Engineering, Medicine and Environm",Evidence Based Reading and Writing,4213,251,474.6,513
+644,DeKalb County,610,"Arabia Mountain High School - Academy of Engineering, Medicine and Environm",Math Section Score,4213,251,447.9,474.5
+644,DeKalb County,810,Elizabeth Andrews High School,Combined Test Score,4213,15,922.5,930.7
+644,DeKalb County,810,Elizabeth Andrews High School,Evidence Based Reading and Writing,4213,15,474.6,483.3
+644,DeKalb County,810,Elizabeth Andrews High School,Math Section Score,4213,15,447.9,447.3
+644,DeKalb County,1070,Tucker High School,Combined Test Score,4213,223,922.5,963.5
+644,DeKalb County,1070,Tucker High School,Evidence Based Reading and Writing,4213,223,474.6,489.8
+644,DeKalb County,1070,Tucker High School,Math Section Score,4213,223,447.9,473.7
+644,DeKalb County,2054,Columbia High School,Combined Test Score,4213,160,922.5,822.3
+644,DeKalb County,2054,Columbia High School,Evidence Based Reading and Writing,4213,160,474.6,414.3
+644,DeKalb County,2054,Columbia High School,Math Section Score,4213,160,447.9,408
+644,DeKalb County,2055,Druid Hills High School,Combined Test Score,4213,204,922.5,1044.3
+644,DeKalb County,2055,Druid Hills High School,Evidence Based Reading and Writing,4213,204,474.6,541
+644,DeKalb County,2055,Druid Hills High School,Math Section Score,4213,204,447.9,503.3
+644,DeKalb County,3060,Lakeside High School,Combined Test Score,4213,321,922.5,1013.1
+644,DeKalb County,3060,Lakeside High School,Evidence Based Reading and Writing,4213,321,474.6,521.6
+644,DeKalb County,3060,Lakeside High School,Math Section Score,4213,321,447.9,491.6
+644,DeKalb County,3070,McNair High School,Combined Test Score,4213,113,922.5,815.1
+644,DeKalb County,3070,McNair High School,Evidence Based Reading and Writing,4213,113,474.6,429.6
+644,DeKalb County,3070,McNair High School,Math Section Score,4213,113,447.9,385.6
+644,DeKalb County,4053,Clarkston High School,Combined Test Score,4213,211,922.5,860.1
+644,DeKalb County,4053,Clarkston High School,Evidence Based Reading and Writing,4213,211,474.6,435
+644,DeKalb County,4053,Clarkston High School,Math Section Score,4213,211,447.9,425.1
+644,DeKalb County,4054,Cross Keys High School,Combined Test Score,4213,261,922.5,852.6
+644,DeKalb County,4054,Cross Keys High School,Evidence Based Reading and Writing,4213,261,474.6,428.5
+644,DeKalb County,4054,Cross Keys High School,Math Section Score,4213,261,447.9,424.1
+644,DeKalb County,4069,Towers High School,Combined Test Score,4213,144,922.5,777.1
+644,DeKalb County,4069,Towers High School,Evidence Based Reading and Writing,4213,144,474.6,399.5
+644,DeKalb County,4069,Towers High School,Math Section Score,4213,144,447.9,377.6
+644,DeKalb County,5052,Chamblee High School,Combined Test Score,4213,299,922.5,1103.2
+644,DeKalb County,5052,Chamblee High School,Evidence Based Reading and Writing,4213,299,474.6,563.3
+644,DeKalb County,5052,Chamblee High School,Math Section Score,4213,299,447.9,539.9
+644,DeKalb County,5055,Dunwoody High School,Combined Test Score,4213,265,922.5,993.7
+644,DeKalb County,5055,Dunwoody High School,Evidence Based Reading and Writing,4213,265,474.6,513.2
+644,DeKalb County,5055,Dunwoody High School,Math Section Score,4213,265,447.9,480.5
+644,DeKalb County,5067,Southwest DeKalb High School,Combined Test Score,4213,211,922.5,911.2
+644,DeKalb County,5067,Southwest DeKalb High School,Evidence Based Reading and Writing,4213,211,474.6,479.9
+644,DeKalb County,5067,Southwest DeKalb High School,Math Section Score,4213,211,447.9,431.3
+645,Dodge County,103,Dodge County High School,Combined Test Score,31,31,1066.1,1066.1
+645,Dodge County,103,Dodge County High School,Evidence Based Reading and Writing,31,31,556.8,556.8
+645,Dodge County,103,Dodge County High School,Math Section Score,31,31,509.4,509.4
+646,Dooly County,182,Dooly County High School,Combined Test Score,TFS,TFS,TFS,TFS
+646,Dooly County,182,Dooly County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+646,Dooly County,182,Dooly County High School,Math Section Score,TFS,TFS,TFS,TFS
+647,Dougherty County,1058,Monroe High School,Combined Test Score,518,107,848,834.3
+647,Dougherty County,1058,Monroe High School,Evidence Based Reading and Writing,518,107,442.4,438.3
+647,Dougherty County,1058,Monroe High School,Math Section Score,518,107,405.6,396
+647,Dougherty County,2052,Dougherty Comprehensive High School,Combined Test Score,518,197,848,808.6
+647,Dougherty County,2052,Dougherty Comprehensive High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+647,Dougherty County,2052,Dougherty Comprehensive High School,Essay Reading Score,TFS,TFS,TFS,TFS
+647,Dougherty County,2052,Dougherty Comprehensive High School,Essay Total,TFS,TFS,TFS,TFS
+647,Dougherty County,2052,Dougherty Comprehensive High School,Essay Writing Score,TFS,TFS,TFS,TFS
+647,Dougherty County,2052,Dougherty Comprehensive High School,Evidence Based Reading and Writing,518,197,442.4,423.9
+647,Dougherty County,2052,Dougherty Comprehensive High School,Math Section Score,518,197,405.6,384.7
+647,Dougherty County,4062,Westover High School,Combined Test Score,518,214,848,891.2
+647,Dougherty County,4062,Westover High School,Evidence Based Reading and Writing,518,214,442.4,461.4
+647,Dougherty County,4062,Westover High School,Math Section Score,518,214,405.6,429.7
+648,Douglas County,100,Chapel Hill High School,Combined Test Score,790,208,994,988.2
+648,Douglas County,100,Chapel Hill High School,Evidence Based Reading and Writing,790,208,519.6,517.8
+648,Douglas County,100,Chapel Hill High School,Math Section Score,790,208,474.4,470.4
+648,Douglas County,175,Lithia Springs Comprehensive High School,Combined Test Score,790,92,994,961.1
+648,Douglas County,175,Lithia Springs Comprehensive High School,Evidence Based Reading and Writing,790,92,519.6,500.2
+648,Douglas County,175,Lithia Springs Comprehensive High School,Math Section Score,790,92,474.4,460.9
+648,Douglas County,187,Alexander High School,Combined Test Score,790,160,994,1044.7
+648,Douglas County,187,Alexander High School,Evidence Based Reading and Writing,790,160,519.6,546.6
+648,Douglas County,187,Alexander High School,Math Section Score,790,160,474.4,498.1
+648,Douglas County,212,New Manchester High School,Combined Test Score,790,160,994,960.4
+648,Douglas County,212,New Manchester High School,Evidence Based Reading and Writing,790,160,519.6,507.3
+648,Douglas County,212,New Manchester High School,Math Section Score,790,160,474.4,453.2
+648,Douglas County,4050,Douglas County High School,Combined Test Score,790,170,994,1002.9
+648,Douglas County,4050,Douglas County High School,Evidence Based Reading and Writing,790,170,519.6,518.5
+648,Douglas County,4050,Douglas County High School,Math Section Score,790,170,474.4,484.4
+649,Early County,2050,Early County High School,Combined Test Score,41,41,883.4,883.4
+649,Early County,2050,Early County High School,Evidence Based Reading and Writing,41,41,449.3,449.3
+649,Early County,2050,Early County High School,Math Section Score,41,41,434.1,434.1
+650,Echols County,1050,Echols County High School,Combined Test Score,TFS,TFS,TFS,TFS
+650,Echols County,1050,Echols County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+650,Echols County,1050,Echols County High School,Math Section Score,TFS,TFS,TFS,TFS
+651,Effingham County,197,South Effingham High School,Combined Test Score,282,146,1060.4,1076.8
+651,Effingham County,197,South Effingham High School,Evidence Based Reading and Writing,282,146,543.9,554.3
+651,Effingham County,197,South Effingham High School,Math Section Score,282,146,516.5,522.5
+651,Effingham County,390,Effingham County High School,Combined Test Score,282,136,1060.4,1042.8
+651,Effingham County,390,Effingham County High School,Evidence Based Reading and Writing,282,136,543.9,532.7
+651,Effingham County,390,Effingham County High School,Math Section Score,282,136,516.5,510.1
+652,Elbert County,176,Elbert County High School,Combined Test Score,44,44,1026.4,1026.4
+652,Elbert County,176,Elbert County High School,Evidence Based Reading and Writing,44,44,535.2,535.2
+652,Elbert County,176,Elbert County High School,Math Section Score,44,44,491.1,491.1
+653,Emanuel County,189,Swainsboro High School,Combined Test Score,81,43,990.4,1004.9
+653,Emanuel County,189,Swainsboro High School,Evidence Based Reading and Writing,81,43,515.3,521.2
+653,Emanuel County,189,Swainsboro High School,Math Section Score,81,43,475.1,483.7
+653,Emanuel County,2050,Emanuel County Institute,Combined Test Score,81,38,990.4,973.9
+653,Emanuel County,2050,Emanuel County Institute,Evidence Based Reading and Writing,81,38,515.3,508.7
+653,Emanuel County,2050,Emanuel County Institute,Math Section Score,81,38,475.1,465.3
+654,Evans County,2050,Claxton High School,Combined Test Score,14,14,972.1,972.1
+654,Evans County,2050,Claxton High School,Evidence Based Reading and Writing,14,14,502.9,502.9
+654,Evans County,2050,Claxton High School,Math Section Score,14,14,469.3,469.3
+655,Fannin County,176,Fannin County High School,Combined Test Score,61,61,1039.8,1039.8
+655,Fannin County,176,Fannin County High School,Evidence Based Reading and Writing,61,61,533,533
+655,Fannin County,176,Fannin County High School,Math Section Score,61,61,506.9,506.9
+656,Fayette County,105,Whitewater High School,Combined Test Score,776,142,1104.8,1103.9
+656,Fayette County,105,Whitewater High School,Evidence Based Reading and Writing,776,142,562.7,560.2
+656,Fayette County,105,Whitewater High School,Math Section Score,776,142,542,543.7
+656,Fayette County,182,McIntosh High School,Combined Test Score,776,217,1104.8,1156.9
+656,Fayette County,182,McIntosh High School,Evidence Based Reading and Writing,776,217,562.7,589.6
+656,Fayette County,182,McIntosh High School,Math Section Score,776,217,542,567.3
+656,Fayette County,192,Sandy Creek High School,Combined Test Score,776,114,1104.8,1036.1
+656,Fayette County,192,Sandy Creek High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+656,Fayette County,192,Sandy Creek High School,Essay Reading Score,TFS,TFS,TFS,TFS
+656,Fayette County,192,Sandy Creek High School,Essay Total,TFS,TFS,TFS,TFS
+656,Fayette County,192,Sandy Creek High School,Essay Writing Score,TFS,TFS,TFS,TFS
+656,Fayette County,192,Sandy Creek High School,Evidence Based Reading and Writing,776,114,562.7,531.3
+656,Fayette County,192,Sandy Creek High School,Math Section Score,776,114,542,504.7
+656,Fayette County,198,Starrs Mill High School,Combined Test Score,776,143,1104.8,1157.2
+656,Fayette County,198,Starrs Mill High School,Evidence Based Reading and Writing,776,143,562.7,585.5
+656,Fayette County,198,Starrs Mill High School,Math Section Score,776,143,542,571.7
+656,Fayette County,398,Fayette County High School,Combined Test Score,776,160,1104.8,1036.9
+656,Fayette County,398,Fayette County High School,Evidence Based Reading and Writing,776,160,562.7,530.4
+656,Fayette County,398,Fayette County High School,Math Section Score,776,160,542,506.4
+657,Floyd County,107,Pepperell High School,Combined Test Score,125,27,1072.9,1064.8
+657,Floyd County,107,Pepperell High School,Evidence Based Reading and Writing,125,27,550.5,542.6
+657,Floyd County,107,Pepperell High School,Math Section Score,125,27,522.4,522.2
+657,Floyd County,111,Model High,Combined Test Score,125,45,1072.9,1054.2
+657,Floyd County,111,Model High,Evidence Based Reading and Writing,125,45,550.5,534.4
+657,Floyd County,111,Model High,Math Section Score,125,45,522.4,519.8
+657,Floyd County,303,Armuchee Middle School,Combined Test Score,125,TFS,1072.9,TFS
+657,Floyd County,303,Armuchee Middle School,Evidence Based Reading and Writing,125,TFS,550.5,TFS
+657,Floyd County,303,Armuchee Middle School,Math Section Score,125,TFS,522.4,TFS
+657,Floyd County,401,Armuchee High School,Combined Test Score,125,33,1072.9,1125.2
+657,Floyd County,401,Armuchee High School,Evidence Based Reading and Writing,125,33,550.5,582.1
+657,Floyd County,401,Armuchee High School,Math Section Score,125,33,522.4,543
+657,Floyd County,5050,Coosa High School,Combined Test Score,125,19,1072.9,1050
+657,Floyd County,5050,Coosa High School,Evidence Based Reading and Writing,125,19,550.5,551.6
+657,Floyd County,5050,Coosa High School,Math Section Score,125,19,522.4,498.4
+658,Forsyth County,107,West Forsyth High School,Combined Test Score,1922,274,1147,1112.1
+658,Forsyth County,107,West Forsyth High School,Evidence Based Reading and Writing,1922,274,581.5,571.2
+658,Forsyth County,107,West Forsyth High School,Math Section Score,1922,274,565.5,540.9
+658,Forsyth County,190,South Forsyth High School,Combined Test Score,1922,255,1147,1181
+658,Forsyth County,190,South Forsyth High School,Evidence Based Reading and Writing,1922,255,581.5,596
+658,Forsyth County,190,South Forsyth High School,Math Section Score,1922,255,565.5,585
+658,Forsyth County,195,North Forsyth High School,Combined Test Score,1922,211,1147,1076.7
+658,Forsyth County,195,North Forsyth High School,Evidence Based Reading and Writing,1922,211,581.5,554.1
+658,Forsyth County,195,North Forsyth High School,Math Section Score,1922,211,565.5,522.6
+658,Forsyth County,214,Lambert High School,Combined Test Score,1922,392,1147,1204
+658,Forsyth County,214,Lambert High School,Evidence Based Reading and Writing,1922,392,581.5,601.8
+658,Forsyth County,214,Lambert High School,Math Section Score,1922,392,565.5,602.3
+658,Forsyth County,218,Forsyth Academy,Combined Test Score,1922,TFS,1147,TFS
+658,Forsyth County,218,Forsyth Academy,Evidence Based Reading and Writing,1922,TFS,581.5,TFS
+658,Forsyth County,218,Forsyth Academy,Math Section Score,1922,TFS,565.5,TFS
+658,Forsyth County,219,Forsyth Virtual Academy,Combined Test Score,1922,TFS,1147,TFS
+658,Forsyth County,219,Forsyth Virtual Academy,Evidence Based Reading and Writing,1922,TFS,581.5,TFS
+658,Forsyth County,219,Forsyth Virtual Academy,Math Section Score,1922,TFS,565.5,TFS
+658,Forsyth County,701,Alliance Academy for Innovation,Combined Test Score,1922,130,1147,1227.2
+658,Forsyth County,701,Alliance Academy for Innovation,Evidence Based Reading and Writing,1922,130,581.5,619.5
+658,Forsyth County,701,Alliance Academy for Innovation,Math Section Score,1922,130,565.5,607.7
+658,Forsyth County,702,Denmark High School,Combined Test Score,1922,266,1147,1156.7
+658,Forsyth County,702,Denmark High School,Evidence Based Reading and Writing,1922,266,581.5,581.1
+658,Forsyth County,702,Denmark High School,Math Section Score,1922,266,565.5,575.6
+658,Forsyth County,704,East Forsyth High School,Combined Test Score,1922,154,1147,1078.7
+658,Forsyth County,704,East Forsyth High School,Evidence Based Reading and Writing,1922,154,581.5,553.1
+658,Forsyth County,704,East Forsyth High School,Math Section Score,1922,154,565.5,525.6
+658,Forsyth County,5050,Forsyth Central High School,Combined Test Score,1922,234,1147,1110.9
+658,Forsyth County,5050,Forsyth Central High School,Evidence Based Reading and Writing,1922,234,581.5,567.6
+658,Forsyth County,5050,Forsyth Central High School,Math Section Score,1922,234,565.5,543.2
+659,Franklin County,3050,Franklin County High School,Combined Test Score,72,72,1056.3,1056.3
+659,Franklin County,3050,Franklin County High School,Evidence Based Reading and Writing,72,72,544,544
+659,Franklin County,3050,Franklin County High School,Math Section Score,72,72,512.2,512.2
+660,Fulton County,106,Milton High School,Combined Test Score,4167,225,1034,1125.1
+660,Fulton County,106,Milton High School,Evidence Based Reading and Writing,4167,225,527.9,577.9
+660,Fulton County,106,Milton High School,Math Section Score,4167,225,506.1,547.2
+660,Fulton County,118,Hapeville Charter Career Academy,Combined Test Score,4167,105,1034,870.6
+660,Fulton County,118,Hapeville Charter Career Academy,Evidence Based Reading and Writing,4167,105,527.9,451.9
+660,Fulton County,118,Hapeville Charter Career Academy,Math Section Score,4167,105,506.1,418.7
+660,Fulton County,119,Cambridge High School,Combined Test Score,4167,263,1034,1129.5
+660,Fulton County,119,Cambridge High School,Evidence Based Reading and Writing,4167,263,527.9,574.7
+660,Fulton County,119,Cambridge High School,Math Section Score,4167,263,506.1,554.9
+660,Fulton County,176,Banneker High School,Combined Test Score,4167,150,1034,867.5
+660,Fulton County,176,Banneker High School,Evidence Based Reading and Writing,4167,150,527.9,451.4
+660,Fulton County,176,Banneker High School,Math Section Score,4167,150,506.1,416.1
+660,Fulton County,191,Roswell High School,Combined Test Score,4167,248,1034,1083.3
+660,Fulton County,191,Roswell High School,Evidence Based Reading and Writing,4167,248,527.9,554.5
+660,Fulton County,191,Roswell High School,Math Section Score,4167,248,506.1,528.8
+660,Fulton County,198,Centennial High School,Combined Test Score,4167,209,1034,1046.6
+660,Fulton County,198,Centennial High School,Evidence Based Reading and Writing,4167,209,527.9,536.7
+660,Fulton County,198,Centennial High School,Math Section Score,4167,209,506.1,509.9
+660,Fulton County,203,Northview High School,Combined Test Score,4167,266,1034,1208.5
+660,Fulton County,203,Northview High School,Evidence Based Reading and Writing,4167,266,527.9,602.1
+660,Fulton County,203,Northview High School,Math Section Score,4167,266,506.1,606.4
+660,Fulton County,205,Alpharetta High School,Combined Test Score,4167,263,1034,1155.9
+660,Fulton County,205,Alpharetta High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+660,Fulton County,205,Alpharetta High School,Essay Reading Score,TFS,TFS,TFS,TFS
+660,Fulton County,205,Alpharetta High School,Essay Total,TFS,TFS,TFS,TFS
+660,Fulton County,205,Alpharetta High School,Essay Writing Score,TFS,TFS,TFS,TFS
+660,Fulton County,205,Alpharetta High School,Evidence Based Reading and Writing,4167,263,527.9,583.2
+660,Fulton County,205,Alpharetta High School,Math Section Score,4167,263,506.1,572.7
+660,Fulton County,289,Woodland Middle School,Combined Test Score,4167,TFS,1034,TFS
+660,Fulton County,289,Woodland Middle School,Evidence Based Reading and Writing,4167,TFS,527.9,TFS
+660,Fulton County,289,Woodland Middle School,Math Section Score,4167,TFS,506.1,TFS
+660,Fulton County,291,Creekside High School,Combined Test Score,4167,274,1034,853.9
+660,Fulton County,291,Creekside High School,Evidence Based Reading and Writing,4167,274,527.9,435.5
+660,Fulton County,291,Creekside High School,Math Section Score,4167,274,506.1,418.4
+660,Fulton County,386,Independence High School,Combined Test Score,4167,13,1034,882.3
+660,Fulton County,386,Independence High School,Evidence Based Reading and Writing,4167,13,527.9,457.7
+660,Fulton County,386,Independence High School,Math Section Score,4167,13,506.1,424.6
+660,Fulton County,392,Chattahoochee High School,Combined Test Score,4167,181,1034,1206.2
+660,Fulton County,392,Chattahoochee High School,Evidence Based Reading and Writing,4167,181,527.9,599
+660,Fulton County,392,Chattahoochee High School,Math Section Score,4167,181,506.1,607.2
+660,Fulton County,691,Tri-Cities High School,Combined Test Score,4167,247,1034,830.6
+660,Fulton County,691,Tri-Cities High School,Evidence Based Reading and Writing,4167,247,527.9,432.9
+660,Fulton County,691,Tri-Cities High School,Math Section Score,4167,247,506.1,397.7
+660,Fulton County,910,Johns Creek High School,Combined Test Score,4167,245,1034,1176.3
+660,Fulton County,910,Johns Creek High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+660,Fulton County,910,Johns Creek High School,Essay Reading Score,TFS,TFS,TFS,TFS
+660,Fulton County,910,Johns Creek High School,Essay Total,TFS,TFS,TFS,TFS
+660,Fulton County,910,Johns Creek High School,Essay Writing Score,TFS,TFS,TFS,TFS
+660,Fulton County,910,Johns Creek High School,Evidence Based Reading and Writing,4167,245,527.9,595.3
+660,Fulton County,910,Johns Creek High School,Math Section Score,4167,245,506.1,581
+660,Fulton County,1110,Langston Hughes High School,Combined Test Score,4167,319,1034,853.9
+660,Fulton County,1110,Langston Hughes High School,Evidence Based Reading and Writing,4167,319,527.9,440
+660,Fulton County,1110,Langston Hughes High School,Math Section Score,4167,319,506.1,413.9
+660,Fulton County,1322,Innovation Academy,Combined Test Score,4167,239,1034,1243.6
+660,Fulton County,1322,Innovation Academy,Evidence Based Reading and Writing,4167,239,527.9,625.3
+660,Fulton County,1322,Innovation Academy,Math Section Score,4167,239,506.1,618.3
+660,Fulton County,1323,Global Impact Academy,Combined Test Score,4167,127,1034,993.9
+660,Fulton County,1323,Global Impact Academy,Evidence Based Reading and Writing,4167,127,527.9,520.1
+660,Fulton County,1323,Global Impact Academy,Math Section Score,4167,127,506.1,473.9
+660,Fulton County,3066,Riverwood International Charter School,Combined Test Score,4167,180,1034,1033.9
+660,Fulton County,3066,Riverwood International Charter School,Evidence Based Reading and Writing,4167,180,527.9,532.9
+660,Fulton County,3066,Riverwood International Charter School,Math Section Score,4167,180,506.1,501.1
+660,Fulton County,4062,North Springs High School,Combined Test Score,4167,181,1034,954.8
+660,Fulton County,4062,North Springs High School,Evidence Based Reading and Writing,4167,181,527.9,493.9
+660,Fulton County,4062,North Springs High School,Math Section Score,4167,181,506.1,460.9
+660,Fulton County,5069,Westlake High School,Combined Test Score,4167,430,1034,954.3
+660,Fulton County,5069,Westlake High School,Evidence Based Reading and Writing,4167,430,527.9,491.8
+660,Fulton County,5069,Westlake High School,Math Section Score,4167,430,506.1,462.5
+661,Gilmer County,196,Gilmer High School,Combined Test Score,66,66,1033.9,1033.9
+661,Gilmer County,196,Gilmer High School,Evidence Based Reading and Writing,66,66,527.9,527.9
+661,Gilmer County,196,Gilmer High School,Math Section Score,66,66,506.1,506.1
+662,Glascock County,196,Glascock County Middle/High School,Combined Test Score,11,11,1006.4,1006.4
+662,Glascock County,196,Glascock County Middle/High School,Evidence Based Reading and Writing,11,11,503.6,503.6
+662,Glascock County,196,Glascock County Middle/High School,Math Section Score,11,11,502.7,502.7
+663,Glynn County,3552,Brunswick High School,Combined Test Score,258,103,1088.9,1004.8
+663,Glynn County,3552,Brunswick High School,Evidence Based Reading and Writing,258,103,565.5,524.2
+663,Glynn County,3552,Brunswick High School,Math Section Score,258,103,523.4,480.6
+663,Glynn County,4752,Glynn Academy,Combined Test Score,258,155,1088.9,1144.8
+663,Glynn County,4752,Glynn Academy,Evidence Based Reading and Writing,258,155,565.5,593
+663,Glynn County,4752,Glynn Academy,Math Section Score,258,155,523.4,551.8
+664,Gordon County,106,Sonoraville High School,Combined Test Score,89,60,1017.4,1017
+664,Gordon County,106,Sonoraville High School,Evidence Based Reading and Writing,89,60,523.1,523.7
+664,Gordon County,106,Sonoraville High School,Math Section Score,89,60,494.3,493.3
+664,Gordon County,286,Gordon Central High School,Combined Test Score,89,29,1017.4,1018.3
+664,Gordon County,286,Gordon Central High School,Evidence Based Reading and Writing,89,29,523.1,522.1
+664,Gordon County,286,Gordon Central High School,Math Section Score,89,29,494.3,496.2
+665,Grady County,1050,Cairo High School,Combined Test Score,79,79,959.7,959.7
+665,Grady County,1050,Cairo High School,Evidence Based Reading and Writing,79,79,497.7,497.7
+665,Grady County,1050,Cairo High School,Math Section Score,79,79,462,462
+666,Greene County,401,Greene County High School,Combined Test Score,10,10,973,973
+666,Greene County,401,Greene County High School,Evidence Based Reading and Writing,10,10,497,497
+666,Greene County,401,Greene County High School,Math Section Score,10,10,476,476
+667,Gwinnett County,101,Grayson High School,Combined Test Score,4964,312,1109.9,1061.1
+667,Gwinnett County,101,Grayson High School,Evidence Based Reading and Writing,4964,312,556.5,537.5
+667,Gwinnett County,101,Grayson High School,Math Section Score,4964,312,553.4,523.6
+667,Gwinnett County,103,Norcross High School,Combined Test Score,4964,147,1109.9,1055.6
+667,Gwinnett County,103,Norcross High School,Evidence Based Reading and Writing,4964,147,556.5,531.2
+667,Gwinnett County,103,Norcross High School,Math Section Score,4964,147,553.4,524.4
+667,Gwinnett County,105,Mill Creek High School,Combined Test Score,4964,275,1109.9,1136.5
+667,Gwinnett County,105,Mill Creek High School,Evidence Based Reading and Writing,4964,275,556.5,568.4
+667,Gwinnett County,105,Mill Creek High School,Math Section Score,4964,275,553.4,568.1
+667,Gwinnett County,176,Parkview High School,Combined Test Score,4964,309,1109.9,1103.5
+667,Gwinnett County,176,Parkview High School,Evidence Based Reading and Writing,4964,309,556.5,556.4
+667,Gwinnett County,176,Parkview High School,Math Section Score,4964,309,553.4,547
+667,Gwinnett County,182,Brookwood High School,Combined Test Score,4964,434,1109.9,1154.8
+667,Gwinnett County,182,Brookwood High School,Evidence Based Reading and Writing,4964,434,556.5,578
+667,Gwinnett County,182,Brookwood High School,Math Section Score,4964,434,553.4,576.8
+667,Gwinnett County,185,Shiloh High School,Combined Test Score,4964,151,1109.9,994.8
+667,Gwinnett County,185,Shiloh High School,Evidence Based Reading and Writing,4964,151,556.5,507.5
+667,Gwinnett County,185,Shiloh High School,Math Section Score,4964,151,553.4,487.3
+667,Gwinnett County,187,Meadowcreek High School,Combined Test Score,4964,119,1109.9,1008.4
+667,Gwinnett County,187,Meadowcreek High School,Evidence Based Reading and Writing,4964,119,556.5,505.9
+667,Gwinnett County,187,Meadowcreek High School,Math Section Score,4964,119,553.4,502.5
+667,Gwinnett County,189,Phoenix High School,Combined Test Score,4964,TFS,1109.9,TFS
+667,Gwinnett County,189,Phoenix High School,Evidence Based Reading and Writing,4964,TFS,556.5,TFS
+667,Gwinnett County,189,Phoenix High School,Math Section Score,4964,TFS,553.4,TFS
+667,Gwinnett County,195,Collins Hill High School,Combined Test Score,4964,176,1109.9,1099.8
+667,Gwinnett County,195,Collins Hill High School,Evidence Based Reading and Writing,4964,176,556.5,549.4
+667,Gwinnett County,195,Collins Hill High School,Math Section Score,4964,176,553.4,550.4
+667,Gwinnett County,198,Crews Middle School,Combined Test Score,4964,TFS,1109.9,TFS
+667,Gwinnett County,198,Crews Middle School,Evidence Based Reading and Writing,4964,TFS,556.5,TFS
+667,Gwinnett County,198,Crews Middle School,Math Section Score,4964,TFS,553.4,TFS
+667,Gwinnett County,304,Berkmar Middle School,Combined Test Score,4964,TFS,1109.9,TFS
+667,Gwinnett County,304,Berkmar Middle School,Evidence Based Reading and Writing,4964,TFS,556.5,TFS
+667,Gwinnett County,304,Berkmar Middle School,Math Section Score,4964,TFS,553.4,TFS
+667,Gwinnett County,380,Dacula Middle School,Combined Test Score,4964,TFS,1109.9,TFS
+667,Gwinnett County,380,Dacula Middle School,Evidence Based Reading and Writing,4964,TFS,556.5,TFS
+667,Gwinnett County,380,Dacula Middle School,Math Section Score,4964,TFS,553.4,TFS
+667,Gwinnett County,805,Peachtree Ridge High School,Combined Test Score,4964,356,1109.9,1141.1
+667,Gwinnett County,805,Peachtree Ridge High School,Evidence Based Reading and Writing,4964,356,556.5,567.9
+667,Gwinnett County,805,Peachtree Ridge High School,Math Section Score,4964,356,553.4,573.2
+667,Gwinnett County,1018,Lanier High School,Combined Test Score,4964,159,1109.9,1114
+667,Gwinnett County,1018,Lanier High School,Evidence Based Reading and Writing,4964,159,556.5,562.2
+667,Gwinnett County,1018,Lanier High School,Math Section Score,4964,159,553.4,551.8
+667,Gwinnett County,1019,"Gwinnett School of Mathematics, Science and Technology",Combined Test Score,4964,193,1109.9,1342.5
+667,Gwinnett County,1019,"Gwinnett School of Mathematics, Science and Technology",Evidence Based Reading and Writing,4964,193,556.5,667.3
+667,Gwinnett County,1019,"Gwinnett School of Mathematics, Science and Technology",Math Section Score,4964,193,553.4,675.2
+667,Gwinnett County,1050,Berkmar High School,Combined Test Score,4964,134,1109.9,986.1
+667,Gwinnett County,1050,Berkmar High School,Evidence Based Reading and Writing,4964,134,556.5,491.9
+667,Gwinnett County,1050,Berkmar High School,Math Section Score,4964,134,553.4,494.2
+667,Gwinnett County,1212,Gwinnett Online Campus,Combined Test Score,4964,38,1109.9,1057.9
+667,Gwinnett County,1212,Gwinnett Online Campus,Evidence Based Reading and Writing,4964,38,556.5,544.7
+667,Gwinnett County,1212,Gwinnett Online Campus,Math Section Score,4964,38,553.4,513.2
+667,Gwinnett County,1410,Mountain View High School,Combined Test Score,4964,211,1109.9,1126.4
+667,Gwinnett County,1410,Mountain View High School,Evidence Based Reading and Writing,4964,211,556.5,561.1
+667,Gwinnett County,1410,Mountain View High School,Math Section Score,4964,211,553.4,565.2
+667,Gwinnett County,1710,Archer High School,Combined Test Score,4964,320,1109.9,1094.9
+667,Gwinnett County,1710,Archer High School,Evidence Based Reading and Writing,4964,320,556.5,554.2
+667,Gwinnett County,1710,Archer High School,Math Section Score,4964,320,553.4,540.7
+667,Gwinnett County,1814,Discovery High School,Combined Test Score,4964,158,1109.9,1033.4
+667,Gwinnett County,1814,Discovery High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+667,Gwinnett County,1814,Discovery High School,Essay Reading Score,TFS,TFS,TFS,TFS
+667,Gwinnett County,1814,Discovery High School,Essay Total,TFS,TFS,TFS,TFS
+667,Gwinnett County,1814,Discovery High School,Essay Writing Score,TFS,TFS,TFS,TFS
+667,Gwinnett County,1814,Discovery High School,Evidence Based Reading and Writing,4964,158,556.5,518
+667,Gwinnett County,1814,Discovery High School,Math Section Score,4964,158,553.4,515.4
+667,Gwinnett County,1818,Paul Duke STEM High School,Combined Test Score,4964,104,1109.9,1144.8
+667,Gwinnett County,1818,Paul Duke STEM High School,Evidence Based Reading and Writing,4964,104,556.5,570.3
+667,Gwinnett County,1818,Paul Duke STEM High School,Math Section Score,4964,104,553.4,574.5
+667,Gwinnett County,1819,McClure Health Science High School,Combined Test Score,4964,100,1109.9,1083.4
+667,Gwinnett County,1819,McClure Health Science High School,Evidence Based Reading and Writing,4964,100,556.5,542.9
+667,Gwinnett County,1819,McClure Health Science High School,Math Section Score,4964,100,553.4,540.5
+667,Gwinnett County,1820,Seckinger High School,Combined Test Score,4964,202,1109.9,1119.4
+667,Gwinnett County,1820,Seckinger High School,Evidence Based Reading and Writing,4964,202,556.5,558.4
+667,Gwinnett County,1820,Seckinger High School,Math Section Score,4964,202,553.4,561
+667,Gwinnett County,2558,South Gwinnett High School,Combined Test Score,4964,130,1109.9,1003.2
+667,Gwinnett County,2558,South Gwinnett High School,Evidence Based Reading and Writing,4964,130,556.5,516.2
+667,Gwinnett County,2558,South Gwinnett High School,Math Section Score,4964,130,553.4,487.1
+667,Gwinnett County,3750,Central Gwinnett High School,Combined Test Score,4964,144,1109.9,1072
+667,Gwinnett County,3750,Central Gwinnett High School,Evidence Based Reading and Writing,4964,144,556.5,544.4
+667,Gwinnett County,3750,Central Gwinnett High School,Math Section Score,4964,144,553.4,527.6
+667,Gwinnett County,4052,Dacula High School,Combined Test Score,4964,183,1109.9,1064.4
+667,Gwinnett County,4052,Dacula High School,Evidence Based Reading and Writing,4964,183,556.5,539.3
+667,Gwinnett County,4052,Dacula High School,Math Section Score,4964,183,553.4,525
+667,Gwinnett County,4556,North Gwinnett High School,Combined Test Score,4964,411,1109.9,1205.6
+667,Gwinnett County,4556,North Gwinnett High School,Evidence Based Reading and Writing,4964,411,556.5,594.2
+667,Gwinnett County,4556,North Gwinnett High School,Math Section Score,4964,411,553.4,611.4
+667,Gwinnett County,5550,Duluth High School,Combined Test Score,4964,189,1109.9,1063
+667,Gwinnett County,5550,Duluth High School,Evidence Based Reading and Writing,4964,189,556.5,529.7
+667,Gwinnett County,5550,Duluth High School,Math Section Score,4964,189,553.4,533.2
+668,Habersham County,2052,Habersham Central High School,Combined Test Score,109,109,1082,1082
+668,Habersham County,2052,Habersham Central High School,Evidence Based Reading and Writing,109,109,557.4,557.4
+668,Habersham County,2052,Habersham Central High School,Math Section Score,109,109,524.6,524.6
+669,Hall County,102,Chestatee High School,Combined Test Score,611,78,1038.5,1043.6
+669,Hall County,102,Chestatee High School,Evidence Based Reading and Writing,611,78,534.7,539.2
+669,Hall County,102,Chestatee High School,Math Section Score,611,78,503.9,504.4
+669,Hall County,105,Lanier College and Career Academy,Combined Test Score,611,TFS,1038.5,TFS
+669,Hall County,105,Lanier College and Career Academy,Evidence Based Reading and Writing,611,TFS,534.7,TFS
+669,Hall County,105,Lanier College and Career Academy,Math Section Score,611,TFS,503.9,TFS
+669,Hall County,189,West Hall High School,Combined Test Score,611,72,1038.5,978.6
+669,Hall County,189,West Hall High School,Evidence Based Reading and Writing,611,72,534.7,501.9
+669,Hall County,189,West Hall High School,Math Section Score,611,72,503.9,476.7
+669,Hall County,202,Flowery Branch High,Combined Test Score,611,129,1038.5,1057.4
+669,Hall County,202,Flowery Branch High,Evidence Based Reading and Writing,611,129,534.7,546
+669,Hall County,202,Flowery Branch High,Math Section Score,611,129,503.9,511.5
+669,Hall County,391,Cherokee Bluff High School,Combined Test Score,611,134,1038.5,1050.5
+669,Hall County,391,Cherokee Bluff High School,Evidence Based Reading and Writing,611,134,534.7,538.1
+669,Hall County,391,Cherokee Bluff High School,Math Section Score,611,134,503.9,512.4
+669,Hall County,1552,East Hall High School,Combined Test Score,611,49,1038.5,986.1
+669,Hall County,1552,East Hall High School,Evidence Based Reading and Writing,611,49,534.7,512
+669,Hall County,1552,East Hall High School,Math Section Score,611,49,503.9,474.1
+669,Hall County,1556,North Hall High School,Combined Test Score,611,86,1038.5,1076.9
+669,Hall County,1556,North Hall High School,Evidence Based Reading and Writing,611,86,534.7,550.6
+669,Hall County,1556,North Hall High School,Math Section Score,611,86,503.9,526.3
+669,Hall County,4752,Johnson High School,Combined Test Score,611,61,1038.5,1031.5
+669,Hall County,4752,Johnson High School,Evidence Based Reading and Writing,611,61,534.7,534.6
+669,Hall County,4752,Johnson High School,Math Section Score,611,61,503.9,496.9
+670,Hancock County,288,Hancock Central High School,Combined Test Score,13,13,867.7,867.7
+670,Hancock County,288,Hancock Central High School,Evidence Based Reading and Writing,13,13,456.2,456.2
+670,Hancock County,288,Hancock Central High School,Math Section Score,13,13,411.5,411.5
+671,Haralson County,3050,Haralson County High School,Combined Test Score,74,74,978.8,978.8
+671,Haralson County,3050,Haralson County High School,Evidence Based Reading and Writing,74,74,505.7,505.7
+671,Haralson County,3050,Haralson County High School,Math Section Score,74,74,473.1,473.1
+672,Harris County,299,Harris County High School,Combined Test Score,107,107,1109.8,1109.8
+672,Harris County,299,Harris County High School,Evidence Based Reading and Writing,107,107,575,575
+672,Harris County,299,Harris County High School,Math Section Score,107,107,534.9,534.9
+673,Hart County,3050,Hart County High School,Combined Test Score,89,89,1023.7,1023.7
+673,Hart County,3050,Hart County High School,Evidence Based Reading and Writing,89,89,533,533
+673,Hart County,3050,Hart County High School,Math Section Score,89,89,490.7,490.7
+674,Heard County,110,Heard County High School,Combined Test Score,54,54,1025.2,1025.2
+674,Heard County,110,Heard County High School,Evidence Based Reading and Writing,54,54,538.1,538.1
+674,Heard County,110,Heard County High School,Math Section Score,54,54,487,487
+675,Henry County,101,Union Grove High,Combined Test Score,1490,197,979.9,1064.5
+675,Henry County,101,Union Grove High,Evidence Based Reading and Writing,1490,197,509.4,547
+675,Henry County,101,Union Grove High,Math Section Score,1490,197,470.5,517.5
+675,Henry County,104,Luella High School,Combined Test Score,1490,172,979.9,927.4
+675,Henry County,104,Luella High School,Evidence Based Reading and Writing,1490,172,509.4,485
+675,Henry County,104,Luella High School,Math Section Score,1490,172,470.5,442.4
+675,Henry County,105,Dutchtown High,Combined Test Score,1490,178,979.9,969.1
+675,Henry County,105,Dutchtown High,Evidence Based Reading and Writing,1490,178,509.4,499.2
+675,Henry County,105,Dutchtown High,Math Section Score,1490,178,470.5,469.9
+675,Henry County,195,Patrick Henry High School,Combined Test Score,1490,TFS,979.9,TFS
+675,Henry County,195,Patrick Henry High School,Evidence Based Reading and Writing,1490,TFS,509.4,TFS
+675,Henry County,195,Patrick Henry High School,Math Section Score,1490,TFS,470.5,TFS
+675,Henry County,214,Locust Grove High,Combined Test Score,1490,129,979.9,983.7
+675,Henry County,214,Locust Grove High,Evidence Based Reading and Writing,1490,129,509.4,509.4
+675,Henry County,214,Locust Grove High,Math Section Score,1490,129,470.5,474.3
+675,Henry County,215,Hampton Middle School,Combined Test Score,1490,TFS,979.9,TFS
+675,Henry County,215,Hampton Middle School,Evidence Based Reading and Writing,1490,TFS,509.4,TFS
+675,Henry County,215,Hampton Middle School,Math Section Score,1490,TFS,470.5,TFS
+675,Henry County,295,Stockbridge High School,Combined Test Score,1490,112,979.9,940.4
+675,Henry County,295,Stockbridge High School,Evidence Based Reading and Writing,1490,112,509.4,491.1
+675,Henry County,295,Stockbridge High School,Math Section Score,1490,112,470.5,449.3
+675,Henry County,307,Ola High School,Combined Test Score,1490,207,979.9,1026.7
+675,Henry County,307,Ola High School,Evidence Based Reading and Writing,1490,207,509.4,528.9
+675,Henry County,307,Ola High School,Math Section Score,1490,207,470.5,497.8
+675,Henry County,315,Hampton High School,Combined Test Score,1490,98,979.9,948.1
+675,Henry County,315,Hampton High School,Evidence Based Reading and Writing,1490,98,509.4,495.9
+675,Henry County,315,Hampton High School,Math Section Score,1490,98,470.5,452.1
+675,Henry County,391,Eagle's Landing High School,Combined Test Score,1490,126,979.9,953.1
+675,Henry County,391,Eagle's Landing High School,Evidence Based Reading and Writing,1490,126,509.4,507
+675,Henry County,391,Eagle's Landing High School,Math Section Score,1490,126,470.5,446.1
+675,Henry County,408,Woodland High School,Combined Test Score,1490,142,979.9,1003.4
+675,Henry County,408,Woodland High School,Evidence Based Reading and Writing,1490,142,509.4,520.8
+675,Henry County,408,Woodland High School,Math Section Score,1490,142,470.5,482.5
+675,Henry County,3050,McDonough High School,Combined Test Score,1490,105,979.9,910.3
+675,Henry County,3050,McDonough High School,Evidence Based Reading and Writing,1490,105,509.4,478.3
+675,Henry County,3050,McDonough High School,Math Section Score,1490,105,470.5,432
+675,Henry County,4050,McDonough Middle School,Combined Test Score,1490,TFS,979.9,TFS
+675,Henry County,4050,McDonough Middle School,Evidence Based Reading and Writing,1490,TFS,509.4,TFS
+675,Henry County,4050,McDonough Middle School,Math Section Score,1490,TFS,470.5,TFS
+675,Henry County,5052,Stockbridge Middle School,Combined Test Score,1490,TFS,979.9,TFS
+675,Henry County,5052,Stockbridge Middle School,Evidence Based Reading and Writing,1490,TFS,509.4,TFS
+675,Henry County,5052,Stockbridge Middle School,Math Section Score,1490,TFS,470.5,TFS
+675,Henry County,6001,Impact Academy,Combined Test Score,1490,19,979.9,947.9
+675,Henry County,6001,Impact Academy,Evidence Based Reading and Writing,1490,19,509.4,513.7
+675,Henry County,6001,Impact Academy,Math Section Score,1490,19,470.5,434.2
+676,Houston County,111,Veterans High School,Combined Test Score,758,216,1061.4,1083.1
+676,Houston County,111,Veterans High School,Evidence Based Reading and Writing,758,216,545.3,556.9
+676,Houston County,111,Veterans High School,Math Section Score,758,216,516,526.2
+676,Houston County,192,Houston County High School,Combined Test Score,758,214,1061.4,1084.3
+676,Houston County,192,Houston County High School,Evidence Based Reading and Writing,758,214,545.3,554
+676,Houston County,192,Houston County High School,Math Section Score,758,214,516,530.4
+676,Houston County,1054,Perry High School,Combined Test Score,758,106,1061.4,1065.9
+676,Houston County,1054,Perry High School,Evidence Based Reading and Writing,758,106,545.3,548.7
+676,Houston County,1054,Perry High School,Math Section Score,758,106,516,517.3
+676,Houston County,2052,Northside High School,Combined Test Score,758,106,1061.4,1058.7
+676,Houston County,2052,Northside High School,Evidence Based Reading and Writing,758,106,545.3,546.6
+676,Houston County,2052,Northside High School,Math Section Score,758,106,516,512.1
+676,Houston County,4056,Warner Robins High School,Combined Test Score,758,116,1061.4,976.8
+676,Houston County,4056,Warner Robins High School,Evidence Based Reading and Writing,758,116,545.3,503.5
+676,Houston County,4056,Warner Robins High School,Math Section Score,758,116,516,473.3
+677,Irwin County,2050,Irwin County High School,Combined Test Score,35,35,966,966
+677,Irwin County,2050,Irwin County High School,Evidence Based Reading and Writing,35,35,500.9,500.9
+677,Irwin County,2050,Irwin County High School,Math Section Score,35,35,465.1,465.1
+678,Jackson County,107,East Jackson Comprehensive High School,Combined Test Score,197,52,1061.6,1085.8
+678,Jackson County,107,East Jackson Comprehensive High School,Evidence Based Reading and Writing,197,52,543.7,555.2
+678,Jackson County,107,East Jackson Comprehensive High School,Math Section Score,197,52,518,530.6
+678,Jackson County,191,Jackson County High School,Combined Test Score,197,145,1061.6,1053
+678,Jackson County,191,Jackson County High School,Evidence Based Reading and Writing,197,145,543.7,539.5
+678,Jackson County,191,Jackson County High School,Math Section Score,197,145,518,513.4
+679,Jasper County,108,Jasper County High School,Combined Test Score,39,39,981,981
+679,Jasper County,108,Jasper County High School,Evidence Based Reading and Writing,39,39,508.7,508.7
+679,Jasper County,108,Jasper County High School,Math Section Score,39,39,472.3,472.3
+680,Jeff Davis County,199,Jeff Davis High School,Combined Test Score,27,27,1097.4,1097.4
+680,Jeff Davis County,199,Jeff Davis High School,Evidence Based Reading and Writing,27,27,571.5,571.5
+680,Jeff Davis County,199,Jeff Davis High School,Math Section Score,27,27,525.9,525.9
+681,Jefferson County,196,Jefferson County High School,Combined Test Score,21,21,981.9,981.9
+681,Jefferson County,196,Jefferson County High School,Evidence Based Reading and Writing,21,21,523.8,523.8
+681,Jefferson County,196,Jefferson County High School,Math Section Score,21,21,458.1,458.1
+682,Jenkins County,201,Jenkins County High School,Combined Test Score,16,16,983.1,983.1
+682,Jenkins County,201,Jenkins County High School,Evidence Based Reading and Writing,16,16,511.9,511.9
+682,Jenkins County,201,Jenkins County High School,Math Section Score,16,16,471.3,471.3
+683,Johnson County,201,Johnson County High School,Combined Test Score,33,33,926.1,926.1
+683,Johnson County,201,Johnson County High School,Evidence Based Reading and Writing,33,33,473.6,473.6
+683,Johnson County,201,Johnson County High School,Math Section Score,33,33,452.4,452.4
+684,Jones County,192,Jones County High School,Combined Test Score,109,109,1032.9,1032.9
+684,Jones County,192,Jones County High School,Evidence Based Reading and Writing,109,109,538.9,538.9
+684,Jones County,192,Jones County High School,Math Section Score,109,109,494,494
+685,Lamar County,175,Lamar County High School,Combined Test Score,41,41,1029.3,1029.3
+685,Lamar County,175,Lamar County High School,Evidence Based Reading and Writing,41,41,535.4,535.4
+685,Lamar County,175,Lamar County High School,Math Section Score,41,41,493.9,493.9
+686,Lanier County,201,Lanier County High School,Combined Test Score,25,25,1029.6,1029.6
+686,Lanier County,201,Lanier County High School,Evidence Based Reading and Writing,25,25,541.6,541.6
+686,Lanier County,201,Lanier County High School,Math Section Score,25,25,488,488
+687,Laurens County,110,West Laurens High School,Combined Test Score,132,102,1037.4,1057.8
+687,Laurens County,110,West Laurens High School,Evidence Based Reading and Writing,132,102,536.9,547.3
+687,Laurens County,110,West Laurens High School,Math Section Score,132,102,500.5,510.6
+687,Laurens County,197,East Laurens High School,Combined Test Score,132,27,1037.4,977.8
+687,Laurens County,197,East Laurens High School,Evidence Based Reading and Writing,132,27,536.9,504.1
+687,Laurens County,197,East Laurens High School,Math Section Score,132,27,500.5,473.7
+687,Laurens County,297,East Laurens Middle School,Combined Test Score,132,TFS,1037.4,TFS
+687,Laurens County,297,East Laurens Middle School,Evidence Based Reading and Writing,132,TFS,536.9,TFS
+687,Laurens County,297,East Laurens Middle School,Math Section Score,132,TFS,500.5,TFS
+687,Laurens County,2054,West Laurens Middle School,Combined Test Score,132,TFS,1037.4,TFS
+687,Laurens County,2054,West Laurens Middle School,Evidence Based Reading and Writing,132,TFS,536.9,TFS
+687,Laurens County,2054,West Laurens Middle School,Math Section Score,132,TFS,500.5,TFS
+688,Lee County,193,Lee County High School,Combined Test Score,143,143,1039.9,1039.9
+688,Lee County,193,Lee County High School,Evidence Based Reading and Writing,143,143,540.5,540.5
+688,Lee County,193,Lee County High School,Math Section Score,143,143,499.4,499.4
+689,Liberty County,105,Bradwell Institute,Combined Test Score,156,89,978.5,975.1
+689,Liberty County,105,Bradwell Institute,Evidence Based Reading and Writing,156,89,513.1,516.7
+689,Liberty County,105,Bradwell Institute,Math Section Score,156,89,465.4,458.3
+689,Liberty County,192,Liberty County High School,Combined Test Score,156,67,978.5,983
+689,Liberty County,192,Liberty County High School,Evidence Based Reading and Writing,156,67,513.1,508.2
+689,Liberty County,192,Liberty County High School,Math Section Score,156,67,465.4,474.8
+690,Lincoln County,110,Lincoln County High School,Combined Test Score,27,27,1038.1,1038.1
+690,Lincoln County,110,Lincoln County High School,Evidence Based Reading and Writing,27,27,531.1,531.1
+690,Lincoln County,110,Lincoln County High School,Math Section Score,27,27,507,507
+691,Long County,205,Long County High School,Combined Test Score,92,92,991.2,991.2
+691,Long County,205,Long County High School,Evidence Based Reading and Writing,92,92,516.4,516.4
+691,Long County,205,Long County High School,Math Section Score,92,92,474.8,474.8
+692,Lowndes County,5050,Lowndes High School,Combined Test Score,255,255,1058.9,1058.9
+692,Lowndes County,5050,Lowndes High School,Evidence Based Reading and Writing,255,255,546.4,546.4
+692,Lowndes County,5050,Lowndes High School,Math Section Score,255,255,512.4,512.4
+693,Lumpkin County,101,Lumpkin County High School,Combined Test Score,92,92,1082.9,1082.9
+693,Lumpkin County,101,Lumpkin County High School,Evidence Based Reading and Writing,92,92,562.4,562.4
+693,Lumpkin County,101,Lumpkin County High School,Math Section Score,92,92,520.5,520.5
+694,Macon County,2060,Macon County High School,Combined Test Score,TFS,TFS,TFS,TFS
+694,Macon County,2060,Macon County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+694,Macon County,2060,Macon County High School,Math Section Score,TFS,TFS,TFS,TFS
+695,Madison County,5050,Madison County High School,Combined Test Score,80,80,1074.8,1074.8
+695,Madison County,5050,Madison County High School,Evidence Based Reading and Writing,80,80,557.3,557.3
+695,Madison County,5050,Madison County High School,Math Section Score,80,80,517.5,517.5
+696,Marion County,275,Marion County Middle/High School,Combined Test Score,30,30,876.3,876.3
+696,Marion County,275,Marion County Middle/High School,Evidence Based Reading and Writing,30,30,464.7,464.7
+696,Marion County,275,Marion County Middle/High School,Math Section Score,30,30,411.7,411.7
+697,McDuffie County,192,Thomson High School,Combined Test Score,53,53,937.9,937.9
+697,McDuffie County,192,Thomson High School,Evidence Based Reading and Writing,53,53,500.8,500.8
+697,McDuffie County,192,Thomson High School,Math Section Score,53,53,437.2,437.2
+698,McIntosh County,104,McIntosh Academy,Combined Test Score,15,15,928,928
+698,McIntosh County,104,McIntosh Academy,Evidence Based Reading and Writing,15,15,477.3,477.3
+698,McIntosh County,104,McIntosh Academy,Math Section Score,15,15,450.7,450.7
+699,Meriwether County,300,Greenville High School,Combined Test Score,88,38,878,856.1
+699,Meriwether County,300,Greenville High School,Evidence Based Reading and Writing,88,38,458.4,449.2
+699,Meriwether County,300,Greenville High School,Math Section Score,88,38,419.5,406.8
+699,Meriwether County,4050,Manchester High School,Combined Test Score,88,50,878,894.6
+699,Meriwether County,4050,Manchester High School,Evidence Based Reading and Writing,88,50,458.4,465.4
+699,Meriwether County,4050,Manchester High School,Math Section Score,88,50,419.5,429.2
+700,Miller County,210,Miller County High School,Combined Test Score,18,18,928.9,928.9
+700,Miller County,210,Miller County High School,Evidence Based Reading and Writing,18,18,484.4,484.4
+700,Miller County,210,Miller County High School,Math Section Score,18,18,444.4,444.4
+701,Mitchell County,105,Baconton Community Charter School,Combined Test Score,31,20,979.7,1010
+701,Mitchell County,105,Baconton Community Charter School,Evidence Based Reading and Writing,31,20,512.3,527
+701,Mitchell County,105,Baconton Community Charter School,Math Section Score,31,20,467.4,483
+701,Mitchell County,282,Mitchell County High School,Combined Test Score,31,11,979.7,924.5
+701,Mitchell County,282,Mitchell County High School,Evidence Based Reading and Writing,31,11,512.3,485.5
+701,Mitchell County,282,Mitchell County High School,Math Section Score,31,11,467.4,439.1
+702,Monroe County,184,Mary Persons High School,Combined Test Score,92,92,1040.8,1040.8
+702,Monroe County,184,Mary Persons High School,Evidence Based Reading and Writing,92,92,540.1,540.1
+702,Monroe County,184,Mary Persons High School,Math Section Score,92,92,500.7,500.7
+703,Montgomery County,201,Montgomery County High School,Combined Test Score,TFS,TFS,TFS,TFS
+703,Montgomery County,201,Montgomery County High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+703,Montgomery County,201,Montgomery County High School,Math Section Score,TFS,TFS,TFS,TFS
+704,Morgan County,1050,Morgan County High School,Combined Test Score,83,83,1044.8,1044.8
+704,Morgan County,1050,Morgan County High School,Evidence Based Reading and Writing,83,83,538.2,538.2
+704,Morgan County,1050,Morgan County High School,Math Section Score,83,83,506.6,506.6
+705,Murray County,112,North Murray High School,Combined Test Score,118,53,998.2,1024
+705,Murray County,112,North Murray High School,Evidence Based Reading and Writing,118,53,520.4,529.2
+705,Murray County,112,North Murray High School,Math Section Score,118,53,477.8,494.7
+705,Murray County,190,Murray County High School,Combined Test Score,118,65,998.2,977.2
+705,Murray County,190,Murray County High School,Evidence Based Reading and Writing,118,65,520.4,513.2
+705,Murray County,190,Murray County High School,Math Section Score,118,65,477.8,464
+706,Muscogee County,203,Northside High School,Combined Test Score,553,114,1069.7,1044.4
+706,Muscogee County,203,Northside High School,Evidence Based Reading and Writing,553,114,552.7,536.5
+706,Muscogee County,203,Northside High School,Math Section Score,553,114,517,507.9
+706,Muscogee County,278,Shaw High School,Combined Test Score,553,50,1069.7,977.8
+706,Muscogee County,278,Shaw High School,Evidence Based Reading and Writing,553,50,552.7,510.4
+706,Muscogee County,278,Shaw High School,Math Section Score,553,50,517,467.4
+706,Muscogee County,378,Spencer High School,Combined Test Score,553,28,1069.7,965.4
+706,Muscogee County,378,Spencer High School,Evidence Based Reading and Writing,553,28,552.7,502.9
+706,Muscogee County,378,Spencer High School,Math Section Score,553,28,517,462.5
+706,Muscogee County,502,Rainey McCullers School of the Arts,Combined Test Score,553,26,1069.7,1033.1
+706,Muscogee County,502,Rainey McCullers School of the Arts,Evidence Based Reading and Writing,553,26,552.7,543.5
+706,Muscogee County,502,Rainey McCullers School of the Arts,Math Section Score,553,26,517,489.6
+706,Muscogee County,1064,Kendrick High School,Combined Test Score,553,18,1069.7,959.4
+706,Muscogee County,1064,Kendrick High School,Evidence Based Reading and Writing,553,18,552.7,502.2
+706,Muscogee County,1064,Kendrick High School,Math Section Score,553,18,517,457.2
+706,Muscogee County,2062,Hardaway High School,Combined Test Score,553,75,1069.7,994.4
+706,Muscogee County,2062,Hardaway High School,Evidence Based Reading and Writing,553,75,552.7,525.1
+706,Muscogee County,2062,Hardaway High School,Math Section Score,553,75,517,469.3
+706,Muscogee County,3054,Columbus High School,Combined Test Score,553,200,1069.7,1193.9
+706,Muscogee County,3054,Columbus High School,Evidence Based Reading and Writing,553,200,552.7,611.4
+706,Muscogee County,3054,Columbus High School,Math Section Score,553,200,517,582.5
+706,Muscogee County,5052,Carver High School,Combined Test Score,553,18,1069.7,943.9
+706,Muscogee County,5052,Carver High School,Evidence Based Reading and Writing,553,18,552.7,487.2
+706,Muscogee County,5052,Carver High School,Math Section Score,553,18,517,456.7
+706,Muscogee County,5062,Jordan Vocational High School,Combined Test Score,553,24,1069.7,920.4
+706,Muscogee County,5062,Jordan Vocational High School,Evidence Based Reading and Writing,553,24,552.7,471.3
+706,Muscogee County,5062,Jordan Vocational High School,Math Section Score,553,24,517,449.2
+707,Newton County,173,Newton High School,Combined Test Score,443,187,959.9,921.4
+707,Newton County,173,Newton High School,Evidence Based Reading and Writing,443,187,504.1,484.7
+707,Newton County,173,Newton High School,Math Section Score,443,187,455.8,436.7
+707,Newton County,206,Alcovy High School,Combined Test Score,443,118,959.9,938.2
+707,Newton County,206,Alcovy High School,Evidence Based Reading and Writing,443,118,504.1,493.6
+707,Newton County,206,Alcovy High School,Math Section Score,443,118,455.8,444.7
+707,Newton County,295,Eastside High School,Combined Test Score,443,127,959.9,1043.6
+707,Newton County,295,Eastside High School,Evidence Based Reading and Writing,443,127,504.1,545.4
+707,Newton County,295,Eastside High School,Math Section Score,443,127,455.8,498.2
+707,Newton County,6002,Newton College and Career Academy,Combined Test Score,443,11,959.9,881.8
+707,Newton County,6002,Newton College and Career Academy,Evidence Based Reading and Writing,443,11,504.1,470
+707,Newton County,6002,Newton College and Career Academy,Math Section Score,443,11,455.8,411.8
+708,Oconee County,105,North Oconee High School,Combined Test Score,326,151,1135.4,1133.6
+708,Oconee County,105,North Oconee High School,Evidence Based Reading and Writing,326,151,580.4,570.3
+708,Oconee County,105,North Oconee High School,Math Section Score,326,151,555,563.3
+708,Oconee County,293,Oconee County High School,Combined Test Score,326,175,1135.4,1137
+708,Oconee County,293,Oconee County High School,Evidence Based Reading and Writing,326,175,580.4,589.2
+708,Oconee County,293,Oconee County High School,Math Section Score,326,175,555,547.8
+709,Oglethorpe County,2050,Oglethorpe County High School,Combined Test Score,37,37,1025.9,1025.9
+709,Oglethorpe County,2050,Oglethorpe County High School,Evidence Based Reading and Writing,37,37,526.5,526.5
+709,Oglethorpe County,2050,Oglethorpe County High School,Math Section Score,37,37,499.5,499.5
+710,Paulding County,101,Hiram High School,Combined Test Score,815,101,1033.3,996.2
+710,Paulding County,101,Hiram High School,Evidence Based Reading and Writing,815,101,536.2,508.8
+710,Paulding County,101,Hiram High School,Math Section Score,815,101,497.1,487.4
+710,Paulding County,106,South Paulding High School,Combined Test Score,815,105,1033.3,1008.6
+710,Paulding County,106,South Paulding High School,Evidence Based Reading and Writing,815,105,536.2,527.3
+710,Paulding County,106,South Paulding High School,Math Section Score,815,105,497.1,481.2
+710,Paulding County,109,North Paulding High School,Combined Test Score,815,304,1033.3,1055.4
+710,Paulding County,109,North Paulding High School,Evidence Based Reading and Writing,815,304,536.2,545.9
+710,Paulding County,109,North Paulding High School,Math Section Score,815,304,497.1,509.5
+710,Paulding County,292,East Paulding High School,Combined Test Score,815,165,1033.3,1015.4
+710,Paulding County,292,East Paulding High School,Evidence Based Reading and Writing,815,165,536.2,526.2
+710,Paulding County,292,East Paulding High School,Math Section Score,815,165,497.1,489.2
+710,Paulding County,2552,Paulding County High School,Combined Test Score,815,140,1033.3,1051.7
+710,Paulding County,2552,Paulding County High School,Evidence Based Reading and Writing,815,140,536.2,553.4
+710,Paulding County,2552,Paulding County High School,Math Section Score,815,140,497.1,498.3
+711,Peach County,2052,Peach County High School,Combined Test Score,69,69,955.7,955.7
+711,Peach County,2052,Peach County High School,Evidence Based Reading and Writing,69,69,500,500
+711,Peach County,2052,Peach County High School,Math Section Score,69,69,455.7,455.7
+712,Pickens County,198,Pickens County High School,Combined Test Score,84,84,1087,1087
+712,Pickens County,198,Pickens County High School,Evidence Based Reading and Writing,84,84,561.4,561.4
+712,Pickens County,198,Pickens County High School,Math Section Score,84,84,525.6,525.6
+713,Pierce County,182,Pierce County High School,Combined Test Score,56,55,1084.6,1081.6
+713,Pierce County,182,Pierce County High School,Evidence Based Reading and Writing,56,55,546.6,544.7
+713,Pierce County,182,Pierce County High School,Math Section Score,56,55,538,536.9
+713,Pierce County,197,Pierce County Middle School,Combined Test Score,56,TFS,1084.6,TFS
+713,Pierce County,197,Pierce County Middle School,Evidence Based Reading and Writing,56,TFS,546.6,TFS
+713,Pierce County,197,Pierce County Middle School,Math Section Score,56,TFS,538,TFS
+714,Pike County,194,Pike County High School,Combined Test Score,59,59,1053.1,1053.1
+714,Pike County,194,Pike County High School,Evidence Based Reading and Writing,59,59,546.4,546.4
+714,Pike County,194,Pike County High School,Math Section Score,59,59,506.6,506.6
+715,Polk County,102,Rockmart High School,Combined Test Score,112,41,1015.4,1033.4
+715,Polk County,102,Rockmart High School,Evidence Based Reading and Writing,112,41,525.1,538.3
+715,Polk County,102,Rockmart High School,Math Section Score,112,41,490.4,495.1
+715,Polk County,5050,Cedartown High School,Combined Test Score,112,71,1015.4,1005.1
+715,Polk County,5050,Cedartown High School,Evidence Based Reading and Writing,112,71,525.1,517.5
+715,Polk County,5050,Cedartown High School,Math Section Score,112,71,490.4,487.6
+716,Pulaski County,2050,Hawkinsville High School,Combined Test Score,16,16,1018.1,1018.1
+716,Pulaski County,2050,Hawkinsville High School,Evidence Based Reading and Writing,16,16,518.8,518.8
+716,Pulaski County,2050,Hawkinsville High School,Math Section Score,16,16,499.4,499.4
+717,Putnam County,114,Putnam County High School,Combined Test Score,29,29,993.1,993.1
+717,Putnam County,114,Putnam County High School,Evidence Based Reading and Writing,29,29,513.1,513.1
+717,Putnam County,114,Putnam County High School,Math Section Score,29,29,480,480
+719,Rabun County,177,Rabun County High School,Combined Test Score,54,54,1061.1,1061.1
+719,Rabun County,177,Rabun County High School,Evidence Based Reading and Writing,54,54,546.9,546.9
+719,Rabun County,177,Rabun County High School,Math Section Score,54,54,514.3,514.3
+720,Randolph County,201,Randolph Clay High School,Combined Test Score,TFS,TFS,TFS,TFS
+720,Randolph County,201,Randolph Clay High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+720,Randolph County,201,Randolph Clay High School,Math Section Score,TFS,TFS,TFS,TFS
+721,Richmond County,100,Cross Creek High School,Combined Test Score,527,44,952.1,925.7
+721,Richmond County,100,Cross Creek High School,Evidence Based Reading and Writing,527,44,499.1,491.8
+721,Richmond County,100,Cross Creek High School,Math Section Score,527,44,453,433.9
+721,Richmond County,1052,Butler High School,Combined Test Score,527,62,952.1,841.8
+721,Richmond County,1052,Butler High School,Evidence Based Reading and Writing,527,62,499.1,439
+721,Richmond County,1052,Butler High School,Math Section Score,527,62,453,402.7
+721,Richmond County,2056,Hephzibah High School,Combined Test Score,527,31,952.1,890
+721,Richmond County,2056,Hephzibah High School,Evidence Based Reading and Writing,527,31,499.1,468.1
+721,Richmond County,2056,Hephzibah High School,Math Section Score,527,31,453,421.9
+721,Richmond County,2574,Westside High School,Combined Test Score,527,85,952.1,878.1
+721,Richmond County,2574,Westside High School,Evidence Based Reading and Writing,527,85,499.1,453.8
+721,Richmond County,2574,Westside High School,Math Section Score,527,85,453,424.4
+721,Richmond County,3054,Glenn Hills High School,Combined Test Score,527,49,952.1,837.8
+721,Richmond County,3054,Glenn Hills High School,Evidence Based Reading and Writing,527,49,499.1,441.6
+721,Richmond County,3054,Glenn Hills High School,Math Section Score,527,49,453,396.1
+721,Richmond County,3556,Johnson Health Science and Engineering Magnet School,Combined Test Score,527,59,952.1,1078.3
+721,Richmond County,3556,Johnson Health Science and Engineering Magnet School,Evidence Based Reading and Writing,527,59,499.1,562.5
+721,Richmond County,3556,Johnson Health Science and Engineering Magnet School,Math Section Score,527,59,453,515.8
+721,Richmond County,3756,Josey High School,Combined Test Score,527,22,952.1,794.5
+721,Richmond County,3756,Josey High School,Evidence Based Reading and Writing,527,22,499.1,417.7
+721,Richmond County,3756,Josey High School,Math Section Score,527,22,453,376.8
+721,Richmond County,4060,Academy of Richmond County High School,Combined Test Score,527,77,952.1,983.9
+721,Richmond County,4060,Academy of Richmond County High School,Evidence Based Reading and Writing,527,77,499.1,519.9
+721,Richmond County,4060,Academy of Richmond County High School,Math Section Score,527,77,453,464
+721,Richmond County,4562,Davidson Fine Arts Magnet,Combined Test Score,527,77,952.1,1169.2
+721,Richmond County,4562,Davidson Fine Arts Magnet,Evidence Based Reading and Writing,527,77,499.1,612.2
+721,Richmond County,4562,Davidson Fine Arts Magnet,Math Section Score,527,77,453,557
+721,Richmond County,5566,Laney High School,Combined Test Score,527,21,952.1,888.1
+721,Richmond County,5566,Laney High School,Evidence Based Reading and Writing,527,21,499.1,470
+721,Richmond County,5566,Laney High School,Math Section Score,527,21,453,418.1
+722,Rockdale County,106,Z_Rockdale Career Academy,Combined Test Score,492,TFS,994.7,TFS
+722,Rockdale County,106,Z_Rockdale Career Academy,Evidence Based Reading and Writing,492,TFS,521.9,TFS
+722,Rockdale County,106,Z_Rockdale Career Academy,Math Section Score,492,TFS,472.8,TFS
+722,Rockdale County,176,Heritage High School,Combined Test Score,492,181,994.7,980
+722,Rockdale County,176,Heritage High School,Evidence Based Reading and Writing,492,181,521.9,517.1
+722,Rockdale County,176,Heritage High School,Math Section Score,492,181,472.8,462.9
+722,Rockdale County,192,Salem High School,Combined Test Score,492,85,994.7,919.5
+722,Rockdale County,192,Salem High School,Evidence Based Reading and Writing,492,85,521.9,483.5
+722,Rockdale County,192,Salem High School,Math Section Score,492,85,472.8,436
+722,Rockdale County,379,Alpha Academy,Combined Test Score,492,TFS,994.7,TFS
+722,Rockdale County,379,Alpha Academy,Evidence Based Reading and Writing,492,TFS,521.9,TFS
+722,Rockdale County,379,Alpha Academy,Math Section Score,492,TFS,472.8,TFS
+722,Rockdale County,3052,Rockdale County High School,Combined Test Score,492,222,994.7,1035.8
+722,Rockdale County,3052,Rockdale County High School,Evidence Based Reading and Writing,492,222,521.9,540.3
+722,Rockdale County,3052,Rockdale County High School,Math Section Score,492,222,472.8,495.5
+723,Schley County,101,Schley Middle High School,Combined Test Score,18,18,979.4,979.4
+723,Schley County,101,Schley Middle High School,Evidence Based Reading and Writing,18,18,513.3,513.3
+723,Schley County,101,Schley Middle High School,Math Section Score,18,18,466.1,466.1
+724,Screven County,4052,Screven County High School,Combined Test Score,26,26,1036.2,1036.2
+724,Screven County,4052,Screven County High School,Evidence Based Reading and Writing,26,26,526.2,526.2
+724,Screven County,4052,Screven County High School,Math Section Score,26,26,510,510
+725,Seminole County,196,Seminole County Middle/High School,Combined Test Score,36,36,992.8,992.8
+725,Seminole County,196,Seminole County Middle/High School,Evidence Based Reading and Writing,36,36,510,510
+725,Seminole County,196,Seminole County Middle/High School,Math Section Score,36,36,482.8,482.8
+726,Griffin-Spalding County,101,Spalding High School,Combined Test Score,151,64,958.3,965.2
+726,Griffin-Spalding County,101,Spalding High School,Evidence Based Reading and Writing,151,64,500.3,507.7
+726,Griffin-Spalding County,101,Spalding High School,Math Section Score,151,64,458.1,457.5
+726,Griffin-Spalding County,187,Griffin High School,Combined Test Score,151,87,958.3,953.3
+726,Griffin-Spalding County,187,Griffin High School,Evidence Based Reading and Writing,151,87,500.3,494.8
+726,Griffin-Spalding County,187,Griffin High School,Math Section Score,151,87,458.1,458.5
+727,Stephens County,5050,Stephens County High School,Combined Test Score,60,60,1021.3,1021.3
+727,Stephens County,5050,Stephens County High School,Evidence Based Reading and Writing,60,60,538,538
+727,Stephens County,5050,Stephens County High School,Math Section Score,60,60,483.3,483.3
+728,Stewart County,201,Stewart County High School,Combined Test Score,14,14,965,965
+728,Stewart County,201,Stewart County High School,Evidence Based Reading and Writing,14,14,490,490
+728,Stewart County,201,Stewart County High School,Math Section Score,14,14,475,475
+729,Sumter County,396,Furlow Charter School,Combined Test Score,51,12,907.8,1027.5
+729,Sumter County,396,Furlow Charter School,Evidence Based Reading and Writing,51,12,474.1,535
+729,Sumter County,396,Furlow Charter School,Math Section Score,51,12,433.7,492.5
+729,Sumter County,397,Sumter County High School,Combined Test Score,51,39,907.8,871
+729,Sumter County,397,Sumter County High School,Evidence Based Reading and Writing,51,39,474.1,455.4
+729,Sumter County,397,Sumter County High School,Math Section Score,51,39,433.7,415.6
+730,Talbot County,190,Central Elementary/High School,Combined Test Score,24,24,786.3,786.3
+730,Talbot County,190,Central Elementary/High School,Evidence Based Reading and Writing,24,24,393.8,393.8
+730,Talbot County,190,Central Elementary/High School,Math Section Score,24,24,392.5,392.5
+731,Taliaferro County,102,Taliaferro County School,Combined Test Score,TFS,TFS,TFS,TFS
+731,Taliaferro County,102,Taliaferro County School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+731,Taliaferro County,102,Taliaferro County School,Math Section Score,TFS,TFS,TFS,TFS
+732,Tattnall County,194,Tattnall County High School,Combined Test Score,38,38,1059.7,1059.7
+732,Tattnall County,194,Tattnall County High School,Evidence Based Reading and Writing,38,38,546.3,546.3
+732,Tattnall County,194,Tattnall County High School,Math Section Score,38,38,513.4,513.4
+733,Taylor County,201,Taylor County High School,Combined Test Score,29,29,953.4,953.4
+733,Taylor County,201,Taylor County High School,Evidence Based Reading and Writing,29,29,495.2,495.2
+733,Taylor County,201,Taylor County High School,Math Section Score,29,29,458.3,458.3
+734,Telfair County,201,Telfair County High School,Combined Test Score,22,22,1005,1005
+734,Telfair County,201,Telfair County High School,Evidence Based Reading and Writing,22,22,516.4,516.4
+734,Telfair County,201,Telfair County High School,Math Section Score,22,22,488.6,488.6
+735,Terrell County,105,Terrell County High School,Combined Test Score,21,21,834.8,834.8
+735,Terrell County,105,Terrell County High School,Evidence Based Reading and Writing,21,21,427.1,427.1
+735,Terrell County,105,Terrell County High School,Math Section Score,21,21,407.6,407.6
+736,Thomas County,100,Thomas County Academy,Combined Test Score,120,TFS,1016.2,TFS
+736,Thomas County,100,Thomas County Academy,Evidence Based Reading and Writing,120,TFS,529.2,TFS
+736,Thomas County,100,Thomas County Academy,Math Section Score,120,TFS,487,TFS
+736,Thomas County,191,Thomas County Central High School,Combined Test Score,120,118,1016.2,1019.1
+736,Thomas County,191,Thomas County Central High School,Evidence Based Reading and Writing,120,118,529.2,530.9
+736,Thomas County,191,Thomas County Central High School,Math Section Score,120,118,487,488.1
+737,Tift County,3052,Northeast Middle School,Combined Test Score,124,124,1026.3,1026.3
+737,Tift County,3052,Northeast Middle School,Evidence Based Reading and Writing,124,124,535.1,535.1
+737,Tift County,3052,Northeast Middle School,Math Section Score,124,124,491.2,491.2
+738,Toombs County,192,Toombs County High School,Combined Test Score,38,38,999.5,999.5
+738,Toombs County,192,Toombs County High School,Evidence Based Reading and Writing,38,38,511.8,511.8
+738,Toombs County,192,Toombs County High School,Math Section Score,38,38,487.6,487.6
+739,Towns County,204,Towns County High School,Combined Test Score,15,15,1149.3,1149.3
+739,Towns County,204,Towns County High School,Evidence Based Reading and Writing,15,15,606,606
+739,Towns County,204,Towns County High School,Math Section Score,15,15,543.3,543.3
+740,Treutlen County,213,Treutlen Middle/High School,Combined Test Score,TFS,TFS,TFS,TFS
+740,Treutlen County,213,Treutlen Middle/High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+740,Treutlen County,213,Treutlen Middle/High School,Math Section Score,TFS,TFS,TFS,TFS
+741,Troup County,201,Callaway High School,Combined Test Score,97,12,1054.5,1040
+741,Troup County,201,Callaway High School,Evidence Based Reading and Writing,97,12,544.6,547.5
+741,Troup County,201,Callaway High School,Math Section Score,97,12,509.9,492.5
+741,Troup County,387,Troup County High School,Combined Test Score,97,37,1054.5,1022.2
+741,Troup County,387,Troup County High School,Evidence Based Reading and Writing,97,37,544.6,535.1
+741,Troup County,387,Troup County High School,Math Section Score,97,37,509.9,487
+741,Troup County,1052,LaGrange High School,Combined Test Score,97,48,1054.5,1083.1
+741,Troup County,1052,LaGrange High School,Evidence Based Reading and Writing,97,48,544.6,551.3
+741,Troup County,1052,LaGrange High School,Math Section Score,97,48,509.9,531.9
+742,Turner County,3050,Turner County High School,Combined Test Score,16,16,916.3,916.3
+742,Turner County,3050,Turner County High School,Evidence Based Reading and Writing,16,16,464.4,464.4
+742,Turner County,3050,Turner County High School,Math Section Score,16,16,451.9,451.9
+743,Twiggs County,201,Twiggs County High School,Combined Test Score,13,13,863.8,863.8
+743,Twiggs County,201,Twiggs County High School,Evidence Based Reading and Writing,13,13,448.5,448.5
+743,Twiggs County,201,Twiggs County High School,Math Section Score,13,13,415.4,415.4
+744,Union County,101,Union County High School,Combined Test Score,74,74,1014.6,1014.6
+744,Union County,101,Union County High School,Evidence Based Reading and Writing,74,74,533.1,533.1
+744,Union County,101,Union County High School,Math Section Score,74,74,481.5,481.5
+745,Thomaston-Upson County,195,Upson-Lee High School,Combined Test Score,75,75,1001.5,1001.5
+745,Thomaston-Upson County,195,Upson-Lee High School,Evidence Based Reading and Writing,75,75,521.1,521.1
+745,Thomaston-Upson County,195,Upson-Lee High School,Math Section Score,75,75,480.4,480.4
+746,Walker County,190,Ridgeland High School,Combined Test Score,16,TFS,1136.9,TFS
+746,Walker County,190,Ridgeland High School,Evidence Based Reading and Writing,16,TFS,604.4,TFS
+746,Walker County,190,Ridgeland High School,Math Section Score,16,TFS,532.5,TFS
+746,Walker County,198,LaFayette High School,Combined Test Score,16,TFS,1136.9,TFS
+746,Walker County,198,LaFayette High School,Evidence Based Reading and Writing,16,TFS,604.4,TFS
+746,Walker County,198,LaFayette High School,Math Section Score,16,TFS,532.5,TFS
+747,Walton County,111,Walnut Grove High School,Combined Test Score,354,115,1042.3,1036.4
+747,Walton County,111,Walnut Grove High School,Evidence Based Reading and Writing,354,115,538.2,537
+747,Walton County,111,Walnut Grove High School,Math Section Score,354,115,504.1,499.5
+747,Walton County,199,Loganville High School,Combined Test Score,354,159,1042.3,1061.7
+747,Walton County,199,Loganville High School,Evidence Based Reading and Writing,354,159,538.2,544.9
+747,Walton County,199,Loganville High School,Math Section Score,354,159,504.1,516.8
+747,Walton County,205,Monroe Area High School,Combined Test Score,354,80,1042.3,1012
+747,Walton County,205,Monroe Area High School,Evidence Based Reading and Writing,354,80,538.2,526.6
+747,Walton County,205,Monroe Area High School,Math Section Score,354,80,504.1,485.4
+748,Ware County,195,Ware County High School,Combined Test Score,77,77,1008.3,1008.3
+748,Ware County,195,Ware County High School,Evidence Based Reading and Writing,77,77,530.1,530.1
+748,Ware County,195,Ware County High School,Math Section Score,77,77,478.2,478.2
+749,Warren County,205,Warren County High School,Combined Test Score,33,33,869.4,869.4
+749,Warren County,205,Warren County High School,Evidence Based Reading and Writing,33,33,459.1,459.1
+749,Warren County,205,Warren County High School,Math Section Score,33,33,410.3,410.3
+750,Washington County,1052,Washington County High School,Combined Test Score,41,41,951.2,951.2
+750,Washington County,1052,Washington County High School,Evidence Based Reading and Writing,41,41,490.2,490.2
+750,Washington County,1052,Washington County High School,Math Section Score,41,41,461,461
+751,Wayne County,101,Wayne County High School,Combined Test Score,96,96,993.4,993.4
+751,Wayne County,101,Wayne County High School,Evidence Based Reading and Writing,96,96,507.1,507.1
+751,Wayne County,101,Wayne County High School,Math Section Score,96,96,486.4,486.4
+752,Webster County,108,Webster County High School,Combined Test Score,10,10,878,878
+752,Webster County,108,Webster County High School,Evidence Based Reading and Writing,10,10,457,457
+752,Webster County,108,Webster County High School,Math Section Score,10,10,421,421
+753,Wheeler County,3052,Wheeler County High School,Combined Test Score,12,12,980,980
+753,Wheeler County,3052,Wheeler County High School,Evidence Based Reading and Writing,12,12,513.3,513.3
+753,Wheeler County,3052,Wheeler County High School,Math Section Score,12,12,466.7,466.7
+754,White County,105,White County High School,Combined Test Score,78,78,1054.7,1054.7
+754,White County,105,White County High School,Evidence Based Reading and Writing,78,78,546,546
+754,White County,105,White County High School,Math Section Score,78,78,508.7,508.7
+755,Whitfield County,112,Coahulla Creek High School,Combined Test Score,172,49,1053.8,1047.3
+755,Whitfield County,112,Coahulla Creek High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+755,Whitfield County,112,Coahulla Creek High School,Essay Reading Score,TFS,TFS,TFS,TFS
+755,Whitfield County,112,Coahulla Creek High School,Essay Total,TFS,TFS,TFS,TFS
+755,Whitfield County,112,Coahulla Creek High School,Essay Writing Score,TFS,TFS,TFS,TFS
+755,Whitfield County,112,Coahulla Creek High School,Evidence Based Reading and Writing,172,49,540.4,540.6
+755,Whitfield County,112,Coahulla Creek High School,Math Section Score,172,49,513.4,506.7
+755,Whitfield County,175,Northwest Whitfield County High School,Combined Test Score,172,65,1053.8,1067.4
+755,Whitfield County,175,Northwest Whitfield County High School,Evidence Based Reading and Writing,172,65,540.4,543.8
+755,Whitfield County,175,Northwest Whitfield County High School,Math Section Score,172,65,513.4,523.5
+755,Whitfield County,275,Southeast Whitfield County High School,Combined Test Score,172,58,1053.8,1044.1
+755,Whitfield County,275,Southeast Whitfield County High School,Evidence Based Reading and Writing,172,58,540.4,536.4
+755,Whitfield County,275,Southeast Whitfield County High School,Math Section Score,172,58,513.4,507.8
+756,Wilcox County,201,Wilcox County High School,Combined Test Score,22,22,973.2,973.2
+756,Wilcox County,201,Wilcox County High School,Evidence Based Reading and Writing,22,22,508.6,508.6
+756,Wilcox County,201,Wilcox County High School,Math Section Score,22,22,464.5,464.5
+757,Wilkes County,110,Washington-Wilkes Comprehensive High School,Combined Test Score,25,25,1008,1008
+757,Wilkes County,110,Washington-Wilkes Comprehensive High School,Evidence Based Reading and Writing,25,25,514.8,514.8
+757,Wilkes County,110,Washington-Wilkes Comprehensive High School,Math Section Score,25,25,493.2,493.2
+758,Wilkinson County,3050,Wilkinson County High School,Combined Test Score,22,22,873.2,873.2
+758,Wilkinson County,3050,Wilkinson County High School,Evidence Based Reading and Writing,22,22,461.4,461.4
+758,Wilkinson County,3050,Wilkinson County High School,Math Section Score,22,22,411.8,411.8
+759,Worth County,176,Worth County High School,Combined Test Score,68,68,968.1,968.1
+759,Worth County,176,Worth County High School,Evidence Based Reading and Writing,68,68,508.8,508.8
+759,Worth County,176,Worth County High School,Math Section Score,68,68,459.3,459.3
+761,Atlanta Public Schools,106,Carver High School Early College,Combined Test Score,858,22,1033.3,962.7
+761,Atlanta Public Schools,106,Carver High School Early College,Evidence Based Reading and Writing,858,22,536.1,505.9
+761,Atlanta Public Schools,106,Carver High School Early College,Math Section Score,858,22,497.2,456.8
+761,Atlanta Public Schools,108,South Atlanta School of Health and Medical Science,Combined Test Score,858,58,1033.3,890.5
+761,Atlanta Public Schools,108,South Atlanta School of Health and Medical Science,Evidence Based Reading and Writing,858,58,536.1,470
+761,Atlanta Public Schools,108,South Atlanta School of Health and Medical Science,Math Section Score,858,58,497.2,420.5
+761,Atlanta Public Schools,118,The Best Academy High School at Benjamin S. Carson,Combined Test Score,858,TFS,1033.3,TFS
+761,Atlanta Public Schools,118,The Best Academy High School at Benjamin S. Carson,Evidence Based Reading and Writing,858,TFS,536.1,TFS
+761,Atlanta Public Schools,118,The Best Academy High School at Benjamin S. Carson,Math Section Score,858,TFS,497.2,TFS
+761,Atlanta Public Schools,121,Coretta Scott King Young Women's Academy High School,Combined Test Score,858,16,1033.3,1020.6
+761,Atlanta Public Schools,121,Coretta Scott King Young Women's Academy High School,Evidence Based Reading and Writing,858,16,536.1,540.6
+761,Atlanta Public Schools,121,Coretta Scott King Young Women's Academy High School,Math Section Score,858,16,497.2,480
+761,Atlanta Public Schools,133,Atlanta Classical Charter Academy Facility,Combined Test Score,858,12,1033.3,1266.7
+761,Atlanta Public Schools,133,Atlanta Classical Charter Academy Facility,Evidence Based Reading and Writing,858,12,536.1,660.8
+761,Atlanta Public Schools,133,Atlanta Classical Charter Academy Facility,Math Section Score,858,12,497.2,605.8
+761,Atlanta Public Schools,182,Benjamin E. Mays High School,Combined Test Score,858,40,1033.3,936
+761,Atlanta Public Schools,182,Benjamin E. Mays High School,Evidence Based Reading and Writing,858,40,536.1,468.8
+761,Atlanta Public Schools,182,Benjamin E. Mays High School,Math Section Score,858,40,497.2,467.3
+761,Atlanta Public Schools,186,Maynard Jackson High School,Combined Test Score,858,115,1033.3,1050.7
+761,Atlanta Public Schools,186,Maynard Jackson High School,Evidence Based Reading and Writing,858,115,536.1,549
+761,Atlanta Public Schools,186,Maynard Jackson High School,Math Section Score,858,115,497.2,501.7
+761,Atlanta Public Schools,192,North Atlanta High School,Combined Test Score,858,216,1033.3,1105.7
+761,Atlanta Public Schools,192,North Atlanta High School,Evidence Based Reading and Writing,858,216,536.1,571.4
+761,Atlanta Public Schools,192,North Atlanta High School,Math Section Score,858,216,497.2,534.3
+761,Atlanta Public Schools,212,Kipp Atlanta Collegiate Charter School,Combined Test Score,858,24,1033.3,946.3
+761,Atlanta Public Schools,212,Kipp Atlanta Collegiate Charter School,Evidence Based Reading and Writing,858,24,536.1,478.3
+761,Atlanta Public Schools,212,Kipp Atlanta Collegiate Charter School,Math Section Score,858,24,497.2,467.9
+761,Atlanta Public Schools,306,School of Technology at Carver,Combined Test Score,858,TFS,1033.3,TFS
+761,Atlanta Public Schools,306,School of Technology at Carver,Evidence Based Reading and Writing,858,TFS,536.1,TFS
+761,Atlanta Public Schools,306,School of Technology at Carver,Math Section Score,858,TFS,497.2,TFS
+761,Atlanta Public Schools,315,Booker T. Washington High School,Combined Test Score,858,38,1033.3,878.7
+761,Atlanta Public Schools,315,Booker T. Washington High School,Evidence Based Reading and Writing,858,38,536.1,452.4
+761,Atlanta Public Schools,315,Booker T. Washington High School,Math Section Score,858,38,497.2,426.3
+761,Atlanta Public Schools,403,Hank Aaron New Beginnings Academy,Combined Test Score,858,TFS,1033.3,TFS
+761,Atlanta Public Schools,403,Hank Aaron New Beginnings Academy,Evidence Based Reading and Writing,858,TFS,536.1,TFS
+761,Atlanta Public Schools,403,Hank Aaron New Beginnings Academy,Math Section Score,858,TFS,497.2,TFS
+761,Atlanta Public Schools,406,School of Health Sciences and Research at Carver,Combined Test Score,858,14,1033.3,879.3
+761,Atlanta Public Schools,406,School of Health Sciences and Research at Carver,Evidence Based Reading and Writing,858,14,536.1,459.3
+761,Atlanta Public Schools,406,School of Health Sciences and Research at Carver,Math Section Score,858,14,497.2,420
+761,Atlanta Public Schools,515,Charles Drew Charter JA/SR Academy,Combined Test Score,858,72,1033.3,1020.4
+761,Atlanta Public Schools,515,Charles Drew Charter JA/SR Academy,Evidence Based Reading and Writing,858,72,536.1,536.5
+761,Atlanta Public Schools,515,Charles Drew Charter JA/SR Academy,Math Section Score,858,72,497.2,483.9
+761,Atlanta Public Schools,708,Therrell School of Health and Science,Combined Test Score,858,33,1033.3,922.4
+761,Atlanta Public Schools,708,Therrell School of Health and Science,Evidence Based Reading and Writing,858,33,536.1,479.7
+761,Atlanta Public Schools,708,Therrell School of Health and Science,Math Section Score,858,33,497.2,442.7
+761,Atlanta Public Schools,4058,Frederick Douglass High School,Combined Test Score,858,34,1033.3,862.1
+761,Atlanta Public Schools,4058,Frederick Douglass High School,Evidence Based Reading and Writing,858,34,536.1,456.8
+761,Atlanta Public Schools,4058,Frederick Douglass High School,Math Section Score,858,34,497.2,405.3
+761,Atlanta Public Schools,4560,Midtown High School,Combined Test Score,858,159,1033.3,1124.3
+761,Atlanta Public Schools,4560,Midtown High School,Evidence Based Reading and Writing,858,159,536.1,579.7
+761,Atlanta Public Schools,4560,Midtown High School,Math Section Score,858,159,497.2,544.6
+763,Bremen City,201,Bremen High School,Combined Test Score,72,72,1097.8,1097.8
+763,Bremen City,201,Bremen High School,Evidence Based Reading and Writing,72,72,557.8,557.8
+763,Bremen City,201,Bremen High School,Math Section Score,72,72,540,540
+764,Buford City,191,Buford High School,Combined Test Score,213,213,1113.3,1113.3
+764,Buford City,191,Buford High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+764,Buford City,191,Buford High School,Essay Reading Score,TFS,TFS,TFS,TFS
+764,Buford City,191,Buford High School,Essay Total,TFS,TFS,TFS,TFS
+764,Buford City,191,Buford High School,Essay Writing Score,TFS,TFS,TFS,TFS
+764,Buford City,191,Buford High School,Evidence Based Reading and Writing,213,213,567.6,567.6
+764,Buford City,191,Buford High School,Math Section Score,213,213,545.7,545.7
+765,Calhoun City,3050,Calhoun High School,Combined Test Score,61,61,1053.4,1053.4
+765,Calhoun City,3050,Calhoun High School,Evidence Based Reading and Writing,61,61,538.7,538.7
+765,Calhoun City,3050,Calhoun High School,Math Section Score,61,61,514.8,514.8
+766,Carrollton City,1050,Carrollton High School,Combined Test Score,181,181,1052.9,1052.9
+766,Carrollton City,1050,Carrollton High School,Evidence Based Reading and Writing,181,181,543.3,543.3
+766,Carrollton City,1050,Carrollton High School,Math Section Score,181,181,509.6,509.6
+767,Cartersville City,2050,Cartersville High School,Combined Test Score,101,101,1056.5,1056.5
+767,Cartersville City,2050,Cartersville High School,Evidence Based Reading and Writing,101,101,538,538
+767,Cartersville City,2050,Cartersville High School,Math Section Score,101,101,518.5,518.5
+769,Chickamauga City,211,Gordon Lee High School,Combined Test Score,13,13,1040.8,1040.8
+769,Chickamauga City,211,Gordon Lee High School,Evidence Based Reading and Writing,13,13,521.5,521.5
+769,Chickamauga City,211,Gordon Lee High School,Math Section Score,13,13,519.2,519.2
+771,Commerce City,112,Commerce High School,Combined Test Score,35,35,1069.4,1069.4
+771,Commerce City,112,Commerce High School,Evidence Based Reading and Writing,35,35,548,548
+771,Commerce City,112,Commerce High School,Math Section Score,35,35,521.4,521.4
+772,Dalton Public Schools,4050,Dalton High School,Combined Test Score,116,116,1045,1045
+772,Dalton Public Schools,4050,Dalton High School,Evidence Based Reading and Writing,116,116,543.8,543.8
+772,Dalton Public Schools,4050,Dalton High School,Math Section Score,116,116,501.2,501.2
+773,City Schools of Decatur,3050,Decatur High School,Combined Test Score,242,242,1155.2,1155.2
+773,City Schools of Decatur,3050,Decatur High School,Evidence Based Reading and Writing,242,242,596.2,596.2
+773,City Schools of Decatur,3050,Decatur High School,Math Section Score,242,242,559,559
+774,Dublin City,211,Dublin High School,Combined Test Score,37,37,923.2,923.2
+774,Dublin City,211,Dublin High School,Essay Analysis Score,TFS,TFS,TFS,TFS
+774,Dublin City,211,Dublin High School,Essay Reading Score,TFS,TFS,TFS,TFS
+774,Dublin City,211,Dublin High School,Essay Total,TFS,TFS,TFS,TFS
+774,Dublin City,211,Dublin High School,Essay Writing Score,TFS,TFS,TFS,TFS
+774,Dublin City,211,Dublin High School,Evidence Based Reading and Writing,37,37,480.3,480.3
+774,Dublin City,211,Dublin High School,Math Section Score,37,37,443,443
+776,Gainesville City,3050,Gainesville High School,Combined Test Score,174,174,1010.8,1010.8
+776,Gainesville City,3050,Gainesville High School,Evidence Based Reading and Writing,174,174,514.2,514.2
+776,Gainesville City,3050,Gainesville High School,Math Section Score,174,174,496.6,496.6
+779,Jefferson City,174,Jefferson High School,Combined Test Score,132,132,1093.6,1093.6
+779,Jefferson City,174,Jefferson High School,Evidence Based Reading and Writing,132,132,552.3,552.3
+779,Jefferson City,174,Jefferson High School,Math Section Score,132,132,541.3,541.3
+781,Marietta City,101,Marietta High School,Combined Test Score,181,181,1078.4,1078.4
+781,Marietta City,101,Marietta High School,Evidence Based Reading and Writing,181,181,556.2,556.2
+781,Marietta City,101,Marietta High School,Math Section Score,181,181,522.2,522.2
+7820108,State Charter Schools- Mountain Education Center School,108,Mountain Education High School,Combined Test Score,TFS,TFS,TFS,TFS
+7820108,State Charter Schools- Mountain Education Center School,108,Mountain Education High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+7820108,State Charter Schools- Mountain Education Center School,108,Mountain Education High School,Math Section Score,TFS,TFS,TFS,TFS
+7820412,State Charter Schools- Georgia Connections Academy,412,Georgia Connections Academy (Virtual),Combined Test Score,119,119,1049.7,1049.7
+7820412,State Charter Schools- Georgia Connections Academy,412,Georgia Connections Academy (Virtual),Evidence Based Reading and Writing,119,119,560.5,560.5
+7820412,State Charter Schools- Georgia Connections Academy,412,Georgia Connections Academy (Virtual),Math Section Score,119,119,489.2,489.2
+7820613,State Charter Schools- Foothills Charter High School (Madison Campus),613,Foothills Regional High School,Combined Test Score,TFS,TFS,TFS,TFS
+7820613,State Charter Schools- Foothills Charter High School (Madison Campus),613,Foothills Regional High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+7820613,State Charter Schools- Foothills Charter High School (Madison Campus),613,Foothills Regional High School,Math Section Score,TFS,TFS,TFS,TFS
+7820618,State Charter Schools- Coastal Plains Charter High School - Candler Campus,618,Coastal Plains High School,Combined Test Score,TFS,TFS,TFS,TFS
+7820618,State Charter Schools- Coastal Plains Charter High School - Candler Campus,618,Coastal Plains High School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+7820618,State Charter Schools- Coastal Plains Charter High School - Candler Campus,618,Coastal Plains High School,Math Section Score,TFS,TFS,TFS,TFS
+7830103,State Charter Schools II- Statesboro STEAM Academy,103,Statesboro STEAM Academy,Combined Test Score,TFS,TFS,TFS,TFS
+7830103,State Charter Schools II- Statesboro STEAM Academy,103,Statesboro STEAM Academy,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+7830103,State Charter Schools II- Statesboro STEAM Academy,103,Statesboro STEAM Academy,Math Section Score,TFS,TFS,TFS,TFS
+7830210,State Charter Schools II- Pataula Charter Academy,210,Pataula Charter Academy,Combined Test Score,24,24,959.6,959.6
+7830210,State Charter Schools II- Pataula Charter Academy,210,Pataula Charter Academy,Evidence Based Reading and Writing,24,24,506.3,506.3
+7830210,State Charter Schools II- Pataula Charter Academy,210,Pataula Charter Academy,Math Section Score,24,24,453.3,453.3
+7830634,State Charter Schools II- Georgia Fugees Academy Charter School,634,Georgia Fugees Academy Charter School,Combined Test Score,TFS,TFS,TFS,TFS
+7830634,State Charter Schools II- Georgia Fugees Academy Charter School,634,Georgia Fugees Academy Charter School,Evidence Based Reading and Writing,TFS,TFS,TFS,TFS
+7830634,State Charter Schools II- Georgia Fugees Academy Charter School,634,Georgia Fugees Academy Charter School,Math Section Score,TFS,TFS,TFS,TFS
+784,Pelham City,111,Pelham High School,Combined Test Score,13,13,904.6,904.6
+784,Pelham City,111,Pelham High School,Evidence Based Reading and Writing,13,13,461.5,461.5
+784,Pelham City,111,Pelham High School,Math Section Score,13,13,443.1,443.1
+785,Rome City,193,Rome High School,Combined Test Score,101,101,1037.7,1037.7
+785,Rome City,193,Rome High School,Evidence Based Reading and Writing,101,101,530,530
+785,Rome City,193,Rome High School,Math Section Score,101,101,507.7,507.7
+786,Social Circle City,201,Social Circle High School,Combined Test Score,53,53,1015.3,1015.3
+786,Social Circle City,201,Social Circle High School,Evidence Based Reading and Writing,53,53,526.2,526.2
+786,Social Circle City,201,Social Circle High School,Math Section Score,53,53,489.1,489.1
+789,Thomasville City,4052,Thomasville High School,Combined Test Score,51,51,1019.6,1019.6
+789,Thomasville City,4052,Thomasville High School,Evidence Based Reading and Writing,51,51,537.3,537.3
+789,Thomasville City,4052,Thomasville High School,Math Section Score,51,51,482.4,482.4
+791,Trion City,301,Trion High School,Combined Test Score,26,26,1072.7,1072.7
+791,Trion City,301,Trion High School,Evidence Based Reading and Writing,26,26,565.4,565.4
+791,Trion City,301,Trion High School,Math Section Score,26,26,507.3,507.3
+792,Valdosta City,273,Valdosta High School,Combined Test Score,175,171,970,968.3
+792,Valdosta City,273,Valdosta High School,Evidence Based Reading and Writing,175,171,506.3,505.3
+792,Valdosta City,273,Valdosta High School,Math Section Score,175,171,463.7,463
+792,Valdosta City,6001,Valdosta Early College Academy,Combined Test Score,175,TFS,970,TFS
+792,Valdosta City,6001,Valdosta Early College Academy,Evidence Based Reading and Writing,175,TFS,506.3,TFS
+792,Valdosta City,6001,Valdosta Early College Academy,Math Section Score,175,TFS,463.7,TFS
+793,Vidalia City,273,Vidalia Comprehensive High School,Combined Test Score,59,59,1006.9,1006.9
+793,Vidalia City,273,Vidalia Comprehensive High School,Evidence Based Reading and Writing,59,59,526.1,526.1
+793,Vidalia City,273,Vidalia Comprehensive High School,Math Section Score,59,59,480.8,480.8
