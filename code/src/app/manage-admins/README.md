@@ -1,111 +1,83 @@
-## Requirements for using Manage Admins
-
-- Be signed in with a verified email.
-- Have a `user_roles` document named after your lowercase email.
-- Have `role` set to `super_admin` and `uid` matching your Firebase Authentication UID.
-- Firestore rules must allow superadmins to list roles and remove regular admins.
-
-Adding admins also requires Firebase credentials configured on the server.
-Users do not need their own service-account key when using the hosted app.
-
 # Manage Admins
 
-Superadmins use this page to view, add and remove admin access.
-Removing access does not delete the person’s account.
-Superadmins cannot be added or removed from this page.
+Superadmins can search, add, and remove regular admin access.
+Removing access keeps the person's login account.
+Superadmins cannot be added or removed through this page.
 
-# Page Access for all Roles
+## Page access
 
-Regular signed in users or signed out, get member role by default and they can access only one page → Dashboard Insights
-Admins need to be verified and can access → Dashboard Insights, Dashboard, Summary, Upload, Manage Versions
-Superadmins can access → All pages, including Manage Admins
+| Role              | Pages                                                           |
+| ----------------- | --------------------------------------------------------------- |
+| Visitor or member | Dashboard Insights                                              |
+| Admin             | Dashboard Insights, Dashboard, Summary, Upload, Manage Versions |
+| Superadmin        | All pages, including Manage Admins                              |
 
-`Users must be signed in with a verified email to use protected pages.`
+Protected pages require a verified email. Accounts without a role
+record receive member access.
 
-## How to manually add Superadmins
+## Set up roles manually
 
-Firebase Console → Data → user_roles (collection).
+Confirm the account exists and has a verified email.
 
-1. Click Add document
-2. For "Document ID" type person's email
+Open Firebase Console → Firestore Database → Data → user_roles.
+Create a document named after the account's lowercase email.
 
-   a. First "Field" type the word "email" in the field, String = [Email of person]
+Add these string fields:
 
-   b. Next "Field" type the word "role", String = [super_admin]
+| Field     | Admin                   | Superadmin                       |
+| --------- | ----------------------- | -------------------------------- |
+| `email` | Lowercase account email | Lowercase account email          |
+| `role`  | `admin`               | `super_admin`                  |
+| `uid`   | Not required            | UID from Authentication → Users |
 
-   c. Next "Field" type the word "uid", String = [uid for super admin]
+Superadmin access requires the UID to match the signed-in account.
 
-## How to add admins through Manage Admins Page
+## Add an admin through the page
 
 1. Sign in as a superadmin and open Manage Admins.
 2. Enter the person's account email.
-3. Wait for the account check.
-4. Click Add Admin when the account is eligible.
+3. Click Add Admin when the account check succeeds.
 
-The account must already exist, be enabled, have a verified
-email, and have no existing role record in user_roles.
+The account must exist, have a verified email, and have no existing
+role record. The server rechecks permissions before saving and only
+grants the `admin` role.
 
-The server checks the caller's permissions again before saving.
-It only grants the `admin` role.
+## Local credentials
 
-## How to manually add Admins
+Adding admins requires approved Firebase server credentials.
 
-Firebase Console → Data → user_roles (collection).
+Place `serviceaccountkey.json` in the `code` folder and add this
+to `code/.env.local`:
 
-1. Click Add document
-2. For "Document ID" type person's email
+```dotenv
+GOOGLE_APPLICATION_CREDENTIALS=./serviceaccountkey.json
+```
 
-   a. First "Field" type the word "email" in the field, String = [Email of person]
+Restart with `npm run dev` from the `code` folder.
 
-   b. Next "Field" type the word "role", String = [super_admin]
+Keep both files out of Git and the key out of Docker images.
+For AWS, configure credentials on the hosted server separately.
+Website users do not need their own key.
 
-## Server credentials
+## Firestore permissions
 
-Adding admins uses Firebase Admin SDK credentials to check
-Authentication accounts and create role records.
+Manage rules under Firebase Console → Firestore Database → Rules.
 
-The endpoint uses Application Default Credentials.
-For local development, GOOGLE_APPLICATION_CREDENTIALS can point
-to an approved service-account JSON file.
+The published rules must allow:
 
-Keep credential files out of Git and Docker images.
-AWS needs its own credential setup; local credentials are not
-automatically available there.
+- Verified users to read their own role.
+- Superadmins to list roles and delete regular admin grants.
 
-The results API uses the user's login token instead of an
-Admin SDK service-account key.
+Browser role creation and updates stay blocked.
+Adding admins goes through the server endpoint using Admin SDK permissions.
 
-## How roles are stored
+Rules affect every branch using the same Firebase project.
+Coordinate changes with SD2.
 
-Roles are saved in Firestore under `user_roles`.
-Each document is named after the person’s lowercase email.
+## Troubleshooting
 
-- Admins need an email and the `admin` role.
-- Superadmins also need their account’s UID from Firebase Authentication → Users.
-
-## Firestore rules
-
-The browser loads the role list and removes admin access directly
-through Firestore, so both actions require suitable security rules.
-
-Only superadmins should be allowed to list roles or delete
-regular admin grants. Browser role creation and updates stay blocked.
-
-The Add Admin server endpoint uses Admin SDK permissions,
-so Firestore browser rules do not authorize its writes.
-
-Rules are shared by everyone using the same Firebase project,
-regardless of their Git branch.
-
-## What the rules check
-
-- `verified()` checks that the person is signed in and has verified their email.
-- `superAdminRecord()` checks their superadmin role and UID.
-- `isSuperAdmin()` makes sure both checks pass.
-
-Admins can read their own role. Only superadmins can see the
-full list and remove regular admins.
-
-## Where the rules are
-
-Firestore → Rules.
+| Error                           | Check                            |
+| ------------------------------- | -------------------------------- |
+| `app/invalid-credential`      | Server credentials and key path  |
+| `resource-exhausted` or `8` | Firestore quotas                 |
+| `permission-denied`           | Account role and published rules |
