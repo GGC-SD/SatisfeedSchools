@@ -7,9 +7,12 @@ import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/fi
 import { db } from "@/firebase/firebaseConfig";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminPages } from "@/firebase/roles";
 
 export default function ManageVersionsPage() {
-    const { user, loading: authLoading } = useAuth();
+    const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
+    const isAdmin = !authLoading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
+
     const router = useRouter();
     const [versions, setVersions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -19,10 +22,10 @@ export default function ManageVersionsPage() {
     const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!authLoading && !user) {
+        if (!authLoading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, authLoading, router]);
+    }, [authLoading, roleLoading, isAdmin, router]);
 
     // Fetch all versions from csv_results
     useEffect(() => {
@@ -42,16 +45,27 @@ export default function ManageVersionsPage() {
             }
         };
 
-        if (user) {
+        if (isAdmin) {
             fetchVersions();
+        } else {
+            setVersions([]);
         }
-    }, [user]);
+    }, [user, isAdmin]);
 
-    if (authLoading || !user) {
+    // keeps the version list hidden while checking access
+    if (authLoading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <Alert variant="danger" className="m-4">
+                You do not have permission to manage versions.
+            </Alert>
         );
     }
 
@@ -61,7 +75,8 @@ export default function ManageVersionsPage() {
     };
 
     const confirmDelete = async () => {
-        if (!versionToDelete) return;
+        // only continue when a superadmin has selected a version
+        if (!isAdmin || !versionToDelete) return;
         setDeletingId(versionToDelete.id);
         try {
             await deleteDoc(doc(db, "csv_results", versionToDelete.id));

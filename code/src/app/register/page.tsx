@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { auth } from "@/firebase/firebaseConfig";
-import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { Container, Row, Col, Form, Button, Alert, Card } from "react-bootstrap";
 import Link from "next/link";
@@ -53,16 +53,23 @@ export default function Register() {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
-            await updateProfile(userCredential.user, {
-                displayName: `${form.firstName} ${form.lastName}`,
-            });
 
-            await sendEmailVerification(userCredential.user);
-            alert("Verification email sent. Please check your inbox before logging in.");
+            try {
+                await updateProfile(userCredential.user, {
+                    displayName: `${form.firstName} ${form.lastName}`,
+                });
 
-            router.push("/");
+                await sendEmailVerification(userCredential.user);
+            } finally {
+                // Registration should not leave an unverified account signed in.
+                await signOut(auth);
+            }
+
+            alert("Verification email sent. Please verify your email before logging in.");
+            router.replace("/login");
         } catch (error) {
-            setError((error as Error).message);
+            console.error("Registration failed:", error);
+            setError("Unable to finish registration. If your account was created, use Login to resend verification.");
         }
     };
 

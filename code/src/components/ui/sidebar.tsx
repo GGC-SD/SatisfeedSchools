@@ -7,6 +7,7 @@ import type { ReactNode, Dispatch, SetStateAction } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
 import { useAuth } from "@/firebase/authContext"
+import { canUseAdminPages, canManageAdmins } from "@/firebase/roles"
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }: {
@@ -43,7 +44,10 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showDesktopMenu, setShowDesktopMenu] = useState(false)
     const pathname = usePathname()
-    const { user, loading } = useAuth()
+    
+    const { user, loading, role, roleLoading, roleError } = useAuth()
+    // wait for the account and role checks before showing private admin pages
+    const showAdminPages = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role)
 
     const translations = {
     en: {
@@ -56,6 +60,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
         logout: "Log Out",
         login: "Log In",
         spanish: "Español",
+        admins: "Manage Admins",
     },
 
     es: {
@@ -68,6 +73,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
         logout: "Cerrar Sesión",
         login: "Iniciar Sesión",
         english: "English",
+        admins: "Administrar usuarios administradores",
     },
 
 
@@ -84,11 +90,16 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
         { path: "/summary", label: t.summary },
         { path: "/upload", label: t.upload },
         { path: "/manage-versions", label: t.versions },
+        ...(canManageAdmins(role) ? [ 
+        { path: "/manage-admins", label: t.admins }
+    ] : []),
     ]
 
-    const navItems = !loading && user
-        ? [...publicNavItems, ...protectedNavItems]
-        : publicNavItems
+    // keeps public pages visible and include admin pages where allowed
+    const navItems = [
+        ...publicNavItems,
+        ...(!loading && user?.emailVerified && showAdminPages ? protectedNavItems : []),
+    ]
 
     const handleLogout = async () => {
         const auth = getAuth()

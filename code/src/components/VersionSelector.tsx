@@ -16,7 +16,7 @@ interface Version {
 
 interface VersionSelectorProps {
     selectedId: string | null;
-    setSelectedId: (id: string) => void;
+    onVersionSelect: (id: string, timeCreated: Date) => void;
 }
 
 export default function VersionSelector({ onVersionSelect, selectedId: externalSelectedId }: VersionSelectorProps) {
@@ -49,21 +49,6 @@ export default function VersionSelector({ onVersionSelect, selectedId: externalS
                 //console.log("Fetched versions:", versionList)
                 setVersions(versionList)
 
-                if (versionList.length > 0) {
-                    // Only set the default if no external ID was provided
-                    if (!externalSelectedId) {
-                        const latest = versionList[0]
-                        setSelectedId(latest.id)
-                        onVersionSelect(latest.id, latest.timeCreated)
-                    } else if (externalSelectedId) {
-                        // If external ID was provided, find and use that version
-                        const selected = versionList.find((v) => v.id === externalSelectedId)
-                        if (selected) {
-                            setSelectedId(selected.id)
-                            onVersionSelect(selected.id, selected.timeCreated)
-                        }
-                    }
-                }
             } catch (err) {
                 console.error("Error fetching versions:", err)
                 setError(`Failed to load versions: ${err.message}`)
@@ -73,13 +58,20 @@ export default function VersionSelector({ onVersionSelect, selectedId: externalS
         }
 
         fetchVersions()
-    }, [onVersionSelect, externalSelectedId])
+    }, [])
 
     useEffect(() => {
         if (externalSelectedId) {
             setSelectedId(externalSelectedId)
+            return
         }
-    }, [externalSelectedId])
+
+        if (versions.length > 0) {
+            const latest = versions[0]
+            setSelectedId(latest.id)
+            onVersionSelect(latest.id, latest.timeCreated)
+        }
+    }, [externalSelectedId, versions, onVersionSelect])
 
     if (loading) {
         return <div className="mb-4">Loading versions...</div>

@@ -8,3 +8,4 @@ test-results
 
 # Keep secret files out of the build.
 **/.env*
+serviceaccountkey.json

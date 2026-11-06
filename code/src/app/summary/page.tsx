@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import SidebarNav from "../../components/ui/sidebar";
 import VersionSelector from "@/components/VersionSelector";
-import { Container, Row, Col, Table, Button, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Spinner, Alert } from "react-bootstrap";
 import {MonthlyChart, WeeklyChart, YearlyChart} from "@/components/ui/chart";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminPages } from "@/firebase/roles";
+import { auth } from "@/firebase/firebaseConfig";
 
 const summarySections = [
     { name: "Yearly Summary", key: "yearly_summary" },
@@ -32,7 +34,9 @@ const sectionKeyOrders: Record<string, string[]> = {
 };
 
 export default function Page() {
-    const { user, loading } = useAuth();
+    const { user, loading, role, roleLoading, roleError } = useAuth();
+    // only verified admins and superadmins can use this page.
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
     const router = useRouter();
     const [data, setData] = useState<{ [key: string]: any[] }>({});
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
@@ -46,7 +50,20 @@ export default function Page() {
 
     const fetchSummaryData = async (versionId: string) => {
         try {
-            const response = await fetch(`/api/getResults?id=${versionId}`);
+            const token = await auth.currentUser?.getIdToken();
+
+            if (!token) throw new Error("Please sign in.");
+
+            const response = await fetch(
+                `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    cache: "no-store"
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Unable to load results.");
+            }
             const json = await response.json();
             const summaries: { [key: string]: any[] } = {
                 county_summary: json.data?.county_summary || [],
@@ -66,24 +83,34 @@ export default function Page() {
     };
 
     useEffect(() => {
-        if (selectedVersionId) {
+        if (isAdmin && selectedVersionId) {
             fetchSummaryData(selectedVersionId);
         }
-    }, [selectedVersionId]);
+    }, [selectedVersionId, isAdmin]);
 
+    // wait for permissions before redirecting
     useEffect(() => {
-        if (!loading && !user) {
+        if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, loading, router]);
+    }, [loading, roleLoading, isAdmin, router]);
 
-    if (loading || !user) {
+    // hides this page while checking access
+    if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
         );
     }
+
+    if (!isAdmin) {
+    return (
+        <Alert variant="danger" className="m-4">
+            {roleError || "Access denied. This page is for admins only."}
+        </Alert>
+    );
+}
 
     return (
         <Container fluid>
