@@ -47,7 +47,7 @@ grants the `admin` role.
 Adding admins requires approved Firebase server credentials.
 
 Place `serviceaccountkey.json` in the `code` folder and add this
-to `code/.env.local`:
+to `code/.env`:
 
 ```dotenv
 GOOGLE_APPLICATION_CREDENTIALS=./serviceaccountkey.json
