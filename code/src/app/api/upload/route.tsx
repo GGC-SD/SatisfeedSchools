@@ -2,8 +2,11 @@ import fs from 'fs';
 import { parse } from 'csv-parse/sync';
 import path from 'path';
 import {NextResponse} from "next/server";
-import { db } from '@/firebase/firebaseConfig';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { app } from "@/firebase/firebaseConfig";
+import { initializeServerApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { collection, addDoc, serverTimestamp, getFirestore, doc, getDoc } from "firebase/firestore";
+import { getRoleFromRecord, canUseAdminPages } from "@/firebase/roles";
 
 export const config = {
     api: {
@@ -15,6 +18,49 @@ export async function POST(req: Request) {
     if (req.method !== 'POST') {
         return NextResponse.json({error: 'Method not allowed'}, {status: 405});
     }
+
+    try {
+        // check their login
+        const token = req.headers.get("authorization")
+            ?.match(/^Bearer\s+(\S+)$/i)?.[1];
+
+        if (!token) {
+            return NextResponse.json(
+                { message: "Please sign in." }, { status: 401 }
+            );
+        }
+
+        const serverApp = initializeServerApp(app.options, {
+            authIdToken: token,
+            releaseOnDeref: req
+        });
+
+        const auth = getAuth(serverApp);
+        await auth.authStateReady();
+        const user = auth.currentUser;
+
+        if (!user) {
+            return NextResponse.json(
+                { message: "Please sign in." }, { status: 401 }
+            );
+        }
+
+        if (!user.emailVerified || !user.email) {
+            return NextResponse.json(
+                { message: "Verify your email first." }, { status: 403 }
+            );
+        }
+
+        // check their role
+        const db = getFirestore(serverApp);
+        const email = user.email.trim().toLowerCase();
+        const record = await getDoc(doc(db, "user_roles", email));
+
+        if (!canUseAdminPages(getRoleFromRecord(record.data(), user.uid))) {
+            return NextResponse.json(
+                { message: "Admin access required." }, { status: 403 }
+            );
+        }
 
     const contentType = req.headers.get("content-type");
     if (!contentType?.includes("multipart/form-data")) {
@@ -33,8 +79,7 @@ export async function POST(req: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    try {
-        const csvText = buffer.toString();
+    const csvText = buffer.toString();
 
         let records = parse(csvText, {
             columns: true,
