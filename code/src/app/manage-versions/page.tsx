@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Spinner, Modal, Alert } from "react-bootstrap";
 import SidebarNav from "@/components/ui/sidebar";
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, runTransaction, serverTimestamp, doc, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
@@ -75,15 +75,40 @@ export default function ManageVersionsPage() {
     };
 
     const confirmDelete = async () => {
-        // only continue when a superadmin has selected a version
-        if (!isAdmin || !versionToDelete) return;
-        setDeletingId(versionToDelete.id);
+        if (!user?.email || !isAdmin || !versionToDelete || deletingId) return;
+
+        const target = versionToDelete;
+        const actorUid = user.uid;
+        const actorEmail = user.email.trim().toLowerCase();
+        setDeletingId(target.id);
+
         try {
-            await deleteDoc(doc(db, "csv_results", versionToDelete.id));
-            setVersions(prev => prev.filter(v => v.id !== versionToDelete.id));
-            setMessage(`Version deleted successfully.`);
+            const versionRef = doc(db, "csv_results", target.id);
+            const logRef = doc(db, "version_logs", target.id + "_delete");
+
+            // delete the version and record who did it
+            await runTransaction(db, async transaction => {
+                const snapshot = await transaction.get(versionRef);
+
+                if (!snapshot.exists()) {
+                    throw new Error("Version no longer exists.");
+                }
+
+                transaction.delete(versionRef);
+                transaction.set(logRef, {
+                    action: "delete",
+                    actorUid,
+                    actorEmail,
+                    versionId: target.id,
+                    filename: snapshot.data().filename || "",
+                    createdAt: serverTimestamp()
+                });
+            });
+
+            setVersions(prev => prev.filter(version => version.id !== target.id));
+            setMessage("Version deleted successfully.");
         } catch (error) {
-            console.error("Error deleting version:", error);
+            console.error("version deletion failed:", error);
             setMessage("Failed to delete version.");
         } finally {
             setDeletingId(null);
@@ -162,7 +187,7 @@ export default function ManageVersionsPage() {
                             <Button variant="secondary" onClick={() => setShowConfirm(false)}>
                                 Cancel
                             </Button>
-                            <Button variant="danger" onClick={confirmDelete}>
+                            <Button variant="danger" onClick={confirmDelete} disabled={deletingId !== null}>
                                 Delete
                             </Button>
                         </Modal.Footer>
