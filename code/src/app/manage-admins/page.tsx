@@ -140,7 +140,7 @@ export default function ManageAdminsPage() {
             setHistoryLoading(false);
         }, () => {
             setHistory([]);
-            setHistoryError("Unable to load access history.");
+            setHistoryError("Unable to load admin role logs.");
             setHistoryLoading(false);
         });
     }, [isSuperAdmin, user]);
@@ -362,7 +362,7 @@ export default function ManageAdminsPage() {
                         </tbody>
                     </Table>
 
-                    <h5 className="mt-4">Access History</h5>
+                    <h5 className="mt-4">Admin Role Logs</h5>
 
                     <Table striped bordered responsive>
                         <thead>
