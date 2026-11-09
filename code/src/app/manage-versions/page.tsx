@@ -3,11 +3,20 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Spinner, Modal, Alert } from "react-bootstrap";
 import SidebarNav from "@/components/ui/sidebar";
-import { collection, getDocs, runTransaction, serverTimestamp, doc, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, runTransaction, serverTimestamp, doc, orderBy, query, onSnapshot, limit, type Timestamp } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
 import { canUseAdminPages } from "@/firebase/roles";
+
+interface VersionLog {
+    id: string;
+    action: "upload" | "delete";
+    actorEmail: string;
+    versionId: string;
+    filename: string;
+    createdAt: Timestamp | null;
+}
 
 export default function ManageVersionsPage() {
     const { user, loading: authLoading, role, roleLoading, roleError } = useAuth();
@@ -20,6 +29,9 @@ export default function ManageVersionsPage() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [versionToDelete, setVersionToDelete] = useState<any>(null);
     const [message, setMessage] = useState<string | null>(null);
+    const [logs, setLogs] = useState<VersionLog[]>([]);
+    const [logsLoading, setLogsLoading] = useState(true);
+    const [logsError, setLogsError] = useState("");
 
     useEffect(() => {
         if (!authLoading && !roleLoading && !isAdmin) {
@@ -50,6 +62,35 @@ export default function ManageVersionsPage() {
         } else {
             setVersions([]);
         }
+    }, [user, isAdmin]);
+
+    // show the latest uploads and deletions
+    useEffect(() => {
+        setLogs([]);
+        setLogsError("");
+
+        if (!user || !isAdmin) return;
+
+        setLogsLoading(true);
+
+        const logsQuery = query(
+            collection(db, "version_logs"),
+            orderBy("createdAt", "desc"),
+            limit(50)
+        );
+
+        return onSnapshot(logsQuery, snapshot => {
+            setLogs(snapshot.docs.map(record => ({
+                id: record.id,
+                ...record.data()
+            }) as VersionLog));
+            setLogsLoading(false);
+        }, error => {
+            console.error("version logs failed:", error);
+            setLogs([]);
+            setLogsError("Unable to load version logs.");
+            setLogsLoading(false);
+        });
     }, [user, isAdmin]);
 
     // keeps the version list hidden while checking access
@@ -175,7 +216,41 @@ export default function ManageVersionsPage() {
                         </Table>
                     )}
 
-                    {/* Confirmation Modal */}
+                    <h5 className="mt-4">Version Logs</h5>
+                    <p className="text-muted">Latest 50 changes</p>
+
+                    <Table striped bordered hover responsive>
+                        <thead>
+                            <tr>
+                                <th>Changed by</th>
+                                <th>Action</th>
+                                <th>File</th>
+                                <th>Version ID</th>
+                                <th>When</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {logsLoading ? (
+                                <tr><td colSpan={5}>Loading logs...</td></tr>
+                            ) : logsError ? (
+                                <tr>
+                                    <td colSpan={5} className="text-danger">{logsError}</td>
+                                </tr>
+                            ) : logs.length === 0 ? (
+                                <tr><td colSpan={5}>No recorded changes.</td></tr>
+                            ) : logs.map(entry => (
+                                <tr key={entry.id}>
+                                    <td>{entry.actorEmail}</td>
+                                    <td>{entry.action === "upload" ? "Uploaded" : "Deleted"}</td>
+                                    <td>{entry.filename || "N/A"}</td>
+                                    <td>{entry.versionId}</td>
+                                    <td>{entry.createdAt?.toDate().toLocaleString() || "—"}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+
+                    {/* confirm the deletion */}
                     <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
                         <Modal.Header closeButton>
                             <Modal.Title>Confirm Delete</Modal.Title>
