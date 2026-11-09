@@ -6,8 +6,7 @@ import maplibregl, {
   MapLayerMouseEvent,
   MapGeoJSONFeature,
 } from "maplibre-gl";
-import { db } from "@/firebase/firebaseConfig";
-import { collection, getDocs, query } from "firebase/firestore";
+import { getPublicData } from "@/firebase/publicData";
 
 import {
   replaceFixedRadiusFromCenter,
@@ -77,7 +76,7 @@ export default function LibrariesClusterOverlay({
     });
 
     async function draw() {
-      const qSnap = await getDocs(query(collection(db, "libraries")));
+      const qSnap = await getPublicData("libraries");
       if (unmounted) return;
 
       const features = qSnap.docs.flatMap((docSnap) => {

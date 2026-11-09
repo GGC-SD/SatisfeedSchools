@@ -6,8 +6,7 @@ import maplibregl, {
   MapLayerMouseEvent,
   MapGeoJSONFeature,
 } from "maplibre-gl";
-import { db } from "@/firebase/firebaseConfig";
-import { collection, getDocs, query } from "firebase/firestore";
+import { getPublicData } from "@/firebase/publicData";
 import {
   replaceFixedRadiusFromCenter,
   clearFixedRadius,
@@ -87,8 +86,7 @@ export default function SchoolsClusterOverlay({
      * add a clustered source with 3 layers: clusters, cluster-count symbol, and unclustered points.
      */
     async function draw() {
-      const q = query(collection(db, "schools"));
-      const snap = await getDocs(q);
+      const snap = await getPublicData("schools");
       if (unmounted) return;
 
       const features = snap.docs.flatMap((docSnap) => {

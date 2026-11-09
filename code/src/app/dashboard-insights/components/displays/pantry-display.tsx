@@ -1,9 +1,8 @@
 "use client";
 
 import {  useCallback, useEffect, useMemo, useRef, useState  } from "react";
-import { collection, getDocs, query } from "firebase/firestore";
 
-import { db } from "@/firebase/firebaseConfig";
+import { getPublicData } from "@/firebase/publicData";
 import DashboardPantryMap, {
   type DashboardPantryMapHandle,
   type PantryAffectedSchool,
@@ -204,8 +203,7 @@ export default function PantryDisplay() {
         setLoading(true);
         setLoadError(null);
 
-        const pantryQuery = query(collection(db, "pantries"));
-        const snapshot = await getDocs(pantryQuery);
+        const snapshot = await getPublicData("pantries");
 
         const loadedPantries: PantryLocation[] = snapshot.docs.map(
           (document) => {
