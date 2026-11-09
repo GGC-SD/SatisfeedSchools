@@ -1,4 +1,4 @@
-import { collection, getDocs, type DocumentData } from "firebase/firestore";
+import { type DocumentData } from "firebase/firestore";
 
 type PublicCollection = "schools" | "libraries" | "pantries";
 type PublicRecord = { id: string; data: DocumentData };
