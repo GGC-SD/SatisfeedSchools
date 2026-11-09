@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { applicationDefault, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import { getRoleFromRecord } from "@/firebase/roles";
 
 export const runtime = "nodejs";
@@ -33,7 +33,8 @@ export async function POST(request: Request) {
             }, "manage-admins");
 
         const auth = getAuth(app);
-        const roles = getFirestore(app).collection("user_roles");
+        const db = getFirestore(app);
+        const roles = db.collection("user_roles");
 
         // check who is making the request
         const decoded = await auth.verifyIdToken(token, true);
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
         const callerRole = await callerRef.get();
 
         if (getRoleFromRecord(callerRole.data(), caller.uid) !== "super_admin") {
-            return reply("Only superadmins can add admins.", 403);
+            return reply("Only superadmins can manage admins.", 403);
         }
 
         const body = await request.json().catch(() => null);
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
             ? body.email.trim().toLowerCase()
             : "";
 
-        if (action !== "check" && action !== "add") {
+        if (action !== "check" && action !== "add" && action !== "remove") {
             return reply("Invalid request.", 400);
         }
 
@@ -68,16 +69,18 @@ export async function POST(request: Request) {
         }
 
         // check the account before granting access
-        const account = await auth.getUserByEmail(email).catch(error => {
-            if (errorCode(error) === "auth/user-not-found") return null;
-            throw error;
-        });
+        if (action !== "remove") {
+            const account = await auth.getUserByEmail(email).catch(error => {
+                if (errorCode(error) === "auth/user-not-found") return null;
+                throw error;
+            });
 
-        if (!account) return reply("No account found for that email.", 404);
+            if (!account) return reply("No account found for that email.", 404);
 
-        if (account.disabled || !account.emailVerified
-            || account.email?.trim().toLowerCase() !== email) {
-            return reply("Use an active account with a verified email.", 400);
+            if (account.disabled || !account.emailVerified
+                || account.email?.trim().toLowerCase() !== email) {
+                return reply("Use an active account with a verified email.", 400);
+            }
         }
 
         const targetRef = roles.doc(email);
@@ -90,25 +93,56 @@ export async function POST(request: Request) {
                 : reply("Account is ready to add.");
         }
 
-        // recheck the role before saving
-        const status = await getFirestore(app).runTransaction(async transaction => {
+        const changeRef = db.collection("role_changes").doc();
+
+        // save the access change and history together
+        const status = await db.runTransaction(async transaction => {
             const currentCaller = await transaction.get(callerRef);
+            const existing = await transaction.get(targetRef);
 
             if (getRoleFromRecord(currentCaller.data(), caller.uid) !== "super_admin") {
                 return 403;
             }
 
-            const existing = await transaction.get(targetRef);
-            if (existing.exists) return 409;
+            if (action === "remove") {
+                // only regular admin access can be removed
+                if (!existing.exists || existing.get("role") !== "admin") {
+                    return 409;
+                }
 
-            transaction.create(targetRef, { email, role: "admin" });
-            return 201;
+                transaction.delete(targetRef);
+            } else {
+                if (existing.exists) return 409;
+
+                transaction.create(targetRef, { email, role: "admin" });
+            }
+
+            transaction.create(changeRef, {
+                action: action === "remove" ? "remove_admin" : "add_admin",
+                actorUid: caller.uid,
+                actorEmail: callerEmail,
+                targetEmail: email,
+                createdAt: FieldValue.serverTimestamp()
+            });
+
+            return action === "remove" ? 200 : 201;
         });
 
         if (status === 403) return reply("Access denied.", 403);
-        if (status === 409) return reply("This account already has a role.", 409);
 
-        return reply("Admin added.", 201);
+        if (status === 409) {
+            return reply(
+                action === "remove"
+                    ? "The role changed. Refresh the list."
+                    : "This account already has a role.",
+                409
+            );
+        }
+
+        return reply(
+            action === "remove" ? "Admin access removed." : "Admin added.",
+            status
+        );
     } catch (error) {
         const code = errorCode(error);
 
@@ -121,6 +155,6 @@ export async function POST(request: Request) {
         }
 
         console.error("Admin request failed:", code || "service-error");
-        return reply("Unable to check or add this admin.", 503);
+        return reply("Unable to manage admins.", 503);
     }
 }
