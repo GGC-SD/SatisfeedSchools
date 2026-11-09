@@ -5,25 +5,39 @@ import { Container, Form, Button, Alert, Spinner, Row, Col } from "react-bootstr
 import SidebarNav from "@/components/ui/sidebar";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminPages } from "@/firebase/roles";
 
 export default function UploadPage() {
-    const { user, loading } = useAuth();
+    const { user, loading, role, roleLoading, roleError } = useAuth();
+    // allow verified admins and superadmins once permissions finish loading
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
+
     const router = useRouter();
     const [files, setFiles] = useState<FileList | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
 
+    // wait for permissions before redirecting
     useEffect(() => {
-        if (!loading && !user) {
+        if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, loading, router]);
+    }, [user, loading, roleLoading, isAdmin, router]);
 
-    if (loading || !user) {
+    // hides this page while checking access
+    if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <Alert variant="danger" className="m-4">
+                You do not have permission to upload data.
+            </Alert>
         );
     }
 
@@ -32,6 +46,7 @@ export default function UploadPage() {
     };
 
     const handleUpload = async () => {
+        if (!isAdmin) return;
         if (!files) {
             setMessage("Please select at least one CSV file.");
             return;
@@ -42,9 +57,13 @@ export default function UploadPage() {
         formData.append("file", files[0]);
 
         try {
+            const token = await user?.getIdToken();
+            if (!token) throw new Error("Please sign in.");
+
             const response = await fetch("/api/upload/", {
                 method: "POST",
-                body: formData,
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData
             });
 
             const result = await response.json();

@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { useEffect, useState } from "react";
 import { Card, Button, Table } from "react-bootstrap";
+import { auth } from "@/firebase/firebaseConfig";
 
 interface ChartData {
     [key: string]: any;
@@ -69,7 +70,21 @@ function ChartContainer({
         async function fetchData() {
             if (!versionId) return;
             try {
-                const response = await fetch(`/api/getResults?id=${versionId}`);
+                const token = await auth.currentUser?.getIdToken();
+                
+                if (!token) throw new Error("Please sign in.");
+                
+                const response = await fetch(
+                    `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        cache: "no-store"
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Unable to load results.");
+                }
                 const result = await response.json();
                 const chartData = result?.data?.[`${chartType}_summary`] || [];
                 setData(chartData.filter((entry: any) => entry[timeKey] !== "Unknown"));

@@ -2,8 +2,7 @@
 
 import DataCard from "../ui/data-card";
 import { LibraryDoc } from "@/data/libraryTypes";
-import { getFirestore, query, doc, getDoc, getDocs, collection} from "firebase/firestore";
-import { app } from "@/firebase/firebaseConfig";
+import { getPublicData } from "@/firebase/publicData";
 import SearchableDropdown from "../filters/searchable-dropdown";
 import DashboardLibraryMap, {
   DashboardLibraryMapHandle,
@@ -86,19 +85,9 @@ export default function LibraryDisplay() {
         return;
       }
       try {
-        const db = getFirestore(app);
-        const ref = doc(db, "libraries", selectionInfo.libraryDocId);
-        const snapshot = await getDoc(ref);
-
-      if (!snapshot.exists()) {
-        console.log("No library doc found for id:", selectionInfo.libraryDocId);
-        setLibraryDoc(null);
-        return;
-      }
-
-      const docData = snapshot.data() as LibraryDoc;
-      console.log("Firestore libraryDoc:", docData);
-      setLibraryDoc(docData);
+      const snapshot = await getPublicData("libraries");
+      const selected = snapshot.docs.find(record => record.id === selectionInfo.libraryDocId);
+      setLibraryDoc(selected ? selected.data() as LibraryDoc : null);
     } catch (error) {
       console.error("Error fetching library doc:", error);
       setLibraryDoc(null);
@@ -224,9 +213,7 @@ export default function LibraryDisplay() {
 
       // Count libraries inside the boundary
       try {
-        const db = getFirestore(app);
-        const qy = query(collection(db, "libraries"));
-        const snap = await getDocs(qy);
+        const snap = await getPublicData("libraries");
 
         var acc = 0;
 

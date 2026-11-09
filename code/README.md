@@ -16,6 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Public map data
+
+Schools, libraries, and pantries load from JSON files to avoid
+reading their Firestore collections whenever someone uses the map.
+
+After changing location data in Firestore, run this from the `code\` folder:
+
+```bash
+npx tsx scripts/export-public-data.ts
+```
+
+The script requires the approved `serviceaccountkey.json`.
+It reads Firestore once per export and updates the three JSON files
+in public/data: libraries, pantries, and schools. Review and commit the updated files.
+
+Visitors do not need credentials. Refresh the page to load updated data.
+
 ## Import Georgia food pantries
 
 The pantry importer follows the same workflow as the school and library

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SidebarNav from "@/components/ui/sidebar";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import VersionSelector from "@/components/VersionSelector";
 import ZipMap from "@/components/ZipMap";
 import DemographicCharts from "@/components/ui/DemographicCharts";
@@ -9,6 +9,8 @@ import CountyMap from "@/components/CountyMap";
 import {Button, ButtonGroup} from "react-bootstrap";
 import { useAuth } from "@/firebase/authContext";
 import { useRouter } from "next/navigation";
+import { canUseAdminPages } from "@/firebase/roles";
+import { auth } from "@/firebase/firebaseConfig";
 
 interface Metrics {
     totalPeopleHelped: number;
@@ -16,7 +18,9 @@ interface Metrics {
 }
 
 export default function Dashboard() {
-    const { user, loading } = useAuth();
+    const { user, loading, role, roleLoading, roleError } = useAuth();
+    // Only verified admins and superadmins can use this page.
+    const isAdmin = !loading && !roleLoading && !roleError && !!user?.emailVerified && canUseAdminPages(role);
     const router = useRouter();
     const [totalMetrics, setTotalMetrics] = useState<Metrics | null>(null);
     const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
@@ -64,7 +68,17 @@ export default function Dashboard() {
 
         try {
             console.log(`Fetching data for version: ${versionId}`)
-            const response = await fetch(`/api/getResults?id=${versionId}`)
+            const token = await auth.currentUser?.getIdToken();
+
+            if (!token) throw new Error("Please sign in.");
+
+            const response = await fetch(
+                `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    cache: "no-store"
+                }
+            );
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch data: ${response.statusText}`)
@@ -97,24 +111,35 @@ export default function Dashboard() {
 
 
     useEffect(() => {
-        if (selectedVersionId) {
+        if (isAdmin && selectedVersionId) {
             fetchData(selectedVersionId)
         }
-    }, [selectedVersionId])
+    }, [selectedVersionId, isAdmin])
 
+    // wait for permissions before redirecting
     useEffect(() => {
-        if (!loading && !user) {
+        if (!loading && !roleLoading && !isAdmin) {
             router.replace("/login");
         }
-    }, [user, loading, router]);
+    }, [user, loading, roleLoading, isAdmin, router]);
 
-    if (loading || !user) {
+
+    // hides this page while checking access
+    if (loading || roleLoading || !isAdmin) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <Spinner animation="border" />
             </div>
         );
     }
+
+    if (!isAdmin) {
+    return (
+        <Alert variant="danger" className="m-4">
+            {roleError || "Access denied. This page is for admins only."}
+        </Alert>
+    );
+}
 
     return (
         <Container fluid className="p-0">

@@ -3,8 +3,7 @@ import DataCard from "../ui/data-card";
 import SearchableDropdown from "../filters/searchable-dropdown";
 import DashboardSchoolsMap, { DashboardSchoolsMapHandle } from "../map/dashboard-schools-map";
 import { useCallback, useRef, useState, useEffect } from "react";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-import { app } from "@/firebase/firebaseConfig"
+import { getPublicData } from "@/firebase/publicData";
 import { SchoolRecord } from "@/data/schoolTypes";
 import CountyStatsCard from "../ui/county-stats-card";
 import * as turf from "@turf/turf";
@@ -105,9 +104,7 @@ export default function SchoolDisplay() {
         return;
       }
       try {
-        const db = getFirestore(app);
-        const q = query(collection(db, "schools"));
-        const snapshot = await getDocs(q);
+        const snapshot = await getPublicData("schools");
         const hit = snapshot.docs.find(d => (d.data() as any)?.name === selectionInfo.schoolName);
         setSchoolRecord(hit ? (hit.data() as any) : null);
       } catch (error) {
@@ -241,9 +238,7 @@ export default function SchoolDisplay() {
 
       // --- Step 3: Count schools inside the boundary ---
       try {
-        const db = getFirestore(app);
-        const qy = query(collection(db, "schools"));
-        const snap = await getDocs(qy);
+        const snap = await getPublicData("schools");
 
         const acc: SchoolsBreakdown = {
           total: 0,

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
 import { Row, Col, Container, Button, ButtonGroup, Form, Card } from "react-bootstrap"
+import { auth } from "@/firebase/firebaseConfig";
 
 interface ZipData {
     ZipCode: string
@@ -69,7 +70,21 @@ const ZipMap = ({ versionId, selectedZip, setSelectedZip, timeframe, specificTim
             if (!versionId) return
             setLoading(true);
             try {
-                const response = await fetch(`/api/getResults?id=${versionId}`)
+                const token = await auth.currentUser?.getIdToken();
+                
+                if (!token) throw new Error("Please sign in.");
+                
+                const response = await fetch(
+                    `/api/getResults?id=${encodeURIComponent(versionId)}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        cache: "no-store"
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Unable to load results.");
+                }
                 const { data } = await response.json()
 
                 if (!data || cancelled) return;
