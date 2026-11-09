@@ -42,6 +42,15 @@ The account must exist, have a verified email, and have no existing
 role record. The server rechecks permissions before saving and only
 grants the `admin` role.
 
+## Admin Logs
+
+Superadmins can see the latest 50 changes: who added or removed
+admin access, whose access changed, and when.
+
+Logs are saved in `role_changes` and cannot be edited from the page.
+They must be edited/removed through the Firebase Console
+Manual Firebase Console changes are not logged.
+
 ## Local credentials
 
 Adding admins requires approved Firebase server credentials.
