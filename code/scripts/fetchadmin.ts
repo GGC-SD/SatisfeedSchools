@@ -4,7 +4,7 @@ import type { SchoolDoc } from '../src/data/schoolTypes';
 
 async function saveSchool(doc: SchoolDoc) {
   if (!doc.id) return;
-  await db.collection('schools').doc(doc.id).set(doc);
+  await db.collection('schools').doc(doc.id).set(doc, { merge: true });
 }
 
 async function saveSchoolsBatch(docs: SchoolDoc[]) {
@@ -14,7 +14,7 @@ async function saveSchoolsBatch(docs: SchoolDoc[]) {
   docs.forEach((doc) => {
     if (!doc.id) return;
     const docRef = collectionRef.doc(doc.id);
-    batch.set(docRef, doc);
+    batch.set(docRef, doc, { merge: true });
   });
 
   await batch.commit();

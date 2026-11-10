@@ -37,6 +37,12 @@ vi.mock("firebase/firestore", () => {
         name: "Walnut Grove Elementary School",
         county: "Walton",
         enrollment: 1_581,
+        lunchStats: {
+          schoolYear: "2024-25",
+          freeEligible: 171,
+          reducedPriceEligible: 24,
+          totalEligible: 195,
+        },
         coords: { lat: 33.9, lng: -84.0 },
       }),
     },
@@ -136,11 +142,15 @@ describe("User Story: See all schools as markers", () => {
         name: "Walnut Grove Elementary School",
         county: "Walton",
         enrollment: 1581,
+        lunchSchoolYear: "2024-25",
+        freeLunchEligible: 171,
+        reducedPriceLunchEligible: 24,
+        totalLunchEligible: 195,
       })
     );
   });
 
-  it("shows school, county, and formatted enrollment in the hover tooltip", async () => {
+  it("shows school, enrollment, and lunch eligibility in the hover tooltip", async () => {
     render(<SchoolsClusterOverlay map={ctx.map} idSuffix="-test" />);
 
     await waitFor(() => {
@@ -156,6 +166,10 @@ describe("User Story: See all schools as markers", () => {
             name: "Walnut Grove Elementary School",
             county: "Walton",
             enrollment: 1581,
+            lunchSchoolYear: "2024-25",
+            freeLunchEligible: 171,
+            reducedPriceLunchEligible: 24,
+            totalLunchEligible: 195,
           },
           geometry: { type: "Point", coordinates: [-83.7, 33.8] },
         },
@@ -167,5 +181,17 @@ describe("User Story: See all schools as markers", () => {
     );
     expect(popupState.content?.textContent).toContain("County: Walton");
     expect(popupState.content?.textContent).toContain("Enrollment: 1,581");
+    expect(popupState.content?.textContent).toContain(
+      "Lunch eligibility (2024-25)"
+    );
+    expect(popupState.content?.textContent).toContain(
+      "Free lunch eligible: 171"
+    );
+    expect(popupState.content?.textContent).toContain(
+      "Reduced-price eligible: 24"
+    );
+    expect(popupState.content?.textContent).toContain(
+      "Free or reduced-price eligible: 195"
+    );
   });
 });

@@ -42,11 +42,17 @@ type SchoolDoc = {
   enrollment?: number | null;
   state?: string;
   coords?: { lat: number; lng: number };
+  lunchStats?: {
+    schoolYear?: string;
+    freeEligible?: number | null;
+    reducedPriceEligible?: number | null;
+    totalEligible?: number | null;
+  };
 };
 
 const NOT_AVAILABLE = "Not available";
 
-function formatEnrollment(value: unknown) {
+function formatCount(value: unknown) {
   return typeof value === "number" && Number.isFinite(value)
     ? new Intl.NumberFormat("en-US").format(value)
     : NOT_AVAILABLE;
@@ -65,6 +71,15 @@ function appendTooltipRow(
   value.textContent = valueText;
   row.append(label, value);
   container.append(row);
+}
+
+function appendTooltipSection(container: HTMLElement, title: string) {
+  const heading = document.createElement("div");
+  const label = document.createElement("strong");
+  heading.style.marginTop = "0.4rem";
+  label.textContent = title;
+  heading.append(label);
+  container.append(heading);
 }
 
 /**
@@ -130,6 +145,11 @@ export default function SchoolsClusterOverlay({
               county: d.county ?? "",
               enrollment: d.enrollment ?? null,
               state: d.state ?? "",
+              lunchSchoolYear: d.lunchStats?.schoolYear ?? "",
+              freeLunchEligible: d.lunchStats?.freeEligible ?? null,
+              reducedPriceLunchEligible:
+                d.lunchStats?.reducedPriceEligible ?? null,
+              totalLunchEligible: d.lunchStats?.totalEligible ?? null,
             },
             geometry: {
               type: "Point" as const,
@@ -326,7 +346,31 @@ export default function SchoolsClusterOverlay({
       appendTooltipRow(
         content,
         "Enrollment",
-        formatEnrollment(school.properties?.enrollment)
+        formatCount(school.properties?.enrollment)
+      );
+      const lunchSchoolYear = String(
+        school.properties?.lunchSchoolYear ?? ""
+      ).trim();
+      appendTooltipSection(
+        content,
+        lunchSchoolYear
+          ? `Lunch eligibility (${lunchSchoolYear})`
+          : "Lunch eligibility"
+      );
+      appendTooltipRow(
+        content,
+        "Free lunch eligible",
+        formatCount(school.properties?.freeLunchEligible)
+      );
+      appendTooltipRow(
+        content,
+        "Reduced-price eligible",
+        formatCount(school.properties?.reducedPriceLunchEligible)
+      );
+      appendTooltipRow(
+        content,
+        "Free or reduced-price eligible",
+        formatCount(school.properties?.totalLunchEligible)
       );
 
       tooltip
