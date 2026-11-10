@@ -51,7 +51,7 @@ async function saveSchoolsInChunks(docs: SchoolDoc[]) {
     chunk.forEach(doc => {
       if (!doc.id) return;
       const ref = db.collection("schools").doc(doc.id);
-      batch.set(ref, doc);
+      batch.set(ref, doc, { merge: true });
     });
 
     await batch.commit();

@@ -30,4 +30,10 @@ export interface SchoolDoc {
   level: string | null;
   enrollment: number | null;
   district_id: string | null;
+  povertyRate?: number | null;
+  povertyPeriod?: string | null;
+  povertyTractGeoid?: string | null;
+  povertySource?: string | null;
+  povertyTotalPopulation?: number | null;
+  povertyBelowCount?: number | null;
 }
