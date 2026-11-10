@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Header from "@/components/ui/header";
 import SidebarNav from "@/components/ui/sidebar";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import VersionSelector from "@/components/VersionSelector";
@@ -130,7 +131,6 @@ export default function Dashboard() {
                     <div style={{margin: "0 auto"}}>
                         {/* Dashboard Header */}
                             <div className="dashboard-main-header d-flex align-items-center justify-content-center gap-2">
-                            <img src="/Satisfeed logo white.png" alt="Satisfeed Logo" className="satisfeed-sidebar-logo" />
                             <h1 className="dashboard-page-title font-bold text-gray-800">
                                 {t.title}
                             </h1>
