@@ -30,4 +30,11 @@ export interface SchoolDoc {
   level: string | null;
   enrollment: number | null;
   district_id: string | null;
+  lunchStats?: {
+    schoolYear: string;
+    freeEligible: number;
+    reducedPriceEligible: number;
+    totalEligible: number;
+    source: "NCES CCD ELSi";
+  };
 }
