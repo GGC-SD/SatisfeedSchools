@@ -114,7 +114,7 @@ export default function SchoolsClusterOverlay({
 
       // Add logo for individual school markers
       if (!m.hasImage(SCHOOL_ICON_ID)) {
-        const schoolIcon = await m.loadImage("/SmallSatisfeedLogoTransp.png");
+        const schoolIcon = await m.loadImage("/small_school_logo.png");
         if (unmounted) return;
         m.addImage(SCHOOL_ICON_ID, schoolIcon.data);
       }
