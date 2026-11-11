@@ -37,4 +37,10 @@ export interface SchoolDoc {
     totalEligible: number;
     source: "NCES CCD ELSi";
   };
+  povertyRate?: number | null;
+  povertyPeriod?: string | null;
+  povertyTractGeoid?: string | null;
+  povertySource?: string | null;
+  povertyTotalPopulation?: number | null;
+  povertyBelowCount?: number | null;
 }
