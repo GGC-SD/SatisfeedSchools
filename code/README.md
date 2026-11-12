@@ -44,13 +44,13 @@ free/reduced count. First run the importer without `--commit` to verify the
 source rows and Firestore ID matches:
 
 ```bash
-npm run import:school-lunch -- /path/to/elsi-export.zip
+npm run import:school-lunch -- ELSIexport.csv
 ```
 
 After reviewing the summary, apply the supplemental fields:
 
 ```bash
-npm run import:school-lunch -- /path/to/elsi-export.zip --commit
+npm run import:school-lunch -- ELSIexport.csv --commit
 ```
 
 The importer updates only `lunchStats.*` on existing documents in the
