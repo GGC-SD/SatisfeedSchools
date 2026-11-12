@@ -127,7 +127,7 @@ export default function SidebarNav({language: providedLanguage,setLanguage: prov
                         {/*https://www.satisfeed.org/ */}
                         <a href="https://www.satisfeed.org/" target="_blank" rel="noopener noreferrer" className="p-0 flex justify-center item-center">
                             <img
-                                src="/Satisfeed logo.png"
+                                src="/Satisfeed logo.svg"
                                 alt="Satisfeed logo"
                                 className="h-20 w-auto border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-xl shadow-black/20"
                             />
