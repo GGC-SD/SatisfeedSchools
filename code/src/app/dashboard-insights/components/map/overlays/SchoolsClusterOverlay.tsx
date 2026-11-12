@@ -190,7 +190,7 @@ export default function SchoolsClusterOverlay({
         filter: ["!", ["has", "point_count"]],
         layout: {
           "icon-image": SCHOOL_ICON_ID,
-          "icon-size": 0.045,
+          "icon-size": 0.05,
           "icon-allow-overlap": true,
           "icon-ignore-placement": true,
         },
