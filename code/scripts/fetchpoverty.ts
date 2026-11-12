@@ -53,81 +53,117 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/**
- * Download every Georgia Census tract's poverty counts from ACS.
- */
+
+// Updated fetchpoverty script in order to resolve issues.
+
 async function fetchGeorgiaPovertyData(): Promise<
-  Map<string, PovertyTractDoc>
+    Map<string, PovertyTractDoc>
 > {
   const apiKey = process.env.CENSUS_API_KEY?.trim();
 
   if (!apiKey) {
     throw new Error(
-      "Missing CENSUS_API_KEY in code/.env.local"
+        "Missing CENSUS_API_KEY in code/.env.local"
     );
   }
 
   const url = new URL(ACS_URL);
 
   url.searchParams.set(
-    "get",
-    "NAME,B17001_001E,B17001_002E"
+      "get",
+      "NAME,B17001_001E,B17001_002E"
   );
 
   url.searchParams.set("for", "tract:*");
+
+  // Explicitly request every tract in every Georgia county.
   url.searchParams.set(
-    "in",
-    `state:${GEORGIA_STATE_FIPS}`
+      "in",
+      `state:${GEORGIA_STATE_FIPS} county:*`
   );
+
   url.searchParams.set("key", apiKey);
 
   console.log(
-    "Fetching Georgia Census tract poverty data..."
+      "Fetching Georgia Census tract poverty data..."
   );
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url.toString(), {
+    headers: {
+      Accept: "application/json",
+    },
+    redirect: "manual",
+    signal: AbortSignal.timeout(30000),
+  });
+
+  const body = await response.text();
 
   if (!response.ok) {
-    const body = await response.text();
-
     throw new Error(
-      `Census ACS error ${response.status}: ${body}`
+        `Census ACS error ${response.status}: ${
+            body.split(apiKey).join("[REDACTED]").slice(0, 500)
+        }`
     );
   }
 
-  const json = (await response.json()) as string[][];
+  const contentType =
+      response.headers.get("content-type") ?? "";
+
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+        `Expected JSON but received ${contentType}: ${
+            body.split(apiKey).join("[REDACTED]").slice(0, 500)
+        }`
+    );
+  }
+
+  const json = JSON.parse(body) as string[][];
 
   if (!Array.isArray(json) || json.length < 2) {
     throw new Error(
-      "Census ACS returned unexpected poverty data."
+        "Census ACS returned unexpected poverty data."
     );
   }
 
   const headers = json[0];
   const rows = json.slice(1);
 
+  console.log(`Received ${rows.length} Census tracts.`);
+
   const povertyByGeoid = new Map<
-    string,
-    PovertyTractDoc
+      string,
+      PovertyTractDoc
   >();
 
   for (const row of rows) {
     const poverty = censusRowToPovertyTract(
-      headers,
-      row
+        headers,
+        row
     );
 
     if (poverty) {
       povertyByGeoid.set(
-        poverty.geoid,
-        poverty
+          poverty.geoid,
+          poverty
       );
     }
   }
 
+  if (povertyByGeoid.size === 0) {
+    throw new Error(
+        "No valid poverty records were produced. " +
+        "Check censusRowToPovertyTract()."
+    );
+  }
+
   console.log(
-    `Loaded ${povertyByGeoid.size} valid Georgia Census tracts.`
+      `Loaded ${povertyByGeoid.size} valid Georgia Census tracts.`
   );
+
+  // Print a sample to verify the transformation.
+  const sample = povertyByGeoid.values().next().value;
+
+  console.log("Sample poverty record:", sample);
 
   return povertyByGeoid;
 }
