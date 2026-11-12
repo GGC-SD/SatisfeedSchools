@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export type DashboardTab = 1 | 2 | 3;
 
@@ -8,13 +9,15 @@ type TabsProp = {
   onSelect: (tab: DashboardTab) => void;
 };
 
-const tabs: readonly { id: DashboardTab; label: string }[] = [
-  { id: 1, label: "Schools" },
-  { id: 2, label: "Libraries" },
-  { id: 3, label: "Pantry" },
+const tabs: readonly { id: DashboardTab; label: string; spanishLabel: string }[] = [
+  { id: 1, label: "Schools", spanishLabel: "Escuelas" },
+    { id: 2, label: "Libraries", spanishLabel: "Bibliotecas" },
+    { id: 3, label: "Pantry", spanishLabel: "Despensas" }
 ];
 
 export default function Tabs({ onSelect }: TabsProp) {
+  const { language } = useLanguage();
+  const es = language === "es";
   const [selectedTab, setSelectedTab] = useState<DashboardTab>(1);
 
   const handleSelectedTab = (tab: DashboardTab) => {
@@ -37,7 +40,7 @@ export default function Tabs({ onSelect }: TabsProp) {
           }`}
           onClick={() => handleSelectedTab(tab.id)}
         >
-          {tab.label}
+          {es ? tab.spanishLabel : tab.label}
         </button>
       ))}
     </div>

@@ -3,11 +3,12 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import type { ReactNode, Dispatch, SetStateAction } from "react"
+import type { ReactNode } from "react"
 import { getAuth, signOut } from "firebase/auth"
 import { Button, Nav, Navbar, Offcanvas } from "react-bootstrap"
 import { useAuth } from "@/firebase/authContext"
 import { canUseAdminPages, canManageAdmins } from "@/firebase/roles"
+import { useLanguage } from "@/components/LanguageContext";
 
 // This component wraps React Bootstrap's Nav.Link with Next.js Link for client-side navigation
 const NavLink = ({ href, active, children, onClick = () => {} }: {
@@ -30,20 +31,12 @@ const NavLink = ({ href, active, children, onClick = () => {} }: {
     )
 }
 
-interface SidebarNavProps {
-    language?: "en" | "es";
-    setLanguage?: Dispatch<SetStateAction<"en" | "es">>;
-}
-
  /* Side Bar Navigation*/
-export default function SidebarNav({language: providedLanguage,setLanguage: providedSetLanguage}: SidebarNavProps = {}) {
-    const [localLanguage, setLocalLanguage] = useState<"en" | "es">("en")
-    const useProvidedLanguage = providedLanguage !== undefined && providedSetLanguage !== undefined
-    const language = useProvidedLanguage ? providedLanguage : localLanguage
-    const setLanguage = useProvidedLanguage ? providedSetLanguage : setLocalLanguage
-    const [showMobileMenu, setShowMobileMenu] = useState(false)
-    const [showDesktopMenu, setShowDesktopMenu] = useState(false)
-    const pathname = usePathname()
+export default function SidebarNav() {
+    const { language, setLanguage } = useLanguage();
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showDesktopMenu, setShowDesktopMenu] = useState(false);
+    const pathname = usePathname();
     
     const { user, loading, role, roleLoading, roleError } = useAuth()
     // wait for the account and role checks before showing private admin pages
