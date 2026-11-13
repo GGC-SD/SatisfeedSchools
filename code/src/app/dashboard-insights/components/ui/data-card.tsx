@@ -65,7 +65,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
         "zip",
         "enrollment",
         "povertyRate",
-        "povertyPeriod",
+        //"povertyPeriod",
         "phone",
         //"website",
       ]
