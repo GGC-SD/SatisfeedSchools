@@ -64,6 +64,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
         "county",
         "zip",
         "enrollment",
+        "povertyRate",
+        "povertyPeriod",
         "phone",
         //"website",
       ]
@@ -97,6 +99,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     state: "State",
     zip: "ZIP Code",
     enrollment: "Enrollment",
+    povertyRate: "Census Tract Poverty Rate",
+    povertyPeriod: "Poverty Data Period",
     phone: "Phone Number",
     hours: "Hours",
     website: "Website",
@@ -146,6 +150,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
                   <div className="break-words">
                     {val === undefined || val === null || val === "" ? (
                       "Not Available"
+                    ) : key === "povertyRate" && typeof val === "number" ? (
+                      `${val.toFixed(1)}%`
                     ) : key === "website" && typeof val === "string" ? (
                       <a
                         href={
