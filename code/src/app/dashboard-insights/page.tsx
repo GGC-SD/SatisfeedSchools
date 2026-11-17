@@ -3,6 +3,7 @@ import SidebarNav from "@/components/ui/sidebar";
 import Header from "@/app/dashboard-insights/components/ui/header";
 import DashboardContentDisplay from "./components/dashboard-content-display";
 import React, { useEffect, useState } from "react";
+import Footer from "./components/ui/footer";
 
 export default function DashboardSchools() {
   return (
@@ -11,6 +12,7 @@ export default function DashboardSchools() {
       <div className="flex flex-col w-full">
         <Header />
         <DashboardContentDisplay />
+        <Footer />
       </div>
     </div>
   );

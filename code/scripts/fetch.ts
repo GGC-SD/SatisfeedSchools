@@ -51,7 +51,8 @@ async function saveSchoolsInChunks(docs: SchoolDoc[]) {
     chunk.forEach(doc => {
       if (!doc.id) return;
       const ref = db.collection("schools").doc(doc.id);
-      // keep extra fields from other imports
+      // Preserve supplemental fields, such as NCES lunch statistics, that are
+      // maintained by their own import workflow.
       batch.set(ref, doc, { merge: true });
     });
 

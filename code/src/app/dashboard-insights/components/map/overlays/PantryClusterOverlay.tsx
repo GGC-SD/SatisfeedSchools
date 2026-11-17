@@ -6,9 +6,13 @@ import maplibregl, {
   type MapLayerMouseEvent,
   type GeoJSONSource,
 } from "maplibre-gl";
+import {
+  replaceFixedRadiusFromCenter,
+  clearFixedRadius,
+} from "./click-radius";
 
-// Place pantry-marker-icon.png in the project's /public directory.
-//const PANTRY_ICON_PATH = "/pantry-marker-icon.png";
+// Place image you want in the project's /public directory.
+const PANTRY_ICON_PATH = "/pantry-marker-icon.png";
 
 export type PantryLocation = {
   /** Firestore document ID; used to identify a pantry. */
@@ -169,6 +173,12 @@ export default function PantryClusterOverlay({
   const onPantryClickRef = useRef(onPantryClick);
   onPantryClickRef.current = onPantryClick;
 
+  // setupLayers is intentionally not recreated every time pantry data changes.
+  // Keep the latest data available to its asynchronous initialization instead
+  // of using the possibly-empty pantries value from the first render.
+  const pantriesRef = useRef(pantries);
+  pantriesRef.current = pantries;
+
   const sourceId = `pantries${idSuffix}`;
   const clusterLayerId = `pantry-clusters${idSuffix}`;
   const clusterCountLayerId = `pantry-cluster-count${idSuffix}`;
@@ -189,6 +199,9 @@ export default function PantryClusterOverlay({
     let ready = false;
     let initializing = false;
     let addedPantryImage = false;
+    // Changes whenever MapLibre emits a new style.load event. This prevents
+    // an async image load from continuing against an older map style.
+    let styleLoadVersion = 0;
 
     let clickPoint:
       | ((event: MapLayerMouseEvent) => void)
@@ -300,6 +313,7 @@ export default function PantryClusterOverlay({
       if (!m.isStyleLoaded()) return;
 
       initializing = true;
+      const setupVersion = styleLoadVersion;
 
       try {
         removeListeners();
@@ -311,7 +325,7 @@ export default function PantryClusterOverlay({
         if (!hasPantryImage) {
           try {
             const image = await m.loadImage(PANTRY_ICON_PATH);
-            if (cancelled) {
+            if (cancelled || setupVersion !== styleLoadVersion) {
               initializing = false;
               return;
             }
@@ -329,19 +343,28 @@ export default function PantryClusterOverlay({
           }
         }
 
-        if (cancelled || !m.isStyleLoaded()) {
+
+        // isStyleLoaded() can temporarily become false while map sources/tiles
+        // style is available, so do not abort source creation for that transient
+        // state. Only stop if this effect was cleaned up or a newer style loaded.
+        if (cancelled || setupVersion !== styleLoadVersion) {
           initializing = false;
           return;
         }
 
+
+        // Build the GeoJSON once so the diagnostic count matches the source data.
+        const pantryGeoJSON = makePantryGeoJSON(pantriesRef.current);
+
         // Clustered pantry source.
         m.addSource(sourceId, {
           type: "geojson",
-          data: makePantryGeoJSON(pantries),
+          data: pantryGeoJSON,
           cluster: true,
           clusterRadius: 40,
           clusterMaxZoom: 14,
         });
+
 
         // Cluster bubbles.
         m.addLayer({
@@ -399,7 +422,7 @@ export default function PantryClusterOverlay({
             layout: {
               "icon-image": pantryIconId,
               "icon-size": 0.045,
-              "icon-anchor": "bottom",
+              "icon-anchor": "center",
               "icon-allow-overlap": true,
               "icon-ignore-placement": true,
             },
@@ -453,7 +476,26 @@ export default function PantryClusterOverlay({
           if (pantryId === undefined || pantryId === null) return;
 
           const coordinates = feature.geometry.coordinates as [number, number];
+
+          // Draw the 3-mile service area directly from the clicked map feature.
+          // Do not wait for the parent component to update selectedPantryId.
+          replaceFixedRadiusFromCenter(m, coordinates, 3, {
+            idSuffix,
+            fillColor: "#2563eb",
+            fillOpacity: 0.15,
+            strokeColor: "#1d4ed8",
+            strokeWidth: 2,
+            steps: 128,
+          });
+
+          // Keep the pantry marker and selected outline visible above the buffer.
+          if (m.getLayer(pointLayerId)) {
+            m.moveLayer(pointLayerId);
+          }
           showSelectedPantryOutline(coordinates);
+
+          // Update the parent selection as well. Its effect keeps the buffer
+          // synchronized if the selected pantry changes outside a map click.
           onPantryClickRef.current(String(pantryId));
         };
 
@@ -530,7 +572,9 @@ export default function PantryClusterOverlay({
             if (!Number.isFinite(clusterId)) return;
 
             const pantriesInCluster = await source.getClusterLeaves(
-              clusterId, 3,0
+              clusterId,
+              3,
+              0
             );
 
             if (
@@ -588,7 +632,7 @@ export default function PantryClusterOverlay({
 
         console.info(
           `[Pantry clusters] Initialized with ${
-            makePantryGeoJSON(pantries).features.length
+            makePantryGeoJSON(pantriesRef.current).features.length
           } valid pantry locations.`
         );
       } catch (error) {
@@ -620,6 +664,9 @@ export default function PantryClusterOverlay({
     const handleStyleLoad = () => {
       if (cancelled) return;
 
+      // Invalidate any setupLayers() call currently waiting for loadImage().
+      // Its version check will prevent it from creating layers on this style.
+      styleLoadVersion += 1;
       ready = false;
       initializing = false;
       setLayersReady(false);
@@ -651,6 +698,7 @@ export default function PantryClusterOverlay({
 
       try {
         setCursor("");
+        clearFixedRadius(m, { idSuffix });
         removeOwnedLayersAndSource();
 
         if (addedPantryImage && m.hasImage(pantryIconId)) {
@@ -663,13 +711,11 @@ export default function PantryClusterOverlay({
       setLayersReady(false);
     };
 
-    // Pantry data is updated by the separate source-update effect.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [map, idSuffix]);
 
-  // Update pantry features without rebuilding the layers.
   useEffect(() => {
-    if (!map || !layersReady || !map.isStyleLoaded()) return;
+    if (!map || !layersReady) return;
 
     const source = map.getSource(sourceId) as GeoJSONSource | undefined;
     if (!source) {
@@ -688,35 +734,56 @@ export default function PantryClusterOverlay({
     );
   }, [map, layersReady, pantries, sourceId]);
 
+  
   // Keep the outline synchronized with the selected pantry from parent state.
   useEffect(() => {
-    if (!map || !layersReady || !map.isStyleLoaded()) return;
+    if (!map || !layersReady) return;
 
     const source = map.getSource(selectedSourceId) as
       | GeoJSONSource
       | undefined;
+
     if (!source) return;
 
     const selectedPantry = pantries.find(
       (pantry) => pantry.id === selectedPantryId
     );
 
+    // No selected pantry: remove the outline and service-area circle.
     if (!selectedPantry || !hasValidCoordinates(selectedPantry)) {
       source.setData(makeSelectedPantryGeoJSON(null));
+      clearFixedRadius(map, { idSuffix });
       return;
     }
 
     const coords = getCoordinates(selectedPantry);
+
     if (!coords) {
       source.setData(makeSelectedPantryGeoJSON(null));
+      clearFixedRadius(map, { idSuffix });
       return;
     }
 
-    source.setData(
-      makeSelectedPantryGeoJSON([coords.lng, coords.lat])
-    );
+    const center: [number, number] = [coords.lng, coords.lat];
 
-    // Keep the outline above the marker and other map overlays.
+    // Display the selected pantry outline.
+    source.setData(makeSelectedPantryGeoJSON(center));
+
+    // Display the selected pantry's 3-mile service area.
+    replaceFixedRadiusFromCenter(map, center, 3, {
+      idSuffix,
+      fillColor: "#2563eb",
+      fillOpacity: 0.15,
+      strokeColor: "#1d4ed8",
+      strokeWidth: 2,
+      steps: 128,
+    });
+
+    // Keep the pantry marker and outline above the service-area circle.
+    if (map.getLayer(pointLayerId)) {
+      map.moveLayer(pointLayerId);
+    }
+
     if (map.getLayer(selectedLayerId)) {
       map.moveLayer(selectedLayerId);
     }
@@ -727,7 +794,10 @@ export default function PantryClusterOverlay({
     selectedPantryId,
     selectedSourceId,
     selectedLayerId,
+    pointLayerId,
+    idSuffix,
   ]);
+
 
   return null;
 }

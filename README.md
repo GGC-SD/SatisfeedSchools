@@ -6,6 +6,9 @@ In Spring 2025, Team Satisfeed partnered with the nonprofit Satisfeed, which pro
 ### Updates Fall 2025
 This semester’s work expands the original dashboard by integrating a new dashboard section with an interactive map. The goal is to help Satisfeed identify trends in food insecurity around Georgia's schools / libraries in relation to food distribution geographical data to improve distribution planning.
 
+### Updates Fall 2026
+This semester work expends the orginal dashboard by creating a new section for pantries around Gerogia. Another way the dashboard was expanded by adding and reducing information for schools, libary, and pantry. Satisfeed implement an admin and user allowance access so regular do not change the firebase data unless they are admin.
+
 ## Project Documentation:
 [Project Demo](https://app.powerbi.com/view?r=eyJrIjoiMGViYzE1YzktZmEzNi00OTJhLThhNWQtZDRkMjczOTZlNzAxIiwidCI6ImNmOTU1MmRiLTY2MGEtNGE5MS05YmQ2LTY1YzIzMDBmOWNiMSIsImMiOjF9)\
 [Project Website](https://satisfeeddashboardproject.carrd.co)\
@@ -17,6 +20,9 @@ Project Poster (in the Docs folder)\
 [Project Poster](https://github.com/GGC-SD/SatisfeedSchools/blob/main/docs-Fall2025/Satisfeed-flyer.pdf)\
 [Final Report](https://github.com/GGC-SD/SatisfeedSchools/blob/main/docs-Fall2025/Satisfeed%20Dashboard%20Final%20Report.pdf)
 
+### Updates Fall 2026
+[Project Poster](https://github.com/GGC-SD/SatisfeedSchools/blob/main/docs-Fall2026/SatisfeedFlyer.pdf)
+
 ## Technologies
 - Next.js
 - Firebase
@@ -24,6 +30,9 @@ Project Poster (in the Docs folder)\
 
 ### Updates Fall 2025
 - MapLibre GL JS - https://maplibre.org/maplibre-gl-js/docs/  
+
+### Updates Fall 2026
+- TypeDoc - https://typedoc.org/
 
 ## Working Features
 - Dashboard Login
@@ -59,6 +68,22 @@ Involved integrating scripts to parse library data from public APIs and saving d
 - County / ZIP Statistics  
 Dashboard integrates relevant statisitcs per county / ZIP code selected while also showcasing location on maps.
 Involved working with exisiting GEOJson data which allows users to select needed County / ZIP to be presented with relevant information.
+
+
+### Working Features Developed Fall 2026
+- Dashboard Pantry Tab
+New section of the dashboard insights page that display all of the pantry across georgia.
+
+- Pantry Data Integration
+Internative map overlay showing Georgia pantries, allowing Satisfeed to view distribution geographic in relation to libaries.
+Involved integrating scripts to parse pantry data from public apis and saving data to firebase.
+
+- Povery Data Integration
+Inveractive map overlay showing schools, now allow to see the poverty rate around the area of a school. Involved integrating scripts to parse Poverty data from public APIs and saving data to firebase. This allowed users to access said data when interacting with the maps in Dashboard Insights' Schools tab.
+
+- Free Lunch Data Integration
+Inveractive map overlay showing schools, now allow to see the free lunch eligablity rate around the area of a school. Involved integrating scripts to parse free lunch data from public APIs and saving data to firebase. This allowed users to access said data when interacting with the maps in Dashboard Insights' Schools tab.
+
 
 ---
 
@@ -122,6 +147,7 @@ Hugo Padilla - Lead Programmer, Client Liaison
 1. Poster was presented at Georgia Gwinnett College's Student Talent and Research Showcase (STARS) 4/17/2025
 2. Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 4/24/2025
 3. Expanded Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 11/21/2025
+4. Expaned Dashboard demo was given at Georgia Gwinnett College's CREATE Symposium 11/13/2026
 
 ---
 
@@ -161,5 +187,5 @@ and is used as a placeholder.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).  
-© 2025 Georgia Gwinnett College
+© 2026 Georgia Gwinnett College
 
