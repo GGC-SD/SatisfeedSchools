@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/components/LanguageContext";
+
 /**
  * Represents a county or ZIP selection from the dropdown.
  */
@@ -64,6 +66,9 @@ export default function CountyStatsCard({
   librariesTotal,
   sections = [],
 }: Props) {
+  const { language } = useLanguage();
+  const es = language === "es";
+
   // Determine header content
   const heading =
     selection?.type === "zip"
@@ -76,7 +81,9 @@ export default function CountyStatsCard({
   if (!heading) {
     return (
       <div className="min-w-[150px] min-h-44 lg:min-h-[10rem] bg-white child-component-borders flex items-center justify-center">
-        <h1 className="text-lg text-neutral-700">Select a County To Begin</h1>
+        <h1 className="text-lg text-neutral-700">
+          {es ? "Seleccione un condado para comenzar" : "Select a County To Begin"}
+        </h1>
       </div>
     );
   }

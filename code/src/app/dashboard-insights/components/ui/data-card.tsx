@@ -3,6 +3,7 @@
 import { SchoolRecord } from "@/data/schoolTypes";
 import { LibraryDoc } from "@/data/libraryTypes";
 import { PantryDoc } from "@/data/pantryTypes";
+import { useLanguage } from "@/components/LanguageContext";
 
 /**
  * Props for the DataCard.
@@ -32,6 +33,8 @@ type DataCardProps ={
  * @returns A card reflecting the selected school's/librarie's data, or a placeholder when none is selected.
  */
 export default function DataCard({ title, value, record, type, onClear }: DataCardProps) {
+  const { language } = useLanguage();
+  const es = language === "es";
 
   const normalizedType = type.toLowerCase();
 
@@ -40,18 +43,18 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
   const isPantry = normalizedType === "pantry";
 
   const typeLabel = isSchool
-    ? "School"
+    ? (es ? "Escuela" : "School")
     : isLibrary
-      ? "Library"
+      ? (es ? "Biblioteca" : "Library")
       : isPantry
-        ? "Pantry"
+        ? (es ? "Despensa" : "Pantry")
         : type;
 
   if (!record && !title) {
     return (
       <div className="min-w-[150px] min-h-96 lg:min-h-[20rem] bg-white child-component-borders flex justify-center items-center p-4">
         <h1 className="text-lg text-neutral-700 text-center">
-          Select a {typeLabel} To Begin
+          {es ? `Seleccione una ${typeLabel.toLowerCase()} para comenzar` : `Select a ${typeLabel} To Begin`}
         </h1>
       </div>
     );
@@ -93,21 +96,21 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
         ];
 
   const fieldLabels: Record<string, string> = {
-    address: "Address",
-    city: "City",
-    county: "County",
-    state: "State",
-    zip: "ZIP Code",
-    enrollment: "Enrollment",
-    povertyRate: "Census Tract Poverty Rate",
-    povertyPeriod: "Poverty Data Period",
-    phone: "Phone Number",
-    hours: "Hours",
-    website: "Website",
-    organization: "Organization",
-    resourceType: "Resource Type",
-    dataSource: "Data Source",
-    lastVerifiedDate: "Last Verified",
+    address: es ? "Dirección" : "Address",
+    city: es ? "Ciudad" : "City",
+    county: es ? "Condado" : "County",
+    state: es ? "Estado" : "State",
+    zip: es ? "Código postal" : "ZIP Code",
+    enrollment: es ? "Matrícula" : "Enrollment",
+    povertyRate: es ? "Tasa de pobreza del sector censal" : "Census Tract Poverty Rate",
+    povertyPeriod: es ? "Período de los datos de pobreza" : "Poverty Data Period",
+    phone: es ? "Número de teléfono" : "Phone Number",
+    hours: es ? "Horario" : "Hours",
+    website: es ? "Sitio web" : "Website",
+    organization: es ? "Organización" : "Organization",
+    resourceType: es ? "Tipo de recurso" : "Resource Type",
+    dataSource: es ? "Fuente de datos" : "Data Source",
+    lastVerifiedDate: es ? "Última verificación" : "Last Verified",
   };
 
   const recordFields = record as unknown as Record<string, unknown>;
@@ -116,17 +119,19 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     <div className="min-w-[150px] min-h-36 lg:min-h-[20rem] bg-white child-component-borders">
       <div className="p-3 w-full h-full flex flex-col">
         <h3 className="text-2xl font-bold text-center">
-          {title || `Selected ${typeLabel}`}
+          {title || (es ? `${typeLabel} seleccionada` : `Selected ${typeLabel}`)}
         </h3>
 
         {(isSchool || isLibrary) && (
         <div className="flex mt-2 text-md flex-col xl:flex-row xl:justify-between">
-          <div className="font-medium uppercase">Households:</div>
+          <div className="font-medium uppercase">
+            {es ? "Hogares:" : "Households:"}
+          </div>
 
           <div className="flex mb-1">
             <div>{value.toLocaleString()}</div>
             <div className="text-sm text-neutral-500 flex place-self-end">
-              &nbsp;(approximate)
+              &nbsp;{es ? "(aprox.)" : "(approximate)"}
             </div>
           </div>
         </div>
@@ -149,7 +154,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
 
                   <div className="break-words">
                     {val === undefined || val === null || val === "" ? (
-                      "Not Available"
+                      es ? "No disponible" : "Not Available"
                     ) : key === "povertyRate" && typeof val === "number" ? (
                       `${val.toFixed(1)}%`
                     ) : key === "website" && typeof val === "string" ? (
@@ -161,7 +166,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
                         rel="noopener noreferrer"
                         className="text-blue-600 underline"
                       >
-                        Visit Website
+                        {es ? "Visitar sitio web" : "Visit Website"}
                       </a>
                     ) : key === "hours" && typeof val === "string" ? (
                       val
@@ -177,7 +182,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           </div>
         ) : (
           <p className="text-neutral-500 mt-4">
-            No additional data found.
+            {es ? "No se encontraron datos adicionales." : "No additional data found."}
           </p>
         )}
 
@@ -186,9 +191,9 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
             type="button"
             onClick={onClear}
             className="button-insights"
-            aria-label={`Clear selected ${typeLabel.toLowerCase()}`}
+            aria-label={es ? `Borrar ${typeLabel.toLowerCase()} seleccionada` : `Clear selected ${typeLabel.toLowerCase()}`}
           >
-            Clear Selected {typeLabel}
+            {es ? `Borrar ${typeLabel.toLowerCase()} seleccionada` : `Clear Selected ${typeLabel}`}
           </button>
         </div>
       </div>

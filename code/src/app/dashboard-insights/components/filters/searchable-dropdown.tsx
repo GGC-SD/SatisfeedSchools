@@ -8,6 +8,7 @@ import {
 } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { parse } from "csv-parse/browser/esm/sync";
+import { useLanguage } from "@/components/LanguageContext";
 
 type CountyData = Record<string, string[]>;
 
@@ -27,6 +28,8 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
   const [countyQuery, setCountyQuery] = useState("");
   const [selectedZip, setSelectedZip] = useState<string | null>(null);
   const [zipQuery, setZipQuery] = useState("");
+  const { language } = useLanguage();
+  const es = language === "es";
 
   useEffect(() => {
     fetch("/data/Zip_City_Mapping.csv")
@@ -125,7 +128,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
                 displayValue={(c) => (c as string) || ""}
                 onChange={(e) => setCountyQuery(e.target.value)}
                 onFocus={() => setCountyQuery("")}
-                placeholder="Select a county..."
+                placeholder={es ? "Seleccione un condado..." : "Select a county..."}
               />
               <ComboboxButton className="absolute right-4 top-3 text-neutral-500 hover:text-neutral-800">
                 <svg
@@ -160,7 +163,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
           </Combobox>
         </div>
         <div className="flex items-center justify-end xl:w-[12rem]">
-              <button className="button-insights w-full h-full text-nowrap overflow-hidden" onClick={clearCounty}>Clear County</button>
+              <button className="button-insights w-full h-full text-nowrap overflow-hidden" onClick={clearCounty}>{es ? "Borrar condado" : "Clear County"}</button>
         </div>
       </div>
 
@@ -174,7 +177,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
                 displayValue={(z) => (z as string) || ""}
                 onChange={(e) => setZipQuery(e.target.value)}
                 onFocus={() => setZipQuery("")}
-                placeholder="Select a ZIP code"
+                placeholder={es ? "Seleccione un código postal" : "Select a ZIP code"}
               />
               <ComboboxButton className="absolute right-4 top-3 text-neutral-500 hover:text-neutral-800">
                 <svg
@@ -209,7 +212,7 @@ export default function SearchableDropdown({ onBoundarySelect, onClearBoundary }
           </Combobox>
         </div>
         <div className="flex items-center justify-end xl:w-[12rem]">
-              <button className="button-insights w-full h-full text-nowrap overflow-hidden" onClick={clearZip}>Clear ZIP</button>
+              <button className="button-insights w-full h-full text-nowrap overflow-hidden" onClick={clearZip}>{es ? "Borrar código postal" : "Clear ZIP"}</button>
         </div>
       </div>
     </div>
