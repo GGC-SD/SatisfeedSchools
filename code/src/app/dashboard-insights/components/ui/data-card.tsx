@@ -64,6 +64,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
         "county",
         "zip",
         "enrollment",
+        "povertyRate",
+        //"povertyPeriod",
         "phone",
         //"website",
       ]
@@ -74,17 +76,16 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           "county",
           "zip",
           "phone",
-          "hours",
+          //"hours",
           "website",
         ]
       : [
-          "organization",
           "address",
-          "city",
-          "state",
-          "zip",
+          //"city",
+          //"state",
+          //"zip",
           "phone",
-          "hours",
+          //"hours",
           "website",
           //"resourceType",
           //"dataSource",
@@ -98,6 +99,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
     state: "State",
     zip: "ZIP Code",
     enrollment: "Enrollment",
+    povertyRate: "Census Tract Poverty Rate",
+    povertyPeriod: "Poverty Data Period",
     phone: "Phone Number",
     hours: "Hours",
     website: "Website",
@@ -116,6 +119,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
           {title || `Selected ${typeLabel}`}
         </h3>
 
+        {(isSchool || isLibrary) && (
         <div className="flex mt-2 text-md flex-col xl:flex-row xl:justify-between">
           <div className="font-medium uppercase">Households:</div>
 
@@ -126,6 +130,7 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
             </div>
           </div>
         </div>
+        )}
 
         {record ? (
           <div className="text-md">
@@ -135,7 +140,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
               return (
                 <div
                   key={key}
-                  className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2"
+                  //className="flex flex-col xl:flex-row xl:justify-between mb-1 gap-x-2"
+                  className="flex flex-row justify-between mb-1 gap-x-2"
                 >
                   <div className="font-medium uppercase">
                     {fieldLabels[key] || key}:
@@ -144,6 +150,8 @@ export default function DataCard({ title, value, record, type, onClear }: DataCa
                   <div className="break-words">
                     {val === undefined || val === null || val === "" ? (
                       "Not Available"
+                    ) : key === "povertyRate" && typeof val === "number" ? (
+                      `${val.toFixed(1)}%`
                     ) : key === "website" && typeof val === "string" ? (
                       <a
                         href={

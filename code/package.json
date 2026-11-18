@@ -11,6 +11,8 @@
     "fetch:pantries": "tsx scripts/fetchpantries.ts",
     "fetch:schools": "tsx scripts/fetch.ts",
     "fetch:libraries": "tsx scripts/fetchlibraries.ts",
+    "import:school-lunch": "tsx scripts/importSchoolLunch.ts",
+    "fetch:poverty": "tsx scripts/fetchpoverty.ts",
     "build:docs": "typedoc"
   },
   "dependencies": {
